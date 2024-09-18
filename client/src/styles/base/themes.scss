@@ -1,0 +1,55 @@
+[data-theme="dark"] {
+  --color: white;
+  --outline: 0.1rem solid rgba(255, 255, 255, 0.1);
+  --backgroundBody: #2c2d37;
+  --shadow: 0.2rem 0.2rem 1rem rgba(0, 0, 0, 0.1);
+  --backgroundBlendMode: multiply, screen;
+  --background: linear-gradient(
+      -125deg,
+      rgb(61, 63, 77) 0%,
+      rgb(49, 50, 59) 100%
+    ),
+    radial-gradient(
+      at top left,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+  --primaryContainer: rgba(0, 0, 0, 0.15);
+  --primaryElement: linear-gradient(45deg, #5a62f4 0%, #7a58f4 100%),
+    radial-gradient(
+      at top left,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+}
+
+[data-theme="light"] {
+  --color: black;
+  --outline: 0.1rem solid rgba(0, 0, 0, 0.5);
+  --backgroundBody: #c3c4cf;
+  --shadow: 0.2rem 0.2rem 1rem rgba(0, 0, 0, 0.1);
+  --backgroundBlendMode: multiply, screen;
+  --background: radial-gradient(
+      at top right,
+      rgba(56, 29, 232, 0.152) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    radial-gradient(
+      at bottom left,
+      rgba(54, 198, 255, 0.173) 0%,
+      rgba(207, 87, 181, 0) 100%
+    ),
+    radial-gradient(
+      at top left,
+      rgba(222, 54, 255, 0.127) 0%,
+      rgba(207, 87, 181, 0) 100%
+    ),
+    radial-gradient(at top left, rgb(255, 255, 255) 0%, rgba(0, 0, 0, 0.2) 100%);
+  --primaryContainer: rgba(255, 255, 255, 0.3);
+  --primaryElement: linear-gradient(45deg, #5a62f4 0%, #7a58f4 100%),
+    radial-gradient(
+      at top left,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
+}
