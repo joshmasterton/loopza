@@ -1,0 +1,32 @@
+@import "../base/variables.scss";
+@import "../base/themes.scss";
+
+form {
+  width: 100%;
+  max-width: $widthContainer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  align-self: center;
+  padding: $paddingLarge;
+  gap: $gapLarge;
+  border-radius: $round;
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+  background: var(--primaryContainer);
+  box-shadow: var(--shadow);
+  background-blend-mode: multiply, screen;
+}
+
+form > main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+form > footer {
+  display: flex;
+  gap: $gap;
+}

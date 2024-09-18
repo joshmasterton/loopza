@@ -1,0 +1,17 @@
+@import "../base/variables.scss";
+@import "../base/themes.scss";
+
+button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $padding;
+  height: $height;
+  cursor: pointer;
+  border-radius: $round;
+  color: white;
+  background: var(--primaryElement);
+  background-blend-mode: multiply, screen;
+  box-shadow: var(--shadow);
+}

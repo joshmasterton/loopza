@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { Input } from "../../src/components/Input.components";
+import { Input } from "../../src/components/Input.component";
 
 describe("Input component", () => {
   test("Should render label and input tag", () => {

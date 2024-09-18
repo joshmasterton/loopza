@@ -1,0 +1,29 @@
+@import "../base/variables.scss";
+
+@keyframes emerge {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top left;
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
