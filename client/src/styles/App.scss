@@ -5,12 +5,18 @@
 @import "./components/Button.component.style.scss";
 @import "./components/Form.component.style.scss";
 @import "./components/Link.component.scss";
+@import "./components/Error.component.style.scss";
 
 * {
   margin: 0;
   padding: 0;
   color: var(--color);
+  font-weight: 600;
   border-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 *:focus {

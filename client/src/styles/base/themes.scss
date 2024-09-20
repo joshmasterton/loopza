@@ -1,5 +1,6 @@
 [data-theme="dark"] {
   --color: white;
+  --colorPrimary: #5f67ff;
   --outline: 0.1rem solid rgba(255, 255, 255, 0.1);
   --backgroundBody: #2c2d37;
   --shadow: 0.2rem 0.2rem 1rem rgba(0, 0, 0, 0.1);
@@ -25,6 +26,7 @@
 
 [data-theme="light"] {
   --color: black;
+  --colorPrimary: #5a62f4;
   --outline: 0.1rem solid rgba(0, 0, 0, 0.5);
   --backgroundBody: #c3c4cf;
   --shadow: 0.2rem 0.2rem 1rem rgba(0, 0, 0, 0.1);

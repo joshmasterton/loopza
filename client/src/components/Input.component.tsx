@@ -5,12 +5,14 @@ export const Input = ({
   title,
   placeholder,
   type,
+  register,
+  className,
   children,
 }: InputTypes) => {
   return (
-    <label htmlFor={id} className={children ? "right" : undefined}>
-      {title}
-      <input id={id} type={type} placeholder={placeholder} />
+    <label htmlFor={id} className={children ? `right ${className}` : className}>
+      <p>{title}</p>
+      <input {...register} id={id} type={type} placeholder={placeholder} />
       {children}
     </label>
   );
