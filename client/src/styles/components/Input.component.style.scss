@@ -7,14 +7,19 @@ label {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: $gap;
+  gap: $gapSmall;
   cursor: text;
+  padding-top: $paddingSmall;
+}
+
+label > p {
+  font-size: $fontSmall;
 }
 
 label > button {
   position: absolute;
   width: fit-content;
-  bottom: 0;
+  top: calc($paddingLarge / 1.075);
   right: 0;
   background: transparent;
   box-shadow: none;
@@ -32,4 +37,33 @@ input {
   outline: $outline;
   transition: background-color 1000000000s, color 100000000s;
   background: transparent;
+}
+
+label.file {
+  width: fit-content;
+  align-items: center;
+  align-self: center;
+  cursor: pointer;
+}
+
+label.file:focus-within > img,
+label.file:focus-within > svg {
+  outline: $outline;
+  box-shadow: $outlineFocus;
+}
+
+label > img,
+label > svg {
+  width: $width + $paddingLarge;
+  height: $height + $paddingLarge;
+  border-radius: $round;
+  border-radius: $roundExtra;
+  outline: $outline;
+}
+
+input[type="file"] {
+  position: absolute;
+  height: 0;
+  width: 0;
+  opacity: 0;
 }
