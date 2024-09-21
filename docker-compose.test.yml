@@ -3,7 +3,34 @@ services:
     build:
       context: ./client
       dockerfile: test.Dockerfile
+    ports:
+      - "9000:9000"
     volumes:
       - "./client/tests:/app/tests"
     environment:
       - CHOKIDAR_USEPOLLING=true
+
+  server:
+    build:
+      context: ./server
+      dockerfile: test.Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - "./server/tests:/app/tests"
+      - "./server/src:/app/src"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  database:
+    image: postgres:15
+    container_name: postgres_db
+    env_file:
+      - server/.env.test
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:

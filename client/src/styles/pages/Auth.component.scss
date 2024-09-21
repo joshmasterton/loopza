@@ -1,0 +1,12 @@
+@import "../base/variables.scss";
+
+#auth {
+  margin-top: $paddingLarge;
+}
+
+#auth > img {
+  position: absolute;
+  top: -$paddingLarge;
+  left: 50%;
+  transform: translateX(-50%);
+}
