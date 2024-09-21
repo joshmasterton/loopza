@@ -11,9 +11,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Navigation } from "../components/Navigation.component";
 import { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { login, signup } from "../services/auth.service";
 import loopza from "../assets/loopza.png";
 import * as yup from "yup";
-import { login, signup } from "../services/auth.service";
 
 const LoginForm = () => {
   const loginSchema = yup.object().shape({
@@ -35,7 +35,8 @@ const LoginForm = () => {
   };
 
   return (
-    <form method="POST" onSubmit={handleSubmit(onSubmit)}>
+    <form id="auth" method="POST" onSubmit={handleSubmit(onSubmit)}>
+      <img src={loopza} alt="logo" />
       <h1>Login</h1>
       <main>
         <Input
@@ -64,7 +65,7 @@ const LoginForm = () => {
           )}
         </Input>
       </main>
-      <Button id="auth" type="submit">
+      <Button id="login" type="submit">
         Login
       </Button>
       <footer>
@@ -113,7 +114,7 @@ const SignupForm = () => {
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), undefined], "Passwords must match")
-      .required("Password is required"),
+      .required("Confirm password is required"),
   });
 
   const {
@@ -148,6 +149,7 @@ const SignupForm = () => {
 
   return (
     <form
+      id="auth"
       method="POST"
       onSubmit={handleSubmit(onSubmit, (errors) => {
         if (errors.profilePicture) {
@@ -157,15 +159,16 @@ const SignupForm = () => {
         }
       })}
     >
+      <img src={loopza} alt="logo" />
       <h1>Signup</h1>
       <main>
         <Input
           id="profilePicture"
           type="file"
-          title=""
+          title="Profile picture"
           className="file"
           register={register("profilePicture", { required: true })}
-          placeholder="Profile Picture"
+          placeholder="Profile picture"
         >
           {imagePreview ? (
             <img src={imagePreview} alt="Profile picture" />
@@ -213,9 +216,9 @@ const SignupForm = () => {
         <Input
           id="confirmPassword"
           type="password"
-          title="Confirm Password"
+          title="Confirm password"
           register={register("confirmPassword", { required: true })}
-          placeholder="Confirm Password"
+          placeholder="Confirm password"
         >
           <Button id="showConfirmPassword" type="button">
             <IoEye />
@@ -225,7 +228,7 @@ const SignupForm = () => {
           )}
         </Input>
       </main>
-      <Button id="auth" type="submit">
+      <Button id="signup" type="submit">
         Signup
       </Button>
       <footer>
@@ -237,10 +240,5 @@ const SignupForm = () => {
 };
 
 export const Auth = ({ isLogin }: AuthPageTypes) => {
-  return (
-    <>
-      <img src={loopza} alt="logo" />
-      {isLogin ? <LoginForm /> : <SignupForm />}
-    </>
-  );
+  return <>{isLogin ? <LoginForm /> : <SignupForm />}</>;
 };

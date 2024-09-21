@@ -6,6 +6,7 @@
 @import "./components/Form.component.style.scss";
 @import "./components/Link.component.scss";
 @import "./components/Error.component.style.scss";
+@import "./pages/Auth.component.scss";
 
 * {
   margin: 0;
@@ -42,7 +43,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: $padding;
-  gap: $gapLarge;
+  gap: $gap;
   background: var(--background);
   background-blend-mode: var(--backgroundBlendMode);
 }

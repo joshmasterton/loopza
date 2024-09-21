@@ -9,7 +9,6 @@ label {
   flex-direction: column;
   gap: $gapSmall;
   cursor: text;
-  padding-top: $paddingSmall;
 }
 
 label > p {
@@ -19,7 +18,7 @@ label > p {
 label > button {
   position: absolute;
   width: fit-content;
-  top: calc($paddingLarge / 1.075);
+  top: calc($paddingLarge / 1.45);
   right: 0;
   background: transparent;
   box-shadow: none;
@@ -40,10 +39,15 @@ input {
 }
 
 label.file {
+  position: relative;
   width: fit-content;
   align-items: center;
   align-self: center;
   cursor: pointer;
+}
+
+label.file > p {
+  display: none;
 }
 
 label.file:focus-within > img,
@@ -54,8 +58,8 @@ label.file:focus-within > svg {
 
 label > img,
 label > svg {
-  width: $width + $paddingLarge;
-  height: $height + $paddingLarge;
+  width: $width + $paddingExtraLarge;
+  height: $height + $paddingExtraLarge;
   border-radius: $round;
   border-radius: $roundExtra;
   outline: $outline;
