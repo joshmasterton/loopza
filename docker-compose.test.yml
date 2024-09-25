@@ -6,7 +6,7 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - "./client/tests:/app/tests"
+      - "./client/__tests__:/app/__tests__"
     environment:
       - CHOKIDAR_USEPOLLING=true
 
@@ -17,8 +17,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - "./server/tests:/app/tests"
+      - "./server/__tests__:/app/__tests__"
       - "./server/src:/app/src"
+      - "./server/vitest.setup.ts:/app/vitest.setup.ts"
     environment:
       - CHOKIDAR_USEPOLLING=true
 

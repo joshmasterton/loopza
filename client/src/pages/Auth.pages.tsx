@@ -11,11 +11,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Navigation } from "../components/Navigation.component";
 import { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { login, signup } from "../services/auth.service";
+import { useDispatch } from "react-redux";
+import { loginUser, signupUser } from "../features/authSlice";
+import { AppDispatch } from "../store";
 import loopza from "../assets/loopza.png";
 import * as yup from "yup";
 
 const LoginForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const loginSchema = yup.object().shape({
     username: yup.string().required("Username required"),
     password: yup.string().required("Password required"),
@@ -31,7 +34,7 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data: LoginFormTypes) => {
-    await login(data);
+    dispatch(loginUser(data));
   };
 
   return (
@@ -77,6 +80,7 @@ const LoginForm = () => {
 };
 
 const SignupForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const profilePictureLabelRef = useRef<HTMLInputElement>(null);
   const [imagePreview, setImagePreview] = useState<string | undefined>(
     undefined
@@ -138,7 +142,7 @@ const SignupForm = () => {
     formData.append("confirmPassword", data.confirmPassword);
     formData.append("profilePicture", data.profilePicture[0]);
 
-    await signup(formData);
+    dispatch(signupUser(formData));
   };
 
   useEffect(() => {

@@ -1,18 +1,6 @@
 import express from "express";
-import * as yup from "yup";
+import { login } from "../../controllers/auth/login.controller";
 
-export const login = express.Router();
+export const loginRouter = express.Router();
 
-const loginSchema = yup.object().shape({
-  username: yup.string().min(6).required(),
-  password: yup.string().min(6).required(),
-});
-
-login.post("/", async (req, res) => {
-  try {
-    await loginSchema.validate(req.body);
-    return res.json(req.body);
-  } catch (error) {
-    return res.json({ error });
-  }
-});
+loginRouter.post("/login", login);
