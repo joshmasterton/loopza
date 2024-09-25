@@ -1,0 +1,58 @@
+import { Request, Response } from "express";
+import { signupUser } from "../../services/auth/signup.service";
+import * as yup from "yup";
+
+const signupSchema = yup.object().shape({
+  username: yup
+    .string()
+    .min(6, "Username must be at least 6 characters")
+    .required(),
+  email: yup.string().email("Must be a valid email type").required(),
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .required(),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), undefined], "Passwords must match")
+    .required(),
+});
+
+export const signup = async (req: Request, res: Response) => {
+  try {
+    const validatedData = await signupSchema.validate(req.body);
+    const file = req.file;
+
+    if (!file) {
+      throw new Error("No profile picture found");
+    }
+
+    const tokens = await signupUser(
+      validatedData.username,
+      validatedData.email,
+      validatedData.password,
+      file?.path
+    );
+
+    return res
+      .cookie("accessToken", tokens?.accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 15 * 60 * 1000,
+      })
+      .cookie("refreshToken", tokens?.refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .json({ message: "Signup successful" });
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    return res.status(400).json({ error: "signup error has occured" });
+  }
+};
