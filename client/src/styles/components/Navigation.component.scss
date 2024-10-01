@@ -1,0 +1,34 @@
+@import "../base/variables.scss";
+
+a {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  color: var(--colorPrimary);
+  text-decoration: none;
+  border-radius: $round;
+  font-size: $fontSmall;
+}
+
+a.button {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  min-width: $width;
+  gap: $gap;
+  padding: $paddingSmall;
+  height: $height;
+  font-size: $font;
+  color: var(--color);
+  background-blend-mode: multiply, screen;
+}
+
+a > p {
+  display: none;
+}
+
+@media screen and (min-width: $widthContainerLarge) {
+  a > p {
+    display: flex;
+  }
+}

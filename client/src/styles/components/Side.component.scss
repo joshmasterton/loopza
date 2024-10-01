@@ -1,0 +1,107 @@
+@import "../base/variables.scss";
+
+.side {
+  position: fixed;
+  top: $height + $paddingLarge;
+  max-width: calc(($widthContainerExtraLarge) + ($padding * 10.5));
+  width: 100%;
+  height: calc(100% - ($paddingLarge));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.side > div {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  transition: width $animationCubic;
+  border-radius: $round;
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+  background: var(--primaryContainer);
+  box-shadow: var(--shadow);
+  background-blend-mode: multiply, screen;
+  pointer-events: all;
+}
+
+.side > div > ul {
+  display: flex;
+  flex-direction: column;
+  gap: $padding;
+  padding: $padding;
+}
+
+.side > div > ul img {
+  width: calc($width - $padding);
+  height: calc($height - $padding);
+  border-radius: $round;
+}
+
+.side.left {
+  display: none;
+  transform-origin: top;
+  animation: $animationCubic comeFromLeft;
+}
+
+.side.left > div {
+  position: absolute;
+  left: $padding;
+  width: calc($height + ($padding * 2));
+}
+
+.side.left > div > ul div {
+  display: none;
+}
+
+.side.right {
+  display: none;
+  transform-origin: top;
+  animation: $animationCubic comeFromRight;
+}
+
+.side.right > div {
+  position: absolute;
+  right: $padding;
+  width: calc($height + ($padding * 2));
+}
+
+.side.right > div > ul div {
+  display: none;
+}
+
+@media screen and (min-width: $widthContainer) {
+  .side {
+    top: $padding;
+  }
+
+  .side.left {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: calc($widthContainerMedium)) {
+  .side.right {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: calc($widthContainerLarge)) {
+  .side.left > div {
+    width: calc($widthContainerSmall);
+  }
+
+  .side.left > div > ul div {
+    display: block;
+  }
+}
+
+@media screen and (min-width: calc($widthContainerExtraLarge)) {
+  .side.right > div {
+    width: calc($widthContainerSmall);
+  }
+
+  .side.right > div > ul div {
+    display: block;
+  }
+}

@@ -1,29 +1,59 @@
 @import "../base/variables.scss";
 
+$animationCubic: 0.75s cubic-bezier(0.175, 0.885, 0.32, 1);
+$animationEase: 0.5s ease;
+
 @keyframes emerge {
   from {
+    opacity: 0%;
     transform: scale(0);
   }
   to {
+    opacity: 100%;
     transform: scale(1);
   }
 }
 
-@keyframes appear {
-  from {
+@keyframes comeFromLeft {
+  0% {
     opacity: 0%;
+    transform: translateX(-200%) scale(0);
   }
-  to {
+  100% {
     opacity: 100%;
+    transform: translateX(0%) scale(1);
   }
 }
 
-@keyframes swing {
+@keyframes comeFromRight {
   0% {
-    transform: scaleY(0);
-    transform-origin: top left;
+    opacity: 0%;
+    transform: translateX(200%) scale(0);
   }
   100% {
-    transform: scaleY(1);
+    opacity: 100%;
+    transform: translateX(0%) scale(1);
+  }
+}
+
+@keyframes comeFromTop {
+  0% {
+    opacity: 0%;
+    transform: translateY(-200%);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0%);
+  }
+}
+
+@keyframes comeFromBottom {
+  0% {
+    opacity: 0%;
+    transform: translatey(200%) scale(0);
+  }
+  100% {
+    opacity: 100%;
+    transform: translatey(0%) scale(1);
   }
 }

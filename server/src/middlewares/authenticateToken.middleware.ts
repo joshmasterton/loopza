@@ -26,7 +26,7 @@ export const authenticateToken = async (
       id: number;
     };
 
-    const user = new User("", "", "");
+    const user = new User();
     const serializedUser = await user.getUser("id", decoded.id);
 
     if (!serializedUser) {

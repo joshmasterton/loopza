@@ -1,25 +1,26 @@
 import { tableConfig } from "../../app";
 import { queryDatabase } from "../../database/query.database";
 import { UserTypes } from "../../../types/model/auth/user.type";
+import { uploadImage } from "../../config/cloudinary.config";
 import bcrypt from "bcryptjs";
 
 export class User {
   public id?: number;
   public username?: string;
   public email?: string;
-  public profilePictureURL?: string;
+  public file?: Express.Multer.File;
   private password?: string;
 
   constructor(
-    username: string,
-    email: string,
-    password: string,
-    profilePictureURL: string
+    username?: string,
+    email?: string,
+    password?: string,
+    file?: Express.Multer.File
   ) {
     this.username = username;
     this.email = email;
     this.password = password;
-    this.profilePictureURL = profilePictureURL;
+    this.file = file;
   }
 
   async signup() {
@@ -37,6 +38,12 @@ export class User {
         throw new Error("No password provided");
       }
 
+      if (!this.file) {
+        throw new Error("No profile picture found");
+      }
+
+      const uploadedImage = await uploadImage(this.file);
+
       const hashedPassword = await bcrypt.hash(this.password, 10);
 
       await queryDatabase(
@@ -52,7 +59,7 @@ export class User {
           this.username?.toLowerCase(),
           this.email,
           hashedPassword,
-          this.profilePictureURL,
+          uploadedImage,
         ]
       );
 
@@ -94,6 +101,23 @@ export class User {
       }
 
       return this;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  }
+
+  async logout(userId: number) {
+    try {
+      await queryDatabase(
+        `
+					UPDATE ${tableConfig.getUsersTable()}
+					SET refresh_token = NULL
+					WHERE id = $1
+				`,
+        [userId]
+      );
     } catch (error) {
       if (error instanceof Error) {
         throw error;

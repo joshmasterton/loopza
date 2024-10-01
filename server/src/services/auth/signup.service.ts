@@ -5,10 +5,10 @@ export const signupUser = async (
   username: string,
   email: string,
   password: string,
-  profilePictureURL: string
+  file: Express.Multer.File
 ) => {
   try {
-    const newUser = new User(username, email, password, profilePictureURL);
+    const newUser = new User(username, email, password, file);
     await newUser.signup();
 
     const userId = await newUser.getUserId(

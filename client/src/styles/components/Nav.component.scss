@@ -1,0 +1,141 @@
+@import "../base/variables.scss";
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: start;
+  width: 100%;
+  z-index: 1;
+  height: calc($height + ($paddingSmall * 2));
+  transition: height $animationCubic, transform $animationCubic;
+  animation: $animationCubic comeFromTop;
+  border-radius: $round;
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+  background: var(--primaryContainer);
+  box-shadow: var(--shadow);
+  background-blend-mode: multiply, screen;
+}
+
+nav.active {
+  height: calc(($height * 6) + ($padding * 2 + $paddingSmall));
+}
+
+nav > header {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: $gap;
+  height: calc($height + ($paddingSmall * 2));
+  padding: $paddingSmall;
+  transition: transform $animationCubic;
+  animation: $animationCubic comeFromTop;
+  z-index: 1;
+}
+
+nav > header > h4 {
+  display: none;
+}
+
+nav > header > img {
+  width: calc($width);
+  height: calc($height);
+  padding: $paddingSmall;
+}
+
+nav > header > div {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  width: 100%;
+}
+
+nav > header > div > button {
+  width: fit-content;
+}
+
+nav > main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+nav.active > main {
+  transition: transform $animationCubic;
+  transform: translateY(calc($height + $paddingSmall));
+}
+
+nav.hidden > main {
+  transition: transform $animationCubic;
+  transform: translateY(-10.5rem);
+}
+
+nav > main > ul {
+  display: flex;
+  flex-direction: column;
+  gap: $padding;
+  padding: $paddingSmall;
+  opacity: 100%;
+  transition: opacity 0.2s ease 0.2s;
+}
+
+nav.hidden > main > ul {
+  transition: opacity 0.05s ease;
+  opacity: 0%;
+}
+
+nav > main > ul img {
+  width: calc($width - $padding);
+  height: calc($height - $padding);
+  border-radius: $round;
+}
+
+@media screen and (min-width: $widthContainer) {
+  nav.active {
+    height: 0;
+  }
+
+  nav.hidden {
+    height: 0;
+  }
+
+  nav > header {
+    animation: none;
+    transform: translateY(-100%);
+    transition: $animationCubic;
+  }
+
+  nav.active > main {
+    transition: transform $animationCubic;
+    transform: translateY(-13rem);
+  }
+
+  nav.active > main > ul {
+    transition: opacity 0.05s ease;
+    opacity: 0%;
+  }
+
+  nav.hidden > main {
+    transition: transform $animationCubic;
+    transform: translateY(-13rem);
+  }
+
+  nav.hidden > main > ul {
+    transition: opacity 0.05s ease;
+    opacity: 0%;
+  }
+}
+
+@media screen and (min-width: $widthContainerLarge) {
+  nav {
+    animation: none;
+  }
+
+  nav > header > h4 {
+    display: flex;
+  }
+}

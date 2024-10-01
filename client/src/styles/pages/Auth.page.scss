@@ -1,0 +1,16 @@
+@import "../base/variables.scss";
+
+#auth {
+  margin-top: $padding;
+  transform-origin: top;
+  animation: $animationCubic comeFromLeft;
+}
+
+#auth > img {
+  position: absolute;
+  width: $width + $paddingSmall;
+  height: $height + $paddingSmall;
+  top: -(calc($paddingLarge / 1.35));
+  left: 50%;
+  transform: translateX(-50%);
+}

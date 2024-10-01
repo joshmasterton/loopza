@@ -31,7 +31,7 @@ export const signup = async (req: Request, res: Response) => {
       validatedData.username,
       validatedData.email,
       validatedData.password,
-      file?.path
+      file
     );
 
     return res
