@@ -14,11 +14,13 @@ export type InputTypes = {
 export type ButtonTypes = {
   id: string;
   onClick?: () => void;
+  className?: string;
   type: "button" | "submit" | "reset" | undefined;
   children: ReactNode;
 };
 
 export type NavigationTypes = {
   link: string;
+  type: "button" | "link";
   children: ReactNode;
 };

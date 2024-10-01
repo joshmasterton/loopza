@@ -11,6 +11,10 @@ label {
   cursor: text;
 }
 
+label svg {
+  color: var(--color);
+}
+
 label > p {
   font-size: $fontSmall;
 }
@@ -18,14 +22,10 @@ label > p {
 label > button {
   position: absolute;
   width: fit-content;
-  top: calc($paddingLarge / 1.45);
+  top: calc($paddingLarge / 1.6);
   right: 0;
   background: transparent;
   box-shadow: none;
-}
-
-label.right > input {
-  padding-right: $width + $padding;
 }
 
 input {
@@ -34,6 +34,7 @@ input {
   padding: $padding;
   border-radius: $round;
   outline: $outline;
+  color: var(--color);
   transition: background-color 1000000000s, color 100000000s;
   background: transparent;
 }

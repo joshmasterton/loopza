@@ -1,5 +1,3 @@
-import { Request } from "express";
-
 export type UserTypes = {
   id: number;
   username: string;
@@ -12,7 +10,3 @@ export type UserTypes = {
   created_at: Date;
   profile_picture_url: string;
 };
-
-export interface UserRequest extends Request {
-  user?: UserTypes;
-}

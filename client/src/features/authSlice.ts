@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppDispatch } from "../store";
 import { LoginFormTypes } from "../../types/pages/Page.types";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { UserTypes } from "../../types/features/features.types";
+import { API_URL } from "../utilities/request.utilities";
 
-const API_URL = "http://localhost:80";
-
-const initialState = {
+const initialState: {
+  user: UserTypes | null;
+  isAuthenticated: boolean;
+  status: "idle" | "loading" | "failed";
+} = {
   user: null,
   isAuthenticated: false,
   status: "idle",
@@ -26,14 +30,22 @@ const authSlice = createSlice({
     setLoading: (state) => {
       state.status = "loading";
     },
+    setIdle: (state) => {
+      state.status = "idle";
+    },
     setError: (state) => {
       state.status = "failed";
     },
   },
 });
 
-export const { setCredentials, clearCredentials, setLoading, setError } =
-  authSlice.actions;
+export const {
+  setCredentials,
+  clearCredentials,
+  setLoading,
+  setIdle,
+  setError,
+} = authSlice.actions;
 
 export const loginUser =
   (data: LoginFormTypes) => async (dispatch: AppDispatch) => {
@@ -49,8 +61,15 @@ export const loginUser =
 
       dispatch(setCredentials({ user: response.data }));
     } catch (error) {
-      console.error(error);
+      if (error instanceof AxiosError) {
+        console.error(error.response?.data);
+      } else {
+        console.error(error);
+      }
+
       dispatch(setError());
+    } finally {
+      dispatch(setIdle());
     }
   };
 
@@ -65,8 +84,37 @@ export const signupUser = (data: FormData) => async (dispatch: AppDispatch) => {
 
     dispatch(setCredentials({ user: response.data }));
   } catch (error) {
-    console.error(error);
+    if (error instanceof AxiosError) {
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
+
     dispatch(setError());
+  } finally {
+    dispatch(setIdle());
+  }
+};
+
+export const logoutUser = () => async (dispatch: AppDispatch) => {
+  dispatch(setLoading());
+  try {
+    await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
+
+    await axios.get(`${API_URL}/auth/user`, {
+      withCredentials: true,
+    });
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
+
+    dispatch(setError());
+  } finally {
+    dispatch(setCredentials({ user: null }));
+    dispatch(setIdle());
   }
 };
 
@@ -83,8 +131,15 @@ export const checkUser = () => async (dispatch: AppDispatch) => {
       dispatch(clearCredentials());
     }
   } catch (error) {
-    console.error(error);
+    if (error instanceof AxiosError) {
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
+
     dispatch(clearCredentials());
+  } finally {
+    dispatch(setIdle());
   }
 };
 

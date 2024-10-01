@@ -1,37 +1,35 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "./store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./store";
 import { useEffect } from "react";
 import { checkUser } from "./features/authSlice";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Home } from "./pages/Home.page";
+import { Auth } from "./pages/Auth.page";
 import "./styles/App.scss";
-import { Auth } from "./pages/Auth.pages";
 
 export const routes = [
   {
     path: "/",
-    element: <Auth isLogin />,
+    element: <Home />,
   },
   {
     path: "/signup",
     element: <Auth />,
+  },
+  {
+    path: "/login",
+    element: <Auth isLogin />,
   },
 ];
 
 const router = createBrowserRouter(routes);
 
 export const App = () => {
-  const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(checkUser());
   }, []);
-
-  useEffect(() => {
-    if (user) {
-      console.log(user);
-    }
-  }, [user]);
 
   return <RouterProvider router={router} />;
 };

@@ -1,4 +1,4 @@
-$round: 0.5rem;
+$round: 0.75rem;
 $roundExtra: 5rem;
 
 $fontSmall: 0.75rem;
@@ -15,10 +15,16 @@ $gap: $padding;
 $gapLarge: $paddingLarge;
 
 $width: 2.5rem;
-$widthContainer: 25rem;
-$height: 2.5rem;
 
-$colorDanger: rgb(255, 57, 57);
+$widthContainerSmall: 15rem;
+$widthContainerMain: 35rem;
+$widthContainerForm: 25rem;
+$widthContainer: 34.5rem;
+$widthContainerMedium: 42.5rem;
+$widthContainerLarge: 48.5rem;
+$widthContainerExtraLarge: 58.5rem;
+
+$height: 2.5rem;
 
 $outline: var(--outline);
 $outlineFocus: 0 0 0 0.25rem #424ae27a;

@@ -5,14 +5,16 @@ import { Test } from "../utilities/Test.utilities";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 
+export const API_URL = "http://localhost:80";
+
 vitest.mock("axios");
 
 describe("Auth page", () => {
   test("Should render correct auth page", async () => {
-    (axios.get as Mock).mockResolvedValueOnce({ data: { user: null } });
+    (axios.get as Mock).mockResolvedValueOnce({});
 
     await act(async () => {
-      render(<Test />);
+      render(<Test initialEntry="/login" />);
     });
 
     const signupNavigate = screen.getByText("Signup");
@@ -32,28 +34,29 @@ describe("Auth page", () => {
   });
 
   test("Should return errors on invalid login form submission", async () => {
-    (axios.get as Mock).mockResolvedValueOnce({ data: { user: null } });
+    (axios.get as Mock).mockResolvedValueOnce({});
 
     await act(async () => {
-      render(<Test />);
+      render(<Test initialEntry="/login" />);
     });
 
     const loginButton = screen.getByRole("button", { name: "Login" });
     await userEvent.click(loginButton);
 
-    expect(screen.queryByText("Username required")).toBeInTheDocument();
-    expect(screen.queryByText("Password required")).toBeInTheDocument();
+    expect(
+      screen.queryByText("Username must be at least 6 characters")
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText("Password must be at least 6 characters")
+    ).toBeInTheDocument();
   });
 
   test("Should return errors on invalid signup form submission", async () => {
-    (axios.get as Mock).mockResolvedValueOnce({ data: { user: null } });
+    (axios.get as Mock).mockResolvedValueOnce({});
 
     await act(async () => {
-      render(<Test />);
+      render(<Test initialEntry="/signup" />);
     });
-
-    const signupNavigate = screen.getByText("Signup");
-    await userEvent.click(signupNavigate);
 
     const usernameInput = screen.getByLabelText("Username");
     const emailInput = screen.getByLabelText("Email");
@@ -72,15 +75,12 @@ describe("Auth page", () => {
   });
 
   test("Should return successful login form submission", async () => {
-    (axios.get as Mock).mockResolvedValueOnce({ data: { user: null } });
-    (axios.get as Mock).mockResolvedValueOnce({ data: { user: null } });
+    (axios.get as Mock).mockResolvedValueOnce({});
+    (axios.get as Mock).mockResolvedValueOnce({});
 
     await act(async () => {
-      render(<Test />);
+      render(<Test initialEntry="/login" />);
     });
-
-    const loginNavigate = screen.getByText("Login");
-    await userEvent.click(loginNavigate);
 
     const usernameInput = screen.getByLabelText("Username");
     const passwordInput = screen.getByLabelText("Password");
@@ -91,30 +91,44 @@ describe("Auth page", () => {
     const loginButton = screen.getByRole("button", { name: "Login" });
     await userEvent.click(loginButton);
 
-    expect(axios.get).toHaveBeenCalledWith();
+    expect(axios.post).toHaveBeenCalledWith(
+      `${API_URL}/auth/login`,
+      { username: "testUser", password: "Password" },
+      { withCredentials: true }
+    );
   });
 
-  // test("Should return successful signup form submission", async () => {
-  //   globalThis.URL.createObjectURL = vitest.fn();
+  test("Should return successful signup form submission", async () => {
+    (axios.get as Mock).mockResolvedValueOnce({});
+    (axios.get as Mock).mockResolvedValueOnce({});
+    globalThis.URL.createObjectURL = vitest.fn();
 
-  //   render(<RouterProvider router={memoryRouter("/signup")} />);
+    await act(async () => {
+      render(<Test initialEntry="/signup" />);
+    });
 
-  //   const profilePictureInput = screen.getByLabelText("Profile picture");
-  //   const usernameInput = screen.getByLabelText("Username");
-  //   const emailInput = screen.getByLabelText("Email");
-  //   const passwordInput = screen.getByLabelText("Password");
-  //   const confirmPasswordInput = screen.getByLabelText("Confirm password");
+    const profilePictureInput = screen.getByLabelText("Profile picture");
+    const usernameInput = screen.getByLabelText("Username");
+    const emailInput = screen.getByLabelText("Email");
+    const passwordInput = screen.getByLabelText("Password");
+    const confirmPasswordInput = screen.getByLabelText("Confirm password");
 
-  //   await userEvent.upload(
-  //     profilePictureInput,
-  //     new File([new Blob([""])], "image.png", { type: "image/png" })
-  //   );
-  //   await userEvent.type(usernameInput, "testUser");
-  //   await userEvent.type(emailInput, "Email@email.com");
-  //   await userEvent.type(passwordInput, "Password");
-  //   await userEvent.type(confirmPasswordInput, "Password");
+    await userEvent.upload(
+      profilePictureInput,
+      new File([new Blob([""])], "image.png", { type: "image/png" })
+    );
+    await userEvent.type(usernameInput, "testUser");
+    await userEvent.type(emailInput, "Email@email.com");
+    await userEvent.type(passwordInput, "Password");
+    await userEvent.type(confirmPasswordInput, "Password");
 
-  //   const signupButton = screen.getByRole("button", { name: "Signup" });
-  //   await userEvent.click(signupButton);
-  // });
+    const signupButton = screen.getByRole("button", { name: "Signup" });
+    await userEvent.click(signupButton);
+
+    expect(axios.post).toHaveBeenCalledWith(
+      `${API_URL}/auth/signup`,
+      expect.any(FormData),
+      { withCredentials: true }
+    );
+  });
 });

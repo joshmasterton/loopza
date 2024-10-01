@@ -11,17 +11,27 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Navigation } from "../components/Navigation.component";
 import { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser, signupUser } from "../features/authSlice";
-import { AppDispatch } from "../store";
+import { AppDispatch, RootState } from "../store";
+import { useNavigate } from "react-router-dom";
 import loopza from "../assets/loopza.png";
 import * as yup from "yup";
 
 const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const { status } = useSelector((state: RootState) => state.auth);
+
   const loginSchema = yup.object().shape({
-    username: yup.string().required("Username required"),
-    password: yup.string().required("Password required"),
+    username: yup
+      .string()
+      .min(6, "Username must be at least 6 characters")
+      .required("Username required"),
+    password: yup
+      .string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password required"),
   });
 
   const {
@@ -55,12 +65,16 @@ const LoginForm = () => {
         </Input>
         <Input
           id="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           title="Password"
           register={register("password", { required: true })}
           placeholder="Password"
         >
-          <Button id="showPassword" type="button">
+          <Button
+            id="showPassword"
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+          >
             <IoEye />
           </Button>
           {errors.password && (
@@ -69,11 +83,13 @@ const LoginForm = () => {
         </Input>
       </main>
       <Button id="login" type="submit">
-        Login
+        {status === "loading" ? "Loading" : "Login"}
       </Button>
       <footer>
         <p>Don`t have an account?</p>
-        <Navigation link="/signup">Signup</Navigation>
+        <Navigation link="/signup" type="link">
+          Signup
+        </Navigation>
       </footer>
     </form>
   );
@@ -81,6 +97,14 @@ const LoginForm = () => {
 
 const SignupForm = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const [showPasswords, setShowPasswords] = useState<{
+    password: boolean;
+    confirmPassword: boolean;
+  }>({
+    password: false,
+    confirmPassword: false,
+  });
+  const { status } = useSelector((state: RootState) => state.auth);
   const profilePictureLabelRef = useRef<HTMLInputElement>(null);
   const [imagePreview, setImagePreview] = useState<string | undefined>(
     undefined
@@ -145,6 +169,13 @@ const SignupForm = () => {
     dispatch(signupUser(formData));
   };
 
+  const showPassword = (passwordType: keyof typeof showPasswords) => {
+    setShowPasswords((prevValue) => ({
+      ...prevValue,
+      [passwordType]: !prevValue[passwordType],
+    }));
+  };
+
   useEffect(() => {
     if (profilePicture?.[0] && profilePicture?.[0].type.includes("image")) {
       setImagePreview(URL.createObjectURL(profilePicture[0]));
@@ -205,12 +236,16 @@ const SignupForm = () => {
         </Input>
         <Input
           id="password"
-          type="password"
+          type={showPasswords.password ? "text" : "password"}
           title="Password"
           register={register("password", { required: true })}
           placeholder="Password"
         >
-          <Button id="showPassword" type="button">
+          <Button
+            id="showPassword"
+            type="button"
+            onClick={() => showPassword("password")}
+          >
             <IoEye />
           </Button>
           {errors.password && (
@@ -219,12 +254,16 @@ const SignupForm = () => {
         </Input>
         <Input
           id="confirmPassword"
-          type="password"
+          type={showPasswords.confirmPassword ? "text" : "password"}
           title="Confirm password"
           register={register("confirmPassword", { required: true })}
           placeholder="Confirm password"
         >
-          <Button id="showConfirmPassword" type="button">
+          <Button
+            id="showConfirmPassword"
+            type="button"
+            onClick={() => showPassword("confirmPassword")}
+          >
             <IoEye />
           </Button>
           {errors.confirmPassword && (
@@ -233,16 +272,27 @@ const SignupForm = () => {
         </Input>
       </main>
       <Button id="signup" type="submit">
-        Signup
+        {status === "loading" ? "Loading" : "Signup"}
       </Button>
       <footer>
         <p>Already have an account?</p>
-        <Navigation link="/">Login</Navigation>
+        <Navigation link="/login" type="link">
+          Login
+        </Navigation>
       </footer>
     </form>
   );
 };
 
 export const Auth = ({ isLogin }: AuthPageTypes) => {
+  const { user } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
+
   return <>{isLogin ? <LoginForm /> : <SignupForm />}</>;
 };

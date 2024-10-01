@@ -4,6 +4,7 @@ import "@testing-library/jest-dom";
 
 beforeEach(() => {
   vitest.clearAllMocks();
+  window.history.pushState({}, "", "/");
 });
 
 afterEach(() => {

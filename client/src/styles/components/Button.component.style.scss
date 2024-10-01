@@ -2,16 +2,38 @@
 @import "../base/themes.scss";
 
 button {
-  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  padding: $padding;
+  min-width: $width;
+  width: 100%;
   height: $height;
+  max-height: $height;
+  padding: $paddingSmall;
+  gap: $gap;
   cursor: pointer;
   border-radius: $round;
   color: white;
   background: var(--primaryElement);
   background-blend-mode: multiply, screen;
-  box-shadow: var(--shadow);
+}
+
+button[type="submit"] {
+  justify-content: center;
+  width: 100%;
+}
+
+button.transparent {
+  color: var(--color);
+  background: transparent;
+}
+
+button > p {
+  display: none;
+}
+
+@media screen and (min-width: $widthContainerLarge) {
+  button > p {
+    display: flex;
+  }
 }
