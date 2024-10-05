@@ -3,7 +3,14 @@
 #auth {
   margin-top: $padding;
   transform-origin: top;
+  align-self: center;
   animation: $animationCubic comeFromLeft;
+}
+
+#auth > a {
+  position: absolute;
+  top: $paddingLarge;
+  right: $paddingLarge;
 }
 
 #auth > img {

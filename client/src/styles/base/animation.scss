@@ -39,11 +39,11 @@ $animationEase: 0.5s ease;
 @keyframes comeFromTop {
   0% {
     opacity: 0%;
-    transform: translateY(-200%);
+    transform: translateY(-200%) scale(0);
   }
   100% {
     opacity: 100%;
-    transform: translateY(0%);
+    transform: translateY(0%) scale(1);
   }
 }
 
@@ -55,5 +55,23 @@ $animationEase: 0.5s ease;
   100% {
     opacity: 100%;
     transform: translatey(0%) scale(1);
+  }
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    stroke-dashoffset: calc(1.2 * $width);
+  }
+  50% {
+    stroke-dashoffset: calc(3.14 * $width);
+  }
+  100% {
+    stroke-dashoffset: calc(1.2 * $width);
   }
 }

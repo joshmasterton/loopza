@@ -6,37 +6,55 @@ import { AppDispatch, RootState } from "../store";
 import { Button } from "./Button.component";
 import { CgLogOut } from "react-icons/cg";
 import { logoutUser } from "../features/authSlice";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Theme } from "./Theme.component";
+import { IoCreate } from "react-icons/io5";
+import { LoadingSpinner } from "./Loading.component";
 
 export const Side = ({ type }: { type: "left" | "right" }) => {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user, status } = useSelector((state: RootState) => state.auth);
+  const [currentPage, setCurrentPage] = useState<string | undefined>(undefined);
+  const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const currentPath = location.pathname.split("/").pop();
+    if (currentPath === "") {
+      setCurrentPage("home");
+    } else {
+      setCurrentPage(currentPath);
+    }
+  }, [location]);
 
   return (
     <div className={`side ${type}`}>
       <div>
         {type === "left" ? (
           <ul>
-            <Navigation link="/login" type="button">
-              {user ? (
-                <>
-                  <img src={user.profile_picture_url} alt="" />
-                  <div>{user.username}</div>
-                </>
-              ) : (
-                <>
-                  <HiUser />
-                  <div>Login</div>
-                </>
-              )}
-            </Navigation>
-
+            <div className={`hover ${currentPage}`} />
+            {user ? (
+              <Navigation link={`/profile/${user.username}`} type="button">
+                <img src={user.profile_picture_url} alt="" />
+                <div>{user.username}</div>
+              </Navigation>
+            ) : (
+              <Navigation link="/login" type="button">
+                <HiUser />
+                <div>Login</div>
+              </Navigation>
+            )}
             <Navigation link="/" type="button">
               <GoHomeFill />
               <div>Home</div>
             </Navigation>
-            <Navigation link="/" type="button">
+            <Navigation link="/following" type="button">
               <HiUsers />
-              <div>Followers</div>
+              <div>Following</div>
+            </Navigation>
+            <Navigation link="/newPost" type="button">
+              <IoCreate />
+              <div>New post</div>
             </Navigation>
             <Button
               type="button"
@@ -47,44 +65,12 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
               }}
             >
               <CgLogOut />
-              <div>Logout</div>
+              {status === "loading" ? <div>Loading</div> : <div>Logout</div>}
             </Button>
+            <Theme />
           </ul>
         ) : (
-          <ul>
-            <Navigation link="/login" type="button">
-              {user ? (
-                <>
-                  <img src={user.profile_picture_url} alt="" />
-                  <div>{user.username}</div>
-                </>
-              ) : (
-                <>
-                  <HiUser />
-                  <div>Login</div>
-                </>
-              )}
-            </Navigation>
-            <Navigation link="/" type="button">
-              <GoHomeFill />
-              <div>Home</div>
-            </Navigation>
-            <Navigation link="/" type="button">
-              <HiUsers />
-              <div>Followers</div>
-            </Navigation>
-            <Button
-              type="button"
-              id="logout"
-              className="transparent"
-              onClick={() => {
-                dispatch(logoutUser());
-              }}
-            >
-              <CgLogOut />
-              <div>Logout</div>
-            </Button>
-          </ul>
+          <LoadingSpinner />
         )}
       </div>
     </div>

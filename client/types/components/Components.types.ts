@@ -3,12 +3,14 @@ import { UseFormRegisterReturn } from "react-hook-form";
 
 export type InputTypes = {
   id: string;
-  title: string;
+  title?: string;
   type: string;
   register?: UseFormRegisterReturn;
   className?: string;
   placeholder?: string;
   children?: ReactNode;
+  isTextArea?: boolean;
+  max?: number;
 };
 
 export type ButtonTypes = {
@@ -22,5 +24,5 @@ export type ButtonTypes = {
 export type NavigationTypes = {
   link: string;
   type: "button" | "link";
-  children: ReactNode;
+  children?: ReactNode;
 };

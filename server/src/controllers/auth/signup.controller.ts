@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { signupUser } from "../../services/auth/signup.service";
+import validator from "validator";
 import * as yup from "yup";
 
 const signupSchema = yup.object().shape({
@@ -23,13 +24,16 @@ export const signup = async (req: Request, res: Response) => {
     const validatedData = await signupSchema.validate(req.body);
     const file = req.file;
 
+    const serializedUsername = validator.escape(validatedData.username);
+    const serializedEmail = validator.escape(validatedData.email);
+
     if (!file) {
       throw new Error("No profile picture found");
     }
 
     const tokens = await signupUser(
-      validatedData.username,
-      validatedData.email,
+      serializedUsername,
+      serializedEmail,
       validatedData.password,
       file
     );

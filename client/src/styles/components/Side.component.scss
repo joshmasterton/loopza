@@ -3,15 +3,16 @@
 .side {
   position: fixed;
   top: $height + $paddingLarge;
-  max-width: calc(($widthContainerExtraLarge) + ($padding * 10.5));
+  max-width: calc(($widthContainerExtraLarge) + ($padding * 11.5));
   width: 100%;
   height: calc(100% - ($paddingLarge));
-  z-index: 1;
   pointer-events: none;
+  z-index: 1;
 }
 
 .side > div {
   display: flex;
+  justify-content: center;
   width: 100%;
   height: 100%;
   overflow: scroll;
@@ -29,7 +30,8 @@
   display: flex;
   flex-direction: column;
   gap: $padding;
-  padding: $padding;
+  padding: $paddingSmall;
+  width: 100%;
 }
 
 .side > div > ul img {
@@ -47,10 +49,11 @@
 .side.left > div {
   position: absolute;
   left: $padding;
-  width: calc($height + ($padding * 2));
+  width: calc($height + ($paddingSmall * 2));
 }
 
-.side.left > div > ul div {
+.side.left > div > ul a > div,
+.side.left > div > ul button > div {
   display: none;
 }
 
@@ -63,11 +66,33 @@
 .side.right > div {
   position: absolute;
   right: $padding;
-  width: calc($height + ($padding * 2));
+  width: calc($height + ($paddingSmall * 2));
 }
 
-.side.right > div > ul div {
+.side.right > div > ul a > div,
+.side.right > div > ul button > div {
   display: none;
+}
+
+.side div.hover {
+  position: absolute;
+  width: calc(100% - ($paddingSmall * 2));
+  height: $height;
+  border-radius: $round;
+  transition: transform $animationCubic;
+  background: var(--primaryContainer);
+}
+
+.side div.hover.home {
+  transform: translateY($paddingSmall * 7);
+}
+
+.side div.hover.following {
+  transform: translateY($paddingSmall * 14);
+}
+
+.side div.hover.newPost {
+  transform: translateY($paddingSmall * 21);
 }
 
 @media screen and (min-width: $widthContainer) {
@@ -91,7 +116,8 @@
     width: calc($widthContainerSmall);
   }
 
-  .side.left > div > ul div {
+  .side.left > div > ul a > div,
+  .side.left > div > ul button > div {
     display: block;
   }
 }
@@ -101,7 +127,8 @@
     width: calc($widthContainerSmall);
   }
 
-  .side.right > div > ul div {
+  .side.right > div > ul a > div,
+  .side.right > div > ul button > div {
     display: block;
   }
 }

@@ -2,6 +2,11 @@ export type AuthPageTypes = {
   isLogin?: boolean;
 };
 
+export type PostFormTypes = {
+  post: string;
+  postPicture?: FileList;
+};
+
 export type SignupFormTypes = {
   username: string;
   email: string;

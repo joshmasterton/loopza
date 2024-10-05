@@ -1,7 +1,10 @@
 import dotenv from "dotenv";
 import path from "path";
 import pg from "pg";
-import { createUserTable, dropTables } from "../database/tables.database";
+import {
+  createPostsCommentsTable,
+  createUserTable,
+} from "../database/tables.database";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -20,7 +23,7 @@ const { Pool } = pg;
 const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_DB, POSTGRES_PASSWORD } =
   process.env;
 
-const adminPool = new Pool({
+export const adminPool = new Pool({
   user: POSTGRES_USER,
   host: POSTGRES_HOST,
   password: POSTGRES_PASSWORD,
@@ -28,17 +31,27 @@ const adminPool = new Pool({
 
 export class TableConfig {
   private usersTable: string;
+  private postsCommentsTable: string;
 
-  constructor(usersTable: string) {
+  constructor(usersTable = "users", postsCommentsTable = "posts_comments") {
     this.usersTable = usersTable;
+    this.postsCommentsTable = postsCommentsTable;
   }
 
   getUsersTable() {
     return this.usersTable;
   }
 
+  getPostsCommentsTable() {
+    return this.postsCommentsTable;
+  }
+
   setUsersTable(name: string) {
     this.usersTable = name;
+  }
+
+  setPostsCommentsTable(name: string) {
+    this.postsCommentsTable = name;
   }
 }
 
@@ -63,8 +76,11 @@ export const createDatabase = async () => {
   }
 };
 
-export const initializeDatabase = async (usersTable = "users") => {
+export const initializeDatabase = async (
+  usersTable = "users",
+  postsCommentsTable = "posts_comments"
+) => {
   await createDatabase();
-  await dropTables(usersTable);
   await createUserTable(usersTable);
+  await createPostsCommentsTable(postsCommentsTable);
 };

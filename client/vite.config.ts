@@ -6,10 +6,11 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   server: { port: 9000, host: "0.0.0.0" },
+  base: "/",
   test: {
     globals: true,
     environment: "jsdom",
     setupFiles: "vitest.setup.ts",
-    forceRerunTriggers: ["**/*"],
+    forceRerunTriggers: ["**/**"],
   },
 });

@@ -2,11 +2,11 @@
 
 nav {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: $padding;
+  left: $padding;
   display: flex;
   align-items: start;
-  width: 100%;
+  width: calc(100% - ($padding * 2));
   z-index: 1;
   height: calc($height + ($paddingSmall * 2));
   transition: height $animationCubic, transform $animationCubic;
@@ -20,7 +20,7 @@ nav {
 }
 
 nav.active {
-  height: calc(($height * 6) + ($padding * 2 + $paddingSmall));
+  height: calc(($height * 8) + ($paddingSmall * 3));
 }
 
 nav > header {
@@ -31,8 +31,6 @@ nav > header {
   gap: $gap;
   height: calc($height + ($paddingSmall * 2));
   padding: $paddingSmall;
-  transition: transform $animationCubic;
-  animation: $animationCubic comeFromTop;
   z-index: 1;
 }
 
@@ -71,20 +69,20 @@ nav.active > main {
 
 nav.hidden > main {
   transition: transform $animationCubic;
-  transform: translateY(-10.5rem);
+  transform: translateY(-19.5rem);
 }
 
 nav > main > ul {
   display: flex;
   flex-direction: column;
-  gap: $padding;
+  gap: $paddingSmall;
   padding: $paddingSmall;
   opacity: 100%;
-  transition: opacity 0.2s ease 0.2s;
+  transition: opacity 0.2s ease 0.4s;
 }
 
 nav.hidden > main > ul {
-  transition: opacity 0.05s ease;
+  transition: opacity 0s ease;
   opacity: 0%;
 }
 
@@ -94,19 +92,40 @@ nav > main > ul img {
   border-radius: $round;
 }
 
+nav div.hover {
+  position: absolute;
+  width: calc(100% - ($paddingSmall * 2));
+  height: $height;
+  border-radius: $round;
+  transition: transform $animationCubic;
+  background: var(--primaryContainer);
+}
+
+nav div.hover.home {
+  transform: translateY($paddingSmall * 6);
+}
+
+nav div.hover.following {
+  transform: translateY($paddingSmall * 12);
+}
+
+nav div.hover.newPost {
+  transform: translateY($paddingSmall * 18);
+}
+
 @media screen and (min-width: $widthContainer) {
+  nav {
+    animation: none;
+  }
+
   nav.active {
-    height: 0;
+    height: calc($height + ($paddingSmall * 2));
+    transform: translateY(-5rem);
   }
 
   nav.hidden {
-    height: 0;
-  }
-
-  nav > header {
-    animation: none;
-    transform: translateY(-100%);
-    transition: $animationCubic;
+    height: calc($height + ($paddingSmall * 2));
+    transform: translateY(-5rem);
   }
 
   nav.active > main {
@@ -115,7 +134,7 @@ nav > main > ul img {
   }
 
   nav.active > main > ul {
-    transition: opacity 0.05s ease;
+    transition: opacity 0s ease;
     opacity: 0%;
   }
 
@@ -125,7 +144,7 @@ nav > main > ul img {
   }
 
   nav.hidden > main > ul {
-    transition: opacity 0.05s ease;
+    transition: opacity 0s ease;
     opacity: 0%;
   }
 }

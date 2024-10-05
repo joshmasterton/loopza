@@ -1,0 +1,71 @@
+@import "../base/variables.scss";
+
+.post {
+  display: flex;
+  flex-direction: column;
+  border-radius: $round;
+  transform-origin: top;
+  border-radius: $round;
+  padding: $padding;
+  gap: $gap;
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+  background: var(--primaryContainer);
+  box-shadow: var(--shadow);
+  background-blend-mode: multiply, screen;
+}
+
+.post > a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - $height - ($paddingSmall * 2));
+}
+
+.post > header {
+  display: flex;
+  align-items: center;
+  gap: $gap;
+}
+
+.post > header > div > p {
+  opacity: $opacity;
+}
+
+.post > header > div > img {
+  border-radius: $round;
+  width: $width - $padding;
+  height: $height - $padding;
+}
+
+.post > main {
+  display: flex;
+  flex-direction: column;
+}
+
+.post > main > div {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  gap: $gap;
+  min-height: calc($height * 2);
+}
+
+.post > main > div > div {
+  flex: 1;
+}
+
+.post > main > div > img {
+  width: 100%;
+  height: fit-content;
+  object-fit: contain;
+  border-radius: $round;
+}
+
+.post > footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: $gap;
+}

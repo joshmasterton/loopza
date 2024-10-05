@@ -3,14 +3,11 @@
 
 form {
   width: 100%;
-  max-width: $widthContainerForm;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: start;
   align-self: center;
-  padding: $paddingLarge;
-  gap: $gapLarge;
   border-radius: $round;
   backdrop-filter: blur(1rem);
   -webkit-backdrop-filter: blur(1rem);
@@ -19,9 +16,47 @@ form {
   background-blend-mode: multiply, screen;
 }
 
+#main > form {
+  display: flex;
+  height: 100%;
+  gap: $gap;
+}
+
+#main > form > main {
+  display: flex;
+  flex-direction: row;
+  padding: $padding;
+  padding-top: 0;
+}
+
+form.small {
+  flex-direction: row;
+  font-size: $fontSmall;
+}
+
+form.small > button {
+  position: absolute;
+  right: 0;
+  width: fit-content;
+  padding: $padding;
+  z-index: 1;
+}
+
+form.small > label > input {
+  padding-right: calc($width + ($padding * 2));
+  outline: none;
+}
+
+form#auth {
+  padding: $paddingLarge;
+  gap: $gapLarge;
+  max-width: $widthContainerForm;
+}
+
 form > main {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   gap: $gap;
 }

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { loginUser } from "../../services/auth/login.service";
 import * as yup from "yup";
+import validator from "validator";
 
 const loginSchema = yup.object().shape({
   username: yup
@@ -17,10 +18,9 @@ export const login = async (req: Request, res: Response) => {
   try {
     const validatedData = await loginSchema.validate(req.body);
 
-    const tokens = await loginUser(
-      validatedData.username,
-      validatedData.password
-    );
+    const serializedUsername = validator.escape(validatedData.username);
+
+    const tokens = await loginUser(serializedUsername, validatedData.password);
 
     return res
       .cookie("accessToken", tokens?.accessToken, {

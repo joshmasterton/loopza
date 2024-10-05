@@ -4,3 +4,8 @@
   font-size: 0.8rem;
   color: var(--colorDanger);
 }
+
+#main .error {
+  padding-left: $padding;
+  padding-right: $padding;
+}

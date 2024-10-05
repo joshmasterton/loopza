@@ -1,11 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, Mock, test, vitest } from "vitest";
 import { act } from "react";
-import { Test } from "../utilities/Test.utilities";
+import { API_URL, Test } from "../utilities/Test.utilities";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
-
-export const API_URL = "http://localhost:80";
 
 vitest.mock("axios");
 

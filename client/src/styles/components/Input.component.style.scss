@@ -11,8 +11,16 @@ label {
   cursor: text;
 }
 
+label.textArea {
+  height: 100%;
+}
+
 label svg {
   color: var(--color);
+}
+
+#main label svg {
+  padding: $paddingSmall;
 }
 
 label > p {
@@ -22,7 +30,7 @@ label > p {
 label > button {
   position: absolute;
   width: fit-content;
-  top: calc($paddingLarge / 1.6);
+  top: calc($paddingLarge / 1.5);
   right: 0;
   background: transparent;
   box-shadow: none;
@@ -39,12 +47,21 @@ input {
   background: transparent;
 }
 
+textarea {
+  padding: $padding;
+  min-height: 100%;
+  border-radius: $round;
+  color: inherit;
+  background: transparent;
+}
+
 label.file {
   position: relative;
   width: fit-content;
   align-items: center;
   align-self: center;
   cursor: pointer;
+  z-index: 1;
 }
 
 label.file > p {
@@ -64,6 +81,12 @@ label > svg {
   border-radius: $round;
   border-radius: $roundExtra;
   outline: $outline;
+}
+
+label.file > img,
+label.file > svg {
+  width: $width;
+  height: $height;
 }
 
 input[type="file"] {
