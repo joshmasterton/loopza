@@ -1,0 +1,32 @@
+@import "../base/variables.scss";
+@import "../base/themes.scss";
+
+#errorPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  text-align: center;
+  gap: $gap;
+  width: 100%;
+  height: 100%;
+}
+
+#errorPage > h4 {
+  padding-bottom: $paddingLarge;
+}
+
+#errorPage > svg {
+  min-width: calc($width * 3);
+  max-width: calc($width * 3);
+  min-height: calc($height * 3);
+  max-height: calc($height * 3);
+  color: var(--color);
+}
+
+#errorPage > a {
+  padding: $padding;
+  background: var(--primaryElement);
+  color: white;
+}

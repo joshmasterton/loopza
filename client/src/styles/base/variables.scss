@@ -1,7 +1,7 @@
-$round: 0.75rem;
+$round: 0.5rem;
 $roundExtra: 5rem;
 
-$fontSmall: 0.75rem;
+$fontSmall: 0.85rem;
 $font: 1rem;
 $fontLarge: 1.25rem;
 
@@ -19,12 +19,14 @@ $width: 2.5rem;
 $widthContainerSmall: 15rem;
 $widthContainerMain: 35rem;
 $widthContainerForm: 25rem;
-$widthContainer: 34.5rem;
-$widthContainerMedium: 42.5rem;
-$widthContainerLarge: 48.5rem;
-$widthContainerExtraLarge: 58.5rem;
+$widthContainer: 32.5rem;
+$widthContainerMedium: 41rem;
+$widthContainerLarge: 46rem;
+$widthContainerExtraLarge: 57.5rem;
 
 $height: 2.5rem;
+
+$opacity: 75%;
 
 $outline: var(--outline);
 $outlineFocus: 0 0 0 0.25rem #424ae27a;

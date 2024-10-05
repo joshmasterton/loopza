@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser, signupUser } from "../features/authSlice";
 import { AppDispatch, RootState } from "../store";
 import { useNavigate } from "react-router-dom";
+import { CgClose } from "react-icons/cg";
 import loopza from "../assets/loopza.png";
 import * as yup from "yup";
 
@@ -44,12 +45,15 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data: LoginFormTypes) => {
-    dispatch(loginUser(data));
+    await dispatch(loginUser(data));
   };
 
   return (
     <form id="auth" method="POST" onSubmit={handleSubmit(onSubmit)}>
       <img src={loopza} alt="logo" />
+      <Navigation link="/" type="button">
+        <CgClose />
+      </Navigation>
       <h1>Login</h1>
       <main>
         <Input
@@ -97,6 +101,7 @@ const LoginForm = () => {
 
 const SignupForm = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const profilePictureLabelRef = useRef<HTMLInputElement>(null);
   const [showPasswords, setShowPasswords] = useState<{
     password: boolean;
     confirmPassword: boolean;
@@ -105,7 +110,6 @@ const SignupForm = () => {
     confirmPassword: false,
   });
   const { status } = useSelector((state: RootState) => state.auth);
-  const profilePictureLabelRef = useRef<HTMLInputElement>(null);
   const [imagePreview, setImagePreview] = useState<string | undefined>(
     undefined
   );
@@ -166,7 +170,7 @@ const SignupForm = () => {
     formData.append("confirmPassword", data.confirmPassword);
     formData.append("profilePicture", data.profilePicture[0]);
 
-    dispatch(signupUser(formData));
+    await dispatch(signupUser(formData));
   };
 
   const showPassword = (passwordType: keyof typeof showPasswords) => {
@@ -195,6 +199,9 @@ const SignupForm = () => {
       })}
     >
       <img src={loopza} alt="logo" />
+      <Navigation link="/" type="button">
+        <CgClose />
+      </Navigation>
       <h1>Signup</h1>
       <main>
         <Input
@@ -205,11 +212,7 @@ const SignupForm = () => {
           register={register("profilePicture", { required: true })}
           placeholder="Profile picture"
         >
-          {imagePreview ? (
-            <img src={imagePreview} alt="Profile picture" />
-          ) : (
-            <FaUser />
-          )}
+          {imagePreview ? <img src={imagePreview} alt="" /> : <FaUser />}
           {errors.profilePicture && (
             <div className="error">{errors.profilePicture.message}</div>
           )}

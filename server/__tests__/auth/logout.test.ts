@@ -1,4 +1,4 @@
-import { describe, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { app } from "../../src/app";
 import request from "supertest";
 import path from "path";
@@ -22,7 +22,6 @@ describe("/logout", () => {
       .post("/auth/logout")
       .set("Cookie", signup.header["set-cookie"]);
 
-    console.log(logout.header["set-cookie"]);
-    console.log(logout.body);
+    expect(logout.body.message).toBe("Logout successful");
   });
 });

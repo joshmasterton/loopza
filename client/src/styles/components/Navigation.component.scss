@@ -8,6 +8,8 @@ a {
   text-decoration: none;
   border-radius: $round;
   font-size: $fontSmall;
+  white-space: nowrap;
+  z-index: 1;
 }
 
 a.button {

@@ -18,6 +18,14 @@ button {
   background-blend-mode: multiply, screen;
 }
 
+button.clear {
+  outline: $outline;
+  max-width: fit-content;
+  border-radius: $roundExtra;
+  color: inherit;
+  background: transparent;
+}
+
 button[type="submit"] {
   justify-content: center;
   width: 100%;
@@ -30,6 +38,36 @@ button.transparent {
 
 button > p {
   display: none;
+}
+
+button.small {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc($paddingLarge * 1.75);
+  height: $height - $padding;
+  padding: $paddingSmall;
+  overflow: hidden;
+  color: inherit;
+  gap: 0;
+  background: var(--primaryContainer);
+  background-blend-mode: multiply, screen;
+}
+
+button.small > p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: calc($paddingLarge / 1.5);
+  max-width: calc($paddingLarge / 1.5);
+  height: $height - $padding;
+  padding-left: 0;
+}
+
+button.small svg {
+  min-width: calc($paddingLarge / 1.5);
+  max-width: calc($paddingLarge / 1.5);
+  padding: calc($paddingSmall / 2);
 }
 
 @media screen and (min-width: $widthContainerLarge) {

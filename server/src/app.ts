@@ -10,6 +10,9 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 import cookie from "cookie-parser";
 import path from "path";
+import { newPostCommentRouter } from "./routes/postComment/newPostComment.route";
+import { getPostCommentRouter } from "./routes/postComment/getPostComment.route";
+import { getPostsCommentsRouter } from "./routes/postComment/getPostsComments.route";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -23,7 +26,7 @@ dotenv.config({
 });
 
 export const app = express();
-export const tableConfig = new TableConfig("users");
+export const tableConfig = new TableConfig();
 
 const { CLIENT_URL } = process.env;
 
@@ -41,21 +44,23 @@ app.use("/auth", signupRouter);
 app.use("/auth", userRouter);
 app.use("/auth", logoutRoute);
 
+app.use("/postComment", newPostCommentRouter);
+app.use("/postComment", getPostCommentRouter);
+app.use("/postComment", getPostsCommentsRouter);
+
 const startServer = async () => {
   try {
-    if (process.env.NODE_ENV !== "test") {
-      await initializeDatabase();
-      app.listen(80, () => {
-        console.log("Listening to server on port 80");
-      });
-    }
+    await initializeDatabase();
+    app.listen(80, () => {
+      console.log("Listening to server on port 80");
+    });
   } catch (error) {
     const retryInterval = 5000;
     if (error instanceof Error) {
       console.log(
         `Error starting database: ${
           error.message
-        }. Will retry connection to server in ${retryInterval / 1000}s`
+        }. Will retry connection to server in ${retryInterval / 1000}s...`
       );
     }
 
@@ -63,4 +68,6 @@ const startServer = async () => {
   }
 };
 
-startServer();
+if (process.env.NODE_ENV !== "test") {
+  startServer();
+}
