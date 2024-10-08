@@ -46,8 +46,6 @@ describe("/postComment/gets", () => {
       })
       .set("Cookie", signup.header["set-cookie"]);
 
-    console.log(getPostsComments.body);
-
     expect(getPostsComments.body).toHaveLength(2);
   });
 });

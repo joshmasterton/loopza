@@ -11,6 +11,8 @@ import { Nav } from "./components/Nav.component";
 import { NewPost } from "./pages/NewPost.page";
 import { Error } from "./pages/Error.page";
 import { PostPage } from "./pages/Post.page";
+import { Protected } from "./utilities/Protected.utilities";
+import { Popup } from "./utilities/Popup.utilities";
 import "./styles/App.scss";
 
 export const Wrapper = ({
@@ -44,7 +46,9 @@ export const routes = [
     path: "/newPost",
     element: (
       <Wrapper isReturn>
-        <NewPost />
+        <Protected>
+          <NewPost />
+        </Protected>
       </Wrapper>
     ),
     errorElement: <Error />,
@@ -102,5 +106,10 @@ export const App = () => {
     dispatch(getTheme());
   }, [currentTheme]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <Popup />
+      <RouterProvider router={router} />
+    </>
+  );
 };

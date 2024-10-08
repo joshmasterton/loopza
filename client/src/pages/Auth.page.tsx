@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 import loopza from "../assets/loopza.png";
 import * as yup from "yup";
+import { LoadingSpinner } from "../components/Loading.component";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -87,7 +88,7 @@ const LoginForm = () => {
         </Input>
       </main>
       <Button id="login" type="submit">
-        {status === "loading" ? "Loading" : "Login"}
+        {status === "loading" ? <LoadingSpinner isPrimary /> : "Login"}
       </Button>
       <footer>
         <p>Don`t have an account?</p>
@@ -275,7 +276,7 @@ const SignupForm = () => {
         </Input>
       </main>
       <Button id="signup" type="submit">
-        {status === "loading" ? "Loading" : "Signup"}
+        {status === "loading" ? <LoadingSpinner isPrimary /> : "Signup"}
       </Button>
       <footer>
         <p>Already have an account?</p>

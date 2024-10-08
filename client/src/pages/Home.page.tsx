@@ -22,7 +22,9 @@ export const Home = () => {
       {status === "loading" ? (
         <LoadingContainer />
       ) : (
-        items && items.map((item) => <Post key={item.id} item={item} />)
+        items &&
+        items.length > 0 &&
+        items.map((item) => <Post key={item.id} item={item} />)
       )}
       <Navigation link="/newPost" type="button">
         <IoCreate />
