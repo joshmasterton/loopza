@@ -3,14 +3,17 @@ import { PostCommentTypes } from "../../types/features/features.types";
 import { AppDispatch } from "../store";
 import axios, { AxiosError } from "axios";
 import { API_URL } from "../utilities/request.utilities";
+import { showPopup } from "./popupSlice";
 
 const initialState: {
   item: PostCommentTypes | undefined;
   items: PostCommentTypes[] | undefined;
+  error: string | null;
   status: "idle" | "loading" | "failed";
 } = {
   item: undefined,
   items: undefined,
+  error: null,
   status: "idle",
 };
 
@@ -23,9 +26,6 @@ const postsCommentsSlice = createSlice({
     },
     setIdle: (state) => {
       state.status = "idle";
-    },
-    setError: (state) => {
-      state.status = "failed";
     },
     setPostsComments: (state, action) => {
       state.items = action.payload.items;
@@ -42,7 +42,6 @@ const postsCommentsSlice = createSlice({
 export const {
   setLoading,
   setIdle,
-  setError,
   setPostComment,
   setPostsComments,
   clearPostsComments,
@@ -57,13 +56,15 @@ export const newPostComment =
         withCredentials: true,
       });
     } catch (error) {
-      if (error instanceof AxiosError) {
+      if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
-      } else {
+        dispatch(showPopup({ messages: [error.response.data.error] }));
+      } else if (error instanceof Error) {
         console.error(error);
+        dispatch(showPopup({ messages: [error.message] }));
       }
 
-      dispatch(setError());
+      dispatch(showPopup({ messages: ["An error has occured"] }));
     } finally {
       dispatch(setIdle());
     }
@@ -84,13 +85,15 @@ export const getPostsComments =
 
       dispatch(setPostsComments({ items: response.data }));
     } catch (error) {
-      if (error instanceof AxiosError) {
+      if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
-      } else {
+        dispatch(showPopup({ messages: [error.response.data.error] }));
+      } else if (error instanceof Error) {
         console.error(error);
+        dispatch(showPopup({ messages: [error.message] }));
       }
 
-      dispatch(setError());
+      dispatch(showPopup({ messages: ["An error has occured"] }));
     } finally {
       dispatch(setIdle());
     }
@@ -110,13 +113,15 @@ export const getPostComment =
 
       dispatch(setPostComment({ item: response.data }));
     } catch (error) {
-      if (error instanceof AxiosError) {
+      if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
-      } else {
+        dispatch(showPopup({ messages: [error.response.data.error] }));
+      } else if (error instanceof Error) {
         console.error(error);
+        dispatch(showPopup({ messages: [error.message] }));
       }
 
-      dispatch(setError());
+      dispatch(showPopup({ messages: ["An error has occured"] }));
     } finally {
       dispatch(setIdle());
     }

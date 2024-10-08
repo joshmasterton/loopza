@@ -4,13 +4,16 @@ import { LoginFormTypes } from "../../types/pages/Page.types";
 import axios, { AxiosError } from "axios";
 import { UserTypes } from "../../types/features/features.types";
 import { API_URL } from "../utilities/request.utilities";
+import { showPopup } from "./popupSlice";
 
 const initialState: {
   user: UserTypes | null;
+  error: string | null;
   isAuthenticated: boolean;
   status: "idle" | "loading" | "failed";
 } = {
   user: null,
+  error: null,
   isAuthenticated: false,
   status: "idle",
 };
@@ -33,19 +36,11 @@ const authSlice = createSlice({
     setIdle: (state) => {
       state.status = "idle";
     },
-    setError: (state) => {
-      state.status = "failed";
-    },
   },
 });
 
-export const {
-  setCredentials,
-  clearCredentials,
-  setLoading,
-  setIdle,
-  setError,
-} = authSlice.actions;
+export const { setCredentials, clearCredentials, setLoading, setIdle } =
+  authSlice.actions;
 
 export const loginUser =
   (data: LoginFormTypes) => async (dispatch: AppDispatch) => {
@@ -61,13 +56,15 @@ export const loginUser =
 
       dispatch(setCredentials({ user: response.data }));
     } catch (error) {
-      if (error instanceof AxiosError) {
+      if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
-      } else {
+        dispatch(showPopup({ messages: [error.response.data.error] }));
+      } else if (error instanceof Error) {
         console.error(error);
+        dispatch(showPopup({ messages: [error.message] }));
+      } else {
+        dispatch(showPopup({ messages: ["An error has occured"] }));
       }
-
-      dispatch(setError());
     } finally {
       dispatch(setIdle());
     }
@@ -84,13 +81,15 @@ export const signupUser = (data: FormData) => async (dispatch: AppDispatch) => {
 
     dispatch(setCredentials({ user: response.data }));
   } catch (error) {
-    if (error instanceof AxiosError) {
+    if (error instanceof AxiosError && error.response) {
       console.error(error.response?.data);
-    } else {
+      dispatch(showPopup({ messages: [error.response.data.error] }));
+    } else if (error instanceof Error) {
       console.error(error);
+      dispatch(showPopup({ messages: [error.message] }));
+    } else {
+      dispatch(showPopup({ messages: ["An error has occured"] }));
     }
-
-    dispatch(setError());
   } finally {
     dispatch(setIdle());
   }
@@ -105,13 +104,11 @@ export const logoutUser = () => async (dispatch: AppDispatch) => {
       withCredentials: true,
     });
   } catch (error) {
-    if (error instanceof AxiosError) {
+    if (error instanceof AxiosError && error.response) {
       console.error(error.response?.data);
-    } else {
+    } else if (error instanceof Error) {
       console.error(error);
     }
-
-    dispatch(setError());
   } finally {
     dispatch(setCredentials({ user: null }));
     dispatch(setIdle());

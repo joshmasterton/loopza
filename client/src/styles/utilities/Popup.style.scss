@@ -1,0 +1,49 @@
+@import "../base/variables.scss";
+
+#popup {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  gap: $gap;
+  top: $padding;
+  right: $padding;
+  padding-left: $padding;
+  overflow: hidden;
+  z-index: 2;
+}
+
+#popup > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $gapSmall;
+  padding: $paddingSmall;
+  max-width: $widthContainerForm;
+  border-radius: $round;
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+  background: var(--primaryContainer);
+  box-shadow: var(--shadow);
+  transform-origin: right;
+  background-blend-mode: multiply, screen;
+  animation: $animationCubic comeFromTop;
+}
+
+#popup > div > main {
+  display: flex;
+  flex-direction: column;
+  gap: $gapSmall;
+  flex: 1;
+}
+
+#popup > div > button {
+  width: fit-content;
+}
+
+#popup > div > svg {
+  width: $width;
+  height: $height;
+  padding: $paddingSmall;
+}
