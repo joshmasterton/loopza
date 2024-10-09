@@ -25,4 +25,5 @@ export type NavigationTypes = {
   link: string;
   type: "button" | "link";
   children?: ReactNode;
+  className?: string;
 };

@@ -10,14 +10,14 @@
   top: $padding;
   right: $padding;
   padding-left: $padding;
-  overflow: hidden;
-  z-index: 2;
+  z-index: 4;
 }
 
 #popup > div {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: calc($height + ($paddingSmall * 2));
   gap: $gapSmall;
   padding: $paddingSmall;
   max-width: $widthContainerForm;

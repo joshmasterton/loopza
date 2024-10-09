@@ -18,17 +18,19 @@ export const Home = () => {
   }, []);
 
   return (
-    <div id="main">
-      {status === "loading" ? (
-        <LoadingContainer />
-      ) : (
-        items &&
-        items.length > 0 &&
-        items.map((item) => <Post key={item.id} item={item} />)
-      )}
-      <Navigation link="/newPost" type="button">
+    <>
+      <div id="main">
+        {status === "loading" ? (
+          <LoadingContainer />
+        ) : items && items.length > 0 ? (
+          items.map((item) => <Post key={item.id} item={item} />)
+        ) : (
+          <div className="blank" />
+        )}
+      </div>
+      <Navigation link="/newPost" type="button" className="fixed">
         <IoCreate />
       </Navigation>
-    </div>
+    </>
   );
 };

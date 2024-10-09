@@ -6,5 +6,6 @@ import { store } from "./store.ts";
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <App />
+    <div id="background" />
   </Provider>
 );

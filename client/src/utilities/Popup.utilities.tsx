@@ -13,7 +13,7 @@ export const Popup = () => {
   );
 
   useEffect(() => {
-    const interval = 5000;
+    const interval = 2000;
 
     const popupInterval = setInterval(() => {
       if (messages.length > 0) {

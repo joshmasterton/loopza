@@ -58,13 +58,10 @@ export const newPostComment =
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
-        dispatch(showPopup({ messages: [error.response.data.error] }));
       } else if (error instanceof Error) {
         console.error(error);
         dispatch(showPopup({ messages: [error.message] }));
       }
-
-      dispatch(showPopup({ messages: ["An error has occured"] }));
     } finally {
       dispatch(setIdle());
     }
@@ -87,13 +84,9 @@ export const getPostsComments =
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
-        dispatch(showPopup({ messages: [error.response.data.error] }));
       } else if (error instanceof Error) {
         console.error(error);
-        dispatch(showPopup({ messages: [error.message] }));
       }
-
-      dispatch(showPopup({ messages: ["An error has occured"] }));
     } finally {
       dispatch(setIdle());
     }
@@ -119,9 +112,9 @@ export const getPostComment =
       } else if (error instanceof Error) {
         console.error(error);
         dispatch(showPopup({ messages: [error.message] }));
+      } else {
+        dispatch(showPopup({ messages: ["An error has occured"] }));
       }
-
-      dispatch(showPopup({ messages: ["An error has occured"] }));
     } finally {
       dispatch(setIdle());
     }

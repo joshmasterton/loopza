@@ -52,6 +52,14 @@ body {
   padding: $padding;
   gap: $gap;
   color: var(--color);
+}
+
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: var(--background);
   background-blend-mode: var(--backgroundBlendMode);
 }
@@ -81,4 +89,15 @@ svg {
   max-height: $height;
   outline: $outline;
   border-radius: $roundExtra;
+}
+
+.blank {
+  width: 100%;
+  height: 100%;
+  border-radius: $round;
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+  background: var(--primaryContainer);
+  box-shadow: var(--shadow);
+  background-blend-mode: multiply, screen;
 }

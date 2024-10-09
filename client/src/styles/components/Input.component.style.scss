@@ -89,6 +89,12 @@ label.file > svg {
   height: $height;
 }
 
+#auth label.file > img,
+#auth label.file > svg {
+  width: $width + $paddingLarge;
+  height: $height + $paddingLarge;
+}
+
 input[type="file"] {
   position: absolute;
   height: 0;
