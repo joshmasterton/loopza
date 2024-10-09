@@ -5,32 +5,31 @@ nav {
   top: $padding;
   left: $padding;
   display: flex;
+  flex-direction: column;
   align-items: start;
+  justify-content: start;
+  gap: $gap;
   width: calc(100% - ($padding * 2));
-  z-index: 1;
-  height: calc($height + ($paddingSmall * 2));
-  transition: height $animationCubic, transform $animationCubic;
-  animation: $animationCubic comeFromTop;
-  border-radius: $round;
-  backdrop-filter: blur(1rem);
-  -webkit-backdrop-filter: blur(1rem);
-  background: var(--primaryContainer);
-  box-shadow: var(--shadow);
-  background-blend-mode: multiply, screen;
-}
-
-nav.active {
-  height: calc(($height * 8) + ($paddingSmall * 3));
+  z-index: 3;
+  height: 0;
 }
 
 nav > header {
-  width: 100%;
   display: flex;
   justify-content: start;
   align-items: center;
+  width: 100%;
   gap: $gap;
-  height: calc($height + ($paddingSmall * 2));
+  min-height: calc($height + ($paddingSmall * 2));
   padding: $paddingSmall;
+  border-radius: $round;
+  backdrop-filter: blur(1rem);
+  transition: transform $animationCubic;
+  -webkit-backdrop-filter: blur(1rem);
+  animation: $animationCubic comeFromTop;
+  background: var(--primaryContainer);
+  box-shadow: var(--shadow);
+  background-blend-mode: multiply, screen;
   z-index: 1;
 }
 
@@ -56,20 +55,25 @@ nav > header > div > button {
 }
 
 nav > main {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  border-radius: $round;
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+  background: var(--primaryContainer);
+  box-shadow: var(--shadow);
+  background-blend-mode: multiply, screen;
 }
 
 nav.active > main {
-  transition: transform $animationCubic;
-  transform: translateY(calc($height + $paddingSmall));
+  transition: transform $animationCubic, opacity $animationCubic 0.15s;
+  opacity: 100%;
 }
 
 nav.hidden > main {
-  transition: transform $animationCubic;
-  transform: translateY(-19.5rem);
+  transition: transform $animationCubic, opacity $animationCubic;
+  transform: translateY(-26rem);
 }
 
 nav > main > ul {
@@ -77,13 +81,6 @@ nav > main > ul {
   flex-direction: column;
   gap: $paddingSmall;
   padding: $paddingSmall;
-  opacity: 100%;
-  transition: opacity 0.2s ease 0.4s;
-}
-
-nav.hidden > main > ul {
-  transition: opacity 0s ease;
-  opacity: 0%;
 }
 
 nav > main > ul img {
@@ -102,50 +99,40 @@ nav div.hover {
 }
 
 nav div.hover.home {
-  transform: translateY($paddingSmall * 6);
+  transform: translateY(($height) + $paddingSmall);
 }
 
 nav div.hover.following {
-  transform: translateY($paddingSmall * 12);
+  transform: translateY(($height * 2) + ($padding));
 }
 
 nav div.hover.newPost {
-  transform: translateY($paddingSmall * 18);
+  transform: translateY(($height * 3) + ($paddingSmall * 3));
 }
 
 @media screen and (min-width: $widthContainer) {
-  nav {
+  nav > header {
     animation: none;
   }
 
-  nav.active {
+  nav.active > header {
     height: calc($height + ($paddingSmall * 2));
     transform: translateY(-5rem);
   }
 
-  nav.hidden {
+  nav.hidden > header {
     height: calc($height + ($paddingSmall * 2));
     transform: translateY(-5rem);
   }
 
   nav.active > main {
-    transition: transform $animationCubic;
-    transform: translateY(-13rem);
-  }
-
-  nav.active > main > ul {
-    transition: opacity 0s ease;
-    opacity: 0%;
+    transition: transform $animationCubic, opacity 0s ease-in-out;
+    transform: translateY(-26rem);
   }
 
   nav.hidden > main {
-    transition: transform $animationCubic;
-    transform: translateY(-13rem);
-  }
-
-  nav.hidden > main > ul {
-    transition: opacity 0s ease;
-    opacity: 0%;
+    transition: transform $animationCubic, opacity 0s ease-in-out;
+    transform: translateY(-26rem);
   }
 }
 

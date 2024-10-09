@@ -75,11 +75,13 @@ export const NewPost = () => {
   useEffect(() => {
     if (postPicture?.[0] && postPicture?.[0].type.includes("image")) {
       setImagePreview(URL.createObjectURL(postPicture[0]));
+    } else {
+      setImagePreview(undefined);
     }
   }, [postPicture]);
 
   return (
-    <div id="main">
+    <div id="main" className="newPost">
       <form
         method="POST"
         onSubmit={handleSubmit(onSubmit, (errors) => {

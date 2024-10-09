@@ -11,16 +11,6 @@
   transform-origin: center;
   animation: $animationCubic emerge;
   transition: margin $animationCubic;
-}
-
-#main > a {
-  position: fixed;
-  width: fit-content;
-  bottom: $padding;
-  right: $padding;
-  color: white;
-  animation: $animationCubic emerge;
-  background: var(--primaryElement);
   z-index: 2;
 }
 
@@ -31,10 +21,6 @@
 
   #main {
     margin-left: calc(($height + $paddingSmall * 2) + $padding);
-  }
-
-  #main > a {
-    display: none;
   }
 }
 
@@ -54,4 +40,7 @@
   #main {
     margin-right: $widthContainerSmall + $padding;
   }
+}
+
+@media screen and (min-width: calc($widthContainerExtraLargeTwo)) {
 }

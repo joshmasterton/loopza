@@ -16,14 +16,16 @@ import { loginUser, signupUser } from "../features/authSlice";
 import { AppDispatch, RootState } from "../store";
 import { useNavigate } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
-import loopza from "../assets/loopza.png";
-import * as yup from "yup";
 import { LoadingSpinner } from "../components/Loading.component";
+import logo from "../assets/loopza.png";
+import logoDark from "../assets/loopza_dark.png";
+import * as yup from "yup";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { status } = useSelector((state: RootState) => state.auth);
+  const { currentTheme } = useSelector((state: RootState) => state.theme);
 
   const loginSchema = yup.object().shape({
     username: yup
@@ -51,7 +53,7 @@ const LoginForm = () => {
 
   return (
     <form id="auth" method="POST" onSubmit={handleSubmit(onSubmit)}>
-      <img src={loopza} alt="logo" />
+      <img src={currentTheme === "dark" ? logo : logoDark} alt="logo" />
       <Navigation link="/" type="button">
         <CgClose />
       </Navigation>
@@ -111,6 +113,7 @@ const SignupForm = () => {
     confirmPassword: false,
   });
   const { status } = useSelector((state: RootState) => state.auth);
+  const { currentTheme } = useSelector((state: RootState) => state.theme);
   const [imagePreview, setImagePreview] = useState<string | undefined>(
     undefined
   );
@@ -184,6 +187,8 @@ const SignupForm = () => {
   useEffect(() => {
     if (profilePicture?.[0] && profilePicture?.[0].type.includes("image")) {
       setImagePreview(URL.createObjectURL(profilePicture[0]));
+    } else {
+      setImagePreview(undefined);
     }
   }, [profilePicture]);
 
@@ -199,7 +204,7 @@ const SignupForm = () => {
         }
       })}
     >
-      <img src={loopza} alt="logo" />
+      <img src={currentTheme === "dark" ? logo : logoDark} alt="logo" />
       <Navigation link="/" type="button">
         <CgClose />
       </Navigation>

@@ -5,6 +5,7 @@
   transform-origin: top;
   align-self: center;
   animation: $animationCubic comeFromLeft;
+  z-index: 1;
 }
 
 #auth > a {
