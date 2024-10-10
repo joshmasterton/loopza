@@ -10,13 +10,15 @@ import { logoutUser } from "../features/authSlice";
 import { GoHomeFill } from "react-icons/go";
 import { useEffect, useState } from "react";
 import { Theme } from "./Theme.component";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/loopza.png";
 import logoDark from "../assets/loopza_dark.png";
+import { showPopup } from "../features/popupSlice";
 
 export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState<string | undefined>(undefined);
   const [isMenu, setIsMenu] = useState(false);
   const { user, status } = useSelector((state: RootState) => state.auth);
@@ -92,10 +94,24 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
             <HiUsers />
             <div>Following</div>
           </Navigation>
-          <Navigation link="/newPost" type="button">
+          <Button
+            type="button"
+            className="transparent"
+            id="newPost"
+            onClick={() => {
+              if (user) {
+                navigate("/newPost");
+              } else {
+                dispatch(
+                  showPopup({ messages: ["Please login to use this feature"] })
+                );
+              }
+              setIsMenu(!isMenu);
+            }}
+          >
             <IoCreate />
             <div>New post</div>
-          </Navigation>
+          </Button>
           <Button
             type="button"
             id="logout"

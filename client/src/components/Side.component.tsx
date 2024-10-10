@@ -7,15 +7,17 @@ import { Button } from "./Button.component";
 import { CgLogOut } from "react-icons/cg";
 import { logoutUser } from "../features/authSlice";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Theme } from "./Theme.component";
 import { IoCreate } from "react-icons/io5";
 import { LoadingSpinner } from "./Loading.component";
+import { showPopup } from "../features/popupSlice";
 
 export const Side = ({ type }: { type: "left" | "right" }) => {
   const { user, status } = useSelector((state: RootState) => state.auth);
   const [currentPage, setCurrentPage] = useState<string | undefined>(undefined);
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -52,10 +54,25 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
               <HiUsers />
               <div>Following</div>
             </Navigation>
-            <Navigation link="/newPost" type="button">
+            <Button
+              type="button"
+              className="transparent"
+              id="newPost"
+              onClick={() => {
+                if (user) {
+                  navigate("/newPost");
+                } else {
+                  dispatch(
+                    showPopup({
+                      messages: ["Please login to use this feature"],
+                    })
+                  );
+                }
+              }}
+            >
               <IoCreate />
               <div>New post</div>
-            </Navigation>
+            </Button>
             <Button
               type="button"
               id="logout"

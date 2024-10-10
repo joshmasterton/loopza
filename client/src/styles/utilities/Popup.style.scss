@@ -1,16 +1,21 @@
 @import "../base/variables.scss";
 
 #popup {
+  width: 100%;
+  max-width: $widthContainerExtraLargeTwo;
   position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: end;
   align-items: end;
   gap: $gap;
-  top: $padding;
-  right: $padding;
-  padding-left: $padding;
+  bottom: 0;
+  right: 50%;
+  transform: translateX(50%);
+  padding: $padding;
+  transition: top $animationCubic;
   z-index: 4;
+  background: red;
 }
 
 #popup > div {
