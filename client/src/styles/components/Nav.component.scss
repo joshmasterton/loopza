@@ -31,7 +31,6 @@ nav > header {
   transition: transform $animationCubic;
   animation: $animationCubic comeFromTop;
   z-index: 1;
-  background: var(--primary);
 }
 
 nav > header > h4 {
@@ -65,7 +64,6 @@ nav > main {
   transition: transform $animationCubic;
   transform-origin: top;
   background: var(--background);
-  background: var(--primary);
 }
 
 nav h5 {

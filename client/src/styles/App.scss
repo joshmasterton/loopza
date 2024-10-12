@@ -42,7 +42,7 @@
 html,
 body {
   height: 100%;
-  background: var(--primary);
+  background: var(--background);
 }
 
 #root {
@@ -52,7 +52,6 @@ body {
   padding: $padding;
   gap: $gap;
   color: var(--color);
-  background: var(--background);
 }
 
 p {
@@ -88,6 +87,5 @@ svg {
   border-radius: $round;
   backdrop-filter: blur(1rem);
   -webkit-backdrop-filter: blur(1rem);
-  background: var(--primaryContainer);
-  box-shadow: var(--shadow);
+  background: var(--container);
 }
