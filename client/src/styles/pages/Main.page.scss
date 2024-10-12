@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   gap: $gap;
-  margin-top: $height + ($padding * 2);
+  margin-top: $height + ($padding);
   width: 100%;
   max-width: $widthContainerMain;
   min-height: 100%;
@@ -20,13 +20,13 @@
   }
 
   #main {
-    margin-left: calc(($height + $paddingSmall * 2) + $padding);
+    margin-left: calc(($height) + ($paddingSmall * 4));
   }
 }
 
 @media screen and (min-width: $widthContainerMedium) {
   #main {
-    margin-right: calc(($height + $paddingSmall * 2) + $padding);
+    margin-right: calc(($height) + ($paddingSmall * 4));
   }
 }
 

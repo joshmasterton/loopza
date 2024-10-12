@@ -14,8 +14,9 @@ button {
   cursor: pointer;
   border-radius: $round;
   color: white;
-  background: var(--primaryElement);
-  background-blend-mode: multiply, screen;
+  white-space: nowrap;
+  background: var(--primary);
+  z-index: 1;
 }
 
 button.clear {
@@ -50,8 +51,7 @@ button.small {
   overflow: hidden;
   color: inherit;
   gap: 0;
-  background: var(--primaryContainer);
-  background-blend-mode: multiply, screen;
+  background: var(--background);
 }
 
 button.small > p {

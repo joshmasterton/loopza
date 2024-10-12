@@ -10,9 +10,7 @@
   gap: $gap;
   backdrop-filter: blur(1rem);
   -webkit-backdrop-filter: blur(1rem);
-  background: var(--primaryContainer);
-  box-shadow: var(--shadow);
-  background-blend-mode: multiply, screen;
+  background: var(--container);
 }
 
 .post > a {

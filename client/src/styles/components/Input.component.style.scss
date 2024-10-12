@@ -41,10 +41,9 @@ input {
   height: $height;
   padding: $padding;
   border-radius: $round;
-  outline: $outline;
   color: var(--color);
   transition: background-color 1000000000s, color 100000000s;
-  background: transparent;
+  background: var(--background);
 }
 
 textarea {

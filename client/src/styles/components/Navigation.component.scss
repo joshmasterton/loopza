@@ -18,7 +18,7 @@ a.fixed {
   bottom: $padding;
   right: $padding;
   animation: $animationCubic emerge;
-  background: var(--primaryElement);
+  background: var(--primary);
   color: white !important;
   z-index: 2;
 }
@@ -39,7 +39,6 @@ a.button {
   height: $height;
   font-size: $font;
   color: var(--color);
-  background-blend-mode: multiply, screen;
 }
 
 a > p {

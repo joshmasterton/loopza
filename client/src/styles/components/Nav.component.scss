@@ -2,19 +2,21 @@
 
 nav {
   position: fixed;
-  top: $padding;
-  left: $padding;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: start;
-  gap: $gap;
-  width: calc(100% - ($padding * 2));
+  width: 100%;
   z-index: 3;
   height: 0;
 }
 
 nav > header {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -23,14 +25,13 @@ nav > header {
   min-height: calc($height + ($paddingSmall * 2));
   padding: $paddingSmall;
   border-radius: $round;
-  backdrop-filter: blur(1rem);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background: var(--background);
   transition: transform $animationCubic;
-  -webkit-backdrop-filter: blur(1rem);
   animation: $animationCubic comeFromTop;
-  background: var(--primaryContainer);
-  box-shadow: var(--shadow);
-  background-blend-mode: multiply, screen;
   z-index: 1;
+  background: var(--primary);
 }
 
 nav > header > h4 {
@@ -55,24 +56,31 @@ nav > header > div > button {
 }
 
 nav > main {
+  position: fixed;
   top: 0;
   left: 0;
+  padding-top: calc($padding * 3);
   width: 100%;
   border-radius: $round;
-  backdrop-filter: blur(1rem);
-  -webkit-backdrop-filter: blur(1rem);
-  background: var(--primaryContainer);
-  box-shadow: var(--shadow);
-  background-blend-mode: multiply, screen;
+  transition: transform $animationCubic;
+  transform-origin: top;
+  background: var(--background);
+  background: var(--primary);
 }
 
-nav.active > main {
-  transition: transform $animationCubic, opacity $animationCubic 0.15s;
-  opacity: 100%;
+nav h5 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: $font;
+}
+
+nav > header > div {
+  width: fit-content;
 }
 
 nav.hidden > main {
-  transition: transform $animationCubic, opacity $animationCubic;
   transform: translateY(-26rem);
 }
 
@@ -95,7 +103,7 @@ nav div.hover {
   height: $height;
   border-radius: $round;
   transition: transform $animationCubic;
-  background: var(--primaryContainer);
+  background: var(--container);
 }
 
 nav div.hover.home {
@@ -116,28 +124,24 @@ nav div.hover.newPost {
   }
 
   nav.active > header {
-    height: calc($height + ($paddingSmall * 2));
     transform: translateY(-5rem);
   }
 
   nav.hidden > header {
-    height: calc($height + ($paddingSmall * 2));
     transform: translateY(-5rem);
   }
 
   nav.active > main {
-    transition: transform $animationCubic, opacity 0s ease-in-out;
-    transform: translateY(-26rem);
+    transform: translateY(-24rem);
   }
 
   nav.hidden > main {
-    transition: transform $animationCubic, opacity 0s ease-in-out;
-    transform: translateY(-26rem);
+    transform: translateY(-24rem);
   }
 }
 
 @media screen and (min-width: $widthContainerLarge) {
-  nav {
+  nav > header {
     animation: none;
   }
 

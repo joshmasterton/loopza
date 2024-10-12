@@ -3,17 +3,14 @@
 
 form {
   width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: start;
   align-self: center;
   border-radius: $round;
-  backdrop-filter: blur(1rem);
-  -webkit-backdrop-filter: blur(1rem);
-  background: var(--primaryContainer);
-  box-shadow: var(--shadow);
-  background-blend-mode: multiply, screen;
+  background: var(--container);
 }
 
 #main > form {

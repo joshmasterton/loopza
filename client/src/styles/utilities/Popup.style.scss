@@ -12,10 +12,11 @@
   bottom: 0;
   right: 50%;
   transform: translateX(50%);
+  pointer-events: none;
+  touch-action: none;
   padding: $padding;
   transition: top $animationCubic;
   z-index: 4;
-  background: red;
 }
 
 #popup > div {
@@ -27,13 +28,13 @@
   padding: $paddingSmall;
   max-width: $widthContainerForm;
   border-radius: $round;
-  backdrop-filter: blur(1rem);
-  -webkit-backdrop-filter: blur(1rem);
-  background: var(--primaryContainer);
-  box-shadow: var(--shadow);
-  transform-origin: right;
+  background: var(--primary);
   background-blend-mode: multiply, screen;
-  animation: $animationCubic comeFromTop;
+  pointer-events: all;
+  touch-action: auto;
+  transform-origin: right;
+  color: white;
+  animation: $animationCubic comeFromBottom;
 }
 
 #popup > div > main {
@@ -45,6 +46,7 @@
 
 #popup > div > button {
   width: fit-content;
+  color: white;
 }
 
 #popup > div > svg {

@@ -59,6 +59,10 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
         ) : (
           <img src={currentTheme === "dark" ? logo : logoDark} alt="" />
         )}
+        <h5>
+          {currentPage &&
+            currentPage.slice(0, 1).toUpperCase() + currentPage?.slice(1)}
+        </h5>
         <div>
           <Button
             id=""

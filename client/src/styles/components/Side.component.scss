@@ -5,9 +5,10 @@
   display: flex;
   width: 100%;
   top: 0;
-  max-width: calc($widthContainerExtraLargeTwo);
+  max-width: calc($widthContainerExtraLargeTwo - ($paddingSmall * 5));
   min-height: calc(100% - ($paddingLarge));
   pointer-events: none;
+  touch-action: none;
   overflow: scroll;
   z-index: 1;
 }
@@ -18,19 +19,16 @@
   min-height: 100%;
   transition: width $animationCubic;
   border-radius: $round;
-  backdrop-filter: blur(1rem);
-  -webkit-backdrop-filter: blur(1rem);
-  background: var(--primaryContainer);
-  box-shadow: var(--shadow);
+  padding: $paddingSmall;
+  background: var(--container);
   pointer-events: all;
-  background-blend-mode: multiply, screen;
+  touch-action: auto;
 }
 
 .side > div > ul {
   display: flex;
   flex-direction: column;
   gap: $padding;
-  padding: $paddingSmall;
   min-height: 100%;
   width: 100%;
 }
@@ -50,7 +48,8 @@
 .side.left > div {
   position: absolute;
   left: $padding;
-  width: calc($height + ($paddingSmall * 2));
+  width: calc($width + ($paddingSmall * 2));
+  background: var(--primary);
 }
 
 .side.left > div > ul a > div,
@@ -70,7 +69,7 @@
   display: flex;
   justify-content: center;
   right: $padding;
-  width: calc($height + ($paddingSmall * 2));
+  width: calc($width + ($paddingSmall * 2));
 }
 
 .side.right > div > ul a > div,
@@ -84,7 +83,7 @@
   height: $height;
   border-radius: $round;
   transition: transform $animationCubic;
-  background: var(--primaryContainer);
+  background: var(--container);
 }
 
 .side div.hover.home {

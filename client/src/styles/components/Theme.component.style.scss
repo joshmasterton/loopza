@@ -11,52 +11,60 @@
 #theme > div {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: calc($width * 2);
-  height: fit-content;
+  height: $height;
   border-radius: $round;
-  background: var(--primaryContainer);
-  background-blend-mode: multiply, screen;
+  background: var(--container);
 }
 
 #theme > div > button.dark {
-  transform: translateX(-50%);
+  transform: translateX(-60%);
 }
 
 #theme > div > button.light {
-  transform: translateX(50%);
+  transform: translateX(60%);
 }
 
 #theme > div > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: calc($padding * 2);
+  max-width: calc($padding * 2);
+  min-height: calc($padding * 2);
+  max-height: calc($padding * 2);
+  padding: 0;
   transition: transform $animationCubic;
   width: fit-content;
 }
 
 .side #theme > div {
   flex-direction: column;
-  width: fit-content;
+  width: calc($width);
   height: calc($width * 2);
 }
 
 .side #theme > div > button.dark {
-  transform: translateY(-50%);
+  transform: translateY(-60%);
 }
 
 .side #theme > div > button.light {
-  transform: translateY(50%);
+  transform: translateY(60%);
 }
 
 @media screen and (min-width: $widthContainerLarge) {
   .side #theme > div {
     width: calc($width * 2);
-    height: fit-content;
+    height: $height;
     flex-direction: row;
   }
 
   .side #theme > div > button.dark {
-    transform: translateX(-50%);
+    transform: translateX(-60%);
   }
 
   .side #theme > div > button.light {
-    transform: translateX(50%);
+    transform: translateX(60%);
   }
 }
