@@ -7,8 +7,6 @@
   top: 0;
   max-width: calc($widthContainerExtraLargeTwo);
   min-height: calc(100% - ($paddingLarge));
-  pointer-events: none;
-  touch-action: none;
   overflow: scroll;
   z-index: 1;
 }
@@ -19,9 +17,7 @@
   min-height: 100%;
   transition: width $animationCubic;
   border-radius: $round;
-  background: var(--background);
-  pointer-events: all;
-  touch-action: auto;
+  background: var(--container);
 }
 
 .side > div > ul {
@@ -48,7 +44,8 @@
 .side.left > div {
   position: absolute;
   left: $padding;
-  width: calc($width);
+  padding: $padding;
+  width: calc($width + ($padding * 2));
 }
 
 .side.left > div > ul a > div,
@@ -68,7 +65,8 @@
   display: flex;
   justify-content: center;
   right: $padding;
-  width: calc($width);
+  width: calc($width + ($padding * 2));
+  background: var(--primary);
 }
 
 .side.right > div > ul a > div,
@@ -78,11 +76,11 @@
 
 .side div.hover {
   position: absolute;
-  width: calc(100%);
+  width: calc(100% - ($padding * 2));
   height: $height;
   border-radius: $round;
   transition: transform $animationCubic;
-  background: var(--container);
+  background: var(--background);
 }
 
 .side div.hover.home {

@@ -43,6 +43,7 @@
   flex-direction: column;
   width: calc($width);
   height: calc($width * 2);
+  background: var(--background);
 }
 
 .side #theme > div > button.dark {

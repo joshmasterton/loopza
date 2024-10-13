@@ -22,8 +22,8 @@ nav > header {
   align-items: center;
   width: 100%;
   gap: $gap;
-  min-height: calc($height + ($paddingSmall * 2));
-  padding: $paddingSmall;
+  min-height: calc($height + ($padding * 2));
+  padding: $padding;
   border-radius: $round;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -58,7 +58,7 @@ nav > main {
   position: fixed;
   top: 0;
   left: 0;
-  padding-top: calc($padding * 3);
+  padding-top: calc($padding * 3.8);
   width: 100%;
   border-radius: $round;
   transition: transform $animationCubic;
@@ -85,8 +85,8 @@ nav.hidden > main {
 nav > main > ul {
   display: flex;
   flex-direction: column;
-  gap: $paddingSmall;
-  padding: $paddingSmall;
+  gap: $padding;
+  padding: $padding;
 }
 
 nav > main > ul img {
@@ -97,7 +97,7 @@ nav > main > ul img {
 
 nav div.hover {
   position: absolute;
-  width: calc(100% - ($paddingSmall * 2));
+  width: calc(100% - ($padding * 2));
   height: $height;
   border-radius: $round;
   transition: transform $animationCubic;
@@ -105,19 +105,23 @@ nav div.hover {
 }
 
 nav div.hover.home {
-  transform: translateY(($height) + $paddingSmall);
+  transform: translateY(($height) + $padding);
 }
 
 nav div.hover.following {
-  transform: translateY(($height * 2) + ($padding));
+  transform: translateY(($height * 2) + ($padding * 2));
 }
 
 nav div.hover.newPost {
-  transform: translateY(($height * 3) + ($paddingSmall * 3));
+  transform: translateY(($height * 3) + ($padding * 3));
 }
 
 @media screen and (min-width: $widthContainer) {
   nav > header {
+    animation: none;
+  }
+
+  nav > main {
     animation: none;
   }
 
@@ -130,19 +134,15 @@ nav div.hover.newPost {
   }
 
   nav.active > main {
-    transform: translateY(-24rem);
+    transform: translateY(-26rem);
   }
 
   nav.hidden > main {
-    transform: translateY(-24rem);
+    transform: translateY(-26rem);
   }
 }
 
 @media screen and (min-width: $widthContainerLarge) {
-  nav > header {
-    animation: none;
-  }
-
   nav > header > h4 {
     display: flex;
   }
