@@ -25,9 +25,15 @@ export const getTheme = () => (dispatch: AppDispatch) => {
   if (!localTheme) {
     localStorage.setItem("loopza_theme", "light");
     document.documentElement.setAttribute("data-theme", "light");
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", "rgb(245, 245, 250)");
     dispatch(setTheme({ currentTheme: "light" }));
   } else {
     document.documentElement.setAttribute("data-theme", localTheme);
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", "rgb(30, 30, 35)");
     dispatch(setTheme({ currentTheme: localTheme }));
   }
 };

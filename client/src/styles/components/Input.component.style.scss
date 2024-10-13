@@ -24,6 +24,7 @@ label svg {
 }
 
 label > p {
+  padding-left: $paddingSmall;
   font-size: $fontSmall;
 }
 
@@ -43,7 +44,7 @@ input {
   border-radius: $round;
   color: var(--color);
   transition: background-color 1000000000s, color 100000000s;
-  background: var(--background);
+  background-color: var(--background);
 }
 
 textarea {
