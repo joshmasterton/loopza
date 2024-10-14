@@ -1,6 +1,6 @@
 import { Button } from "../components/Button.component";
 import { Input } from "../components/Input.component";
-import { IoEye } from "react-icons/io5";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import {
   SignupFormTypes,
@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 import { LoadingSpinner } from "../components/Loading.component";
 import logo from "../assets/loopza.png";
-import logoDark from "../assets/loopza_dark.png";
+import logo_dark from "../assets/loopza_dark.png";
 import * as yup from "yup";
 
 const LoginForm = () => {
@@ -53,7 +53,7 @@ const LoginForm = () => {
 
   return (
     <form id="auth" method="POST" onSubmit={handleSubmit(onSubmit)}>
-      <img src={currentTheme === "dark" ? logo : logoDark} alt="logo" />
+      <img src={currentTheme === "dark" ? logo : logo_dark} alt="logo" />
       <Navigation link="/" type="button">
         <CgClose />
       </Navigation>
@@ -82,7 +82,7 @@ const LoginForm = () => {
             type="button"
             onClick={() => setShowPassword(!showPassword)}
           >
-            <IoEye />
+            {showPassword ? <IoEyeOff /> : <IoEye />}
           </Button>
           {errors.password && (
             <div className="error">{errors.password.message}</div>
@@ -204,7 +204,7 @@ const SignupForm = () => {
         }
       })}
     >
-      <img src={currentTheme === "dark" ? logo : logoDark} alt="logo" />
+      <img src={currentTheme === "dark" ? logo : logo_dark} alt="logo" />
       <Navigation link="/" type="button">
         <CgClose />
       </Navigation>
@@ -255,7 +255,7 @@ const SignupForm = () => {
             type="button"
             onClick={() => showPassword("password")}
           >
-            <IoEye />
+            {showPasswords.password ? <IoEyeOff /> : <IoEye />}
           </Button>
           {errors.password && (
             <div className="error">{errors.password.message}</div>
@@ -273,7 +273,7 @@ const SignupForm = () => {
             type="button"
             onClick={() => showPassword("confirmPassword")}
           >
-            <IoEye />
+            {showPasswords.confirmPassword ? <IoEyeOff /> : <IoEye />}
           </Button>
           {errors.confirmPassword && (
             <div className="error">{errors.confirmPassword.message}</div>

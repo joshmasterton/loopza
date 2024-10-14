@@ -14,13 +14,21 @@ a {
 
 a.fixed {
   position: fixed;
-  width: fit-content;
+  display: flex;
   bottom: $padding;
   right: $padding;
+  width: calc($width + ($paddingSmall * 2));
+  min-height: calc($height + ($paddingSmall * 2));
   animation: $animationCubic emerge;
   background: var(--primary);
   color: white !important;
   z-index: 2;
+}
+
+a.fixed > svg {
+  width: calc($width + ($paddingSmall * 2));
+  min-height: calc($height + ($paddingSmall * 2));
+  padding: $padding;
 }
 
 @media screen and (min-width: $widthContainer) {
@@ -45,7 +53,7 @@ a > p {
 }
 
 a > div {
-  padding-top: 0.35rem;
+  padding-top: $fontAdjust;
 }
 
 @media screen and (min-width: $widthContainerLarge) {

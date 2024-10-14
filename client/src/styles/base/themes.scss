@@ -2,17 +2,17 @@ $dark: rgb(35, 35, 42);
 
 [data-theme="dark"] {
   --color: white;
-  --primary: rgb(82, 90, 236);
+  --primary: #525aec;
   --colorDanger: rgb(255, 57, 57);
   --outline: 0.1rem solid rgba(255, 255, 255, 0.1);
-  --background: rgba(30, 30, 35);
+  --background: rgb(30, 30, 35);
   --shadow: 0.1rem 0.2rem 0.75rem rgba(0, 0, 0, 0.2);
   --container: rgb(35, 35, 42);
 }
 
 [data-theme="light"] {
   --color: black;
-  --primary: rgb(89, 98, 255);
+  --primary: #5962ff;
   --colorDanger: rgb(220, 53, 53);
   --outline: 0.1rem solid rgba(0, 0, 0, 0.5);
   --background: rgb(245, 245, 250);

@@ -12,6 +12,7 @@ button {
   gap: $gapSmall;
   cursor: pointer;
   border-radius: $round;
+  padding-top: $fontAdjust;
   color: white;
   white-space: nowrap;
   background: var(--primary);
@@ -38,10 +39,11 @@ button.transparent {
 
 button > p {
   display: none;
+  padding-top: calc($fontAdjust / 2);
 }
 
 button > div {
-  padding-top: 0.35rem;
+  padding-top: $fontAdjust;
 }
 
 button.small {

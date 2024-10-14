@@ -41,10 +41,6 @@
   background: var(--background);
 }
 
-nav #theme > div {
-  background: $dark;
-}
-
 .side #theme > div > button.dark {
   transform: translateY(-52%);
 }

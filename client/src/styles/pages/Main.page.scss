@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   gap: $gap;
-  margin-top: calc($height + ($padding * 2));
+  margin-top: calc($height + ($padding));
   width: 100%;
   max-width: $widthContainerMain;
   min-height: 100%;
