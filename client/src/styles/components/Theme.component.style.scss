@@ -19,11 +19,11 @@
 }
 
 #theme > div > button.dark {
-  transform: translateX(-50%);
+  transform: translateX(-52%);
 }
 
 #theme > div > button.light {
-  transform: translateX(50%);
+  transform: translateX(52%);
 }
 
 #theme > div > button {
@@ -42,15 +42,15 @@
 }
 
 nav #theme > div {
-  background: var(--background);
+  background: $dark;
 }
 
 .side #theme > div > button.dark {
-  transform: translateY(-50%);
+  transform: translateY(-52%);
 }
 
 .side #theme > div > button.light {
-  transform: translateY(50%);
+  transform: translateY(52%);
 }
 
 @media screen and (min-width: $widthContainerLarge) {
@@ -61,10 +61,10 @@ nav #theme > div {
   }
 
   .side #theme > div > button.dark {
-    transform: translateX(-50%);
+    transform: translateX(-52%);
   }
 
   .side #theme > div > button.light {
-    transform: translateX(50%);
+    transform: translateX(52%);
   }
 }

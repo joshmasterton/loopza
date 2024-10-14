@@ -1,6 +1,8 @@
+$dark: rgb(35, 35, 42);
+
 [data-theme="dark"] {
   --color: white;
-  --primary: rgb(84, 91, 214);
+  --primary: rgb(82, 90, 236);
   --colorDanger: rgb(255, 57, 57);
   --outline: 0.1rem solid rgba(255, 255, 255, 0.1);
   --background: rgba(30, 30, 35);
@@ -10,7 +12,7 @@
 
 [data-theme="light"] {
   --color: black;
-  --primary: rgb(90, 98, 244);
+  --primary: rgb(89, 98, 255);
   --colorDanger: rgb(220, 53, 53);
   --outline: 0.1rem solid rgba(0, 0, 0, 0.5);
   --background: rgb(245, 245, 250);

@@ -13,7 +13,6 @@ import { Theme } from "./Theme.component";
 import { useLocation, useNavigate } from "react-router-dom";
 import { showPopup } from "../features/popupSlice";
 import logo from "../assets/loopza.png";
-import logoDark from "../assets/loopza_dark.png";
 
 export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
   const location = useLocation();
@@ -22,7 +21,6 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
   const [currentPage, setCurrentPage] = useState<string | undefined>(undefined);
   const [isMenu, setIsMenu] = useState(false);
   const { user, status } = useSelector((state: RootState) => state.auth);
-  const { currentTheme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
     const currentPath = location.pathname.split("/").pop();
@@ -57,7 +55,7 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
             <IoChevronBack />
           </Navigation>
         ) : (
-          <img src={currentTheme === "dark" ? logo : logoDark} alt="" />
+          <img src={logo} alt="" />
         )}
         <h5>
           {currentPage &&
