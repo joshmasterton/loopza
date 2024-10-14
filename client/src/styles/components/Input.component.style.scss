@@ -38,17 +38,20 @@ label > button {
 }
 
 input {
+  display: flex;
   width: 100%;
   height: $height;
   padding: $padding;
+  padding-top: $padding + 0.15rem;
   border-radius: $round;
   color: var(--color);
+  outline: var(--outline);
   transition: background-color 1000000000s, color 100000000s;
-  background-color: var(--background);
+  background: transparent;
 }
 
 textarea {
-  padding: $padding;
+  padding: calc($paddingLarge / 1.25);
   min-height: 100%;
   border-radius: $round;
   color: inherit;

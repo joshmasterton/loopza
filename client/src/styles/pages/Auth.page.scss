@@ -10,8 +10,8 @@
 
 #auth > a {
   position: absolute;
-  top: $paddingLarge;
-  right: $paddingLarge;
+  top: calc($paddingLarge / 1.25);
+  right: calc($paddingLarge / 1.25);
 }
 
 #auth > img {

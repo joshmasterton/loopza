@@ -29,8 +29,9 @@
 }
 
 .side > div > ul img {
-  width: calc($width - $padding);
-  height: calc($height - $padding);
+  width: calc($width);
+  height: calc($height);
+  padding: calc($paddingSmall);
   border-radius: $round;
 }
 

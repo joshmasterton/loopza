@@ -19,22 +19,17 @@
 }
 
 #theme > div > button.dark {
-  transform: translateX(-60%);
+  transform: translateX(-50%);
 }
 
 #theme > div > button.light {
-  transform: translateX(60%);
+  transform: translateX(50%);
 }
 
 #theme > div > button {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: calc($padding * 2);
-  max-width: calc($padding * 2);
-  min-height: calc($padding * 2);
-  max-height: calc($padding * 2);
-  padding: 0;
   transition: transform $animationCubic;
   width: fit-content;
 }
@@ -46,12 +41,16 @@
   background: var(--background);
 }
 
+nav #theme > div {
+  background: var(--background);
+}
+
 .side #theme > div > button.dark {
-  transform: translateY(-60%);
+  transform: translateY(-50%);
 }
 
 .side #theme > div > button.light {
-  transform: translateY(60%);
+  transform: translateY(50%);
 }
 
 @media screen and (min-width: $widthContainerLarge) {
@@ -62,10 +61,10 @@
   }
 
   .side #theme > div > button.dark {
-    transform: translateX(-60%);
+    transform: translateX(-50%);
   }
 
   .side #theme > div > button.light {
-    transform: translateX(60%);
+    transform: translateX(50%);
   }
 }

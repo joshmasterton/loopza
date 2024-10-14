@@ -34,8 +34,7 @@ a.button {
   justify-content: start;
   align-items: center;
   min-width: $width;
-  gap: $gap;
-  padding: $paddingSmall;
+  gap: $gapSmall;
   height: $height;
   font-size: $font;
   color: var(--color);
@@ -43,6 +42,10 @@ a.button {
 
 a > p {
   display: none;
+}
+
+a > div {
+  padding-top: 0.35rem;
 }
 
 @media screen and (min-width: $widthContainerLarge) {

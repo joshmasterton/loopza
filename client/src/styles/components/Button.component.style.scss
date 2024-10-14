@@ -9,8 +9,7 @@ button {
   width: 100%;
   height: $height;
   max-height: $height;
-  padding: $paddingSmall;
-  gap: $gap;
+  gap: $gapSmall;
   cursor: pointer;
   border-radius: $round;
   color: white;
@@ -41,6 +40,10 @@ button > p {
   display: none;
 }
 
+button > div {
+  padding-top: 0.35rem;
+}
+
 button.small {
   display: flex;
   justify-content: center;
@@ -67,7 +70,9 @@ button.small > p {
 button.small svg {
   min-width: calc($paddingLarge / 1.5);
   max-width: calc($paddingLarge / 1.5);
-  padding: calc($paddingSmall / 2);
+  min-height: calc($paddingLarge / 1.5);
+  max-height: calc($paddingLarge / 1.5);
+  padding: calc($paddingSmall / 1.5);
 }
 
 @media screen and (min-width: $widthContainerLarge) {

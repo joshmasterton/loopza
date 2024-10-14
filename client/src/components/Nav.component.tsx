@@ -11,9 +11,9 @@ import { GoHomeFill } from "react-icons/go";
 import { useEffect, useState } from "react";
 import { Theme } from "./Theme.component";
 import { useLocation, useNavigate } from "react-router-dom";
+import { showPopup } from "../features/popupSlice";
 import logo from "../assets/loopza.png";
 import logoDark from "../assets/loopza_dark.png";
-import { showPopup } from "../features/popupSlice";
 
 export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
   const location = useLocation();

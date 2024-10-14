@@ -13,7 +13,7 @@ import { Error } from "./pages/Error.page";
 import { PostPage } from "./pages/Post.page";
 import { Protected } from "./utilities/Protected.utilities";
 import { Popup } from "./utilities/Popup.utilities";
-import "@fontsource/montserrat";
+import "@fontsource-variable/comfortaa";
 import "./styles/App.scss";
 
 export const Wrapper = ({
