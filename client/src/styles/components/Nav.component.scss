@@ -13,10 +13,6 @@ nav {
   height: 0;
 }
 
-nav * {
-  color: white;
-}
-
 nav > header {
   position: fixed;
   top: 0;
@@ -31,7 +27,7 @@ nav > header {
   border-radius: $round;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  background: var(--primary);
+  background: var(--container);
   transition: transform $animationCubic;
   animation: $animationCubic comeFromTop;
   z-index: 1;
@@ -68,7 +64,7 @@ nav > main {
   border-radius: $round;
   transition: transform $animationCubic;
   transform-origin: top;
-  background: var(--primary);
+  background: var(--container);
 }
 
 nav h5 {
@@ -107,7 +103,7 @@ nav div.hover {
   height: $height;
   border-radius: $round;
   transition: transform $animationCubic;
-  background: $dark;
+  background: var(--container);
 }
 
 nav div.hover.home {

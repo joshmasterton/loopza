@@ -27,14 +27,14 @@ export const getTheme = () => (dispatch: AppDispatch) => {
     document.documentElement.setAttribute("data-theme", "light");
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", "#5962ff");
+      ?.setAttribute("content", "rgb(255, 255, 255)");
     dispatch(setTheme({ currentTheme: "light" }));
   } else {
     document
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute(
         "content",
-        `${localTheme === "dark" ? "#525aec" : "#5962ff"}`
+        `${localTheme === "dark" ? "rgb(35, 35, 42)" : "rgb(255, 255, 255)"}`
       );
 
     document.documentElement.setAttribute("data-theme", localTheme);
@@ -50,7 +50,7 @@ export const changeTheme =
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute(
         "content",
-        `${newTheme === "dark" ? "#525aec" : "#5962ff"}`
+        `${newTheme === "dark" ? "rgb(35, 35, 42)" : "rgb(255, 255, 255)"}`
       );
     document.documentElement.setAttribute("data-theme", newTheme);
 

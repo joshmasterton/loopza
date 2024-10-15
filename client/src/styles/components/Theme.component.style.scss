@@ -35,7 +35,7 @@
 }
 
 nav #theme > div {
-  background: $dark;
+  background: var(--background);
 }
 
 .side #theme > div {

@@ -28,7 +28,7 @@ a.fixed {
 a.fixed > svg {
   width: calc($width + ($paddingSmall * 2));
   min-height: calc($height + ($paddingSmall * 2));
-  padding: $padding;
+  padding: calc($padding * 1.1);
 }
 
 @media screen and (min-width: $widthContainer) {
