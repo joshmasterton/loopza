@@ -1,19 +1,20 @@
 import { Navigation } from "./Navigation.component";
-import { IoChevronBack, IoClose, IoCreate, IoMenu } from "react-icons/io5";
+import { IoChevronBack, IoClose, IoMenu } from "react-icons/io5";
 import { Button } from "./Button.component";
 import { CgLogOut } from "react-icons/cg";
-import { HiUsers } from "react-icons/hi";
-import { HiUser } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { logoutUser } from "../features/authSlice";
-import { GoHomeFill } from "react-icons/go";
 import { useEffect, useState } from "react";
 import { Theme } from "./Theme.component";
 import { useLocation, useNavigate } from "react-router-dom";
 import { showPopup } from "../features/popupSlice";
+import { TbBuildingArch } from "react-icons/tb";
+import { TiGroupOutline, TiUserOutline } from "react-icons/ti";
+import { MdOutlineCreate } from "react-icons/md";
 import logo from "../assets/loopza.png";
 import logo_dark from "../assets/loopza_dark.png";
+import { LoadingSpinner } from "./Loading.component";
 
 export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
   const location = useLocation();
@@ -25,7 +26,14 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
   const { currentTheme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
-    const currentPath = location.pathname.split("/").pop();
+    let currentPath: string | undefined;
+
+    if (location.pathname.split("/").length > 2) {
+      currentPath = location.pathname.split("/").splice(0, 2).pop();
+    } else {
+      currentPath = location.pathname.split("/").pop();
+    }
+
     if (currentPath === "") {
       setCurrentPage("home");
     } else {
@@ -86,16 +94,16 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
             </Navigation>
           ) : (
             <Navigation link="/login" type="button">
-              <HiUser />
+              <TiUserOutline />
               <div>Login</div>
             </Navigation>
           )}
           <Navigation link="/" type="button">
-            <GoHomeFill />
+            <TbBuildingArch />
             <div>Home</div>
           </Navigation>
           <Navigation link="/following" type="button">
-            <HiUsers />
+            <TiGroupOutline />
             <div>Following</div>
           </Navigation>
           <Button
@@ -113,7 +121,7 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
               setIsMenu(!isMenu);
             }}
           >
-            <IoCreate />
+            <MdOutlineCreate />
             <div>New post</div>
           </Button>
           <Button
@@ -125,7 +133,7 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
             }}
           >
             <CgLogOut />
-            {status === "loading" ? <div>Loading</div> : <div>Logout</div>}
+            {status === "loading" ? <LoadingSpinner /> : <div>Logout</div>}
           </Button>
           <Theme />
         </ul>

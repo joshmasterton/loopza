@@ -27,7 +27,7 @@ nav > header {
   border-radius: $round;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  background: var(--container);
+  background: var(--background);
   transition: transform $animationCubic;
   animation: $animationCubic comeFromTop;
   z-index: 1;
@@ -40,7 +40,7 @@ nav > header > h5 {
 nav > header > img {
   width: calc($width);
   height: calc($height);
-  padding: calc($padding / 1.75);
+  padding: calc($padding / 2.5);
   border-radius: $round;
 }
 
@@ -64,7 +64,7 @@ nav > main {
   border-radius: $round;
   transition: transform $animationCubic;
   transform-origin: top;
-  background: var(--container);
+  background: var(--background);
 }
 
 nav h5 {
@@ -116,6 +116,10 @@ nav div.hover.following {
 
 nav div.hover.newPost {
   transform: translateY(($height * 3) + ($padding * 3));
+}
+
+nav div.hover.post {
+  transform: translateY(-200%);
 }
 
 @media screen and (min-width: $widthContainer) {

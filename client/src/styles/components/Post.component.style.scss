@@ -1,14 +1,12 @@
 @import "../base/variables.scss";
 
 .post {
+  position: relative;
   display: flex;
   flex-direction: column;
   border-radius: $round;
   transform-origin: top;
   border-radius: $round;
-  gap: $gap;
-  backdrop-filter: blur(1rem);
-  -webkit-backdrop-filter: blur(1rem);
   background: var(--container);
 }
 
@@ -23,9 +21,13 @@
 .post > header {
   display: flex;
   align-items: center;
-  padding: $padding;
-  padding-bottom: 0;
+  padding: calc($padding * 1.25);
   gap: $gap;
+}
+
+.post > header > div {
+  display: flex;
+  flex-direction: column;
 }
 
 .post > header > div > p {
@@ -34,8 +36,8 @@
 
 .post > header > div > img {
   border-radius: $round;
-  width: $width - $padding;
-  height: $height - $padding;
+  width: $width - $paddingSmall;
+  height: $height - $paddingSmall;
 }
 
 .post > main {
@@ -48,29 +50,27 @@
   flex-direction: column;
   height: fit-content;
   word-break: break-all;
-  gap: $gap;
   min-height: calc($height * 2);
 }
 
 .post > main > div > div {
-  flex: 1;
-  padding: $padding;
+  padding: calc($padding * 1.25);
   padding-top: 0;
   padding-bottom: 0;
+  flex: 1;
 }
 
 .post > main > div > img {
   width: 100%;
   height: fit-content;
   object-fit: contain;
+  margin-bottom: calc($padding * 1.25);
   border-radius: $round;
 }
 
 .post > footer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: end;
-  padding: $padding;
-  padding-top: 0;
+  padding: calc($padding * 1.25);
   gap: $gap;
 }

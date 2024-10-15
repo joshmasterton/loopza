@@ -18,6 +18,31 @@ button {
   z-index: 1;
 }
 
+button.fixed {
+  position: fixed;
+  display: flex;
+  bottom: $padding;
+  right: $padding;
+  width: calc($width + ($paddingSmall * 2));
+  min-height: calc($height + ($paddingSmall * 2));
+  animation: $animationCubic emerge;
+  background: var(--primary);
+  color: white !important;
+  z-index: 2;
+}
+
+button.fixed > svg {
+  width: calc($width + ($paddingSmall * 2));
+  min-height: calc($height + ($paddingSmall * 2));
+  padding: calc($padding * 1.1);
+}
+
+@media screen and (min-width: $widthContainer) {
+  button.fixed {
+    display: none !important;
+  }
+}
+
 button.clear {
   outline: $outline;
   max-width: fit-content;
@@ -49,31 +74,30 @@ button.small {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc($paddingLarge * 1.75);
+  width: fit-content;
+  overflow: visible;
   height: $height - $padding;
-  padding: $paddingSmall;
-  overflow: hidden;
-  color: inherit;
-  gap: 0;
-  background: var(--background);
+  background: transparent;
 }
 
 button.small > p {
+  padding-right: calc($fontAdjust / 2);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: calc($paddingLarge / 1.5);
-  max-width: calc($paddingLarge / 1.5);
-  height: $height - $padding;
-  padding-left: 0;
 }
 
-button.small svg {
-  min-width: calc($paddingLarge / 1.5);
-  max-width: calc($paddingLarge / 1.5);
-  min-height: calc($paddingLarge / 1.5);
-  max-height: calc($paddingLarge / 1.5);
-  padding: calc($paddingSmall / 1.5);
+button.small > svg {
+  padding: 0;
+  overflow: visible;
+  min-width: calc($padding * 1.35);
+  min-height: calc($padding * 1.35);
+}
+
+button.like > svg {
+  color: var(--primary);
+}
+
+button.danger > svg {
+  color: var(--colorDanger);
 }
 
 @media screen and (min-width: $widthContainerLarge) {

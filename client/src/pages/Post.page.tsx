@@ -27,6 +27,9 @@ export const PostPage = () => {
     return (
       <div id="main">
         {status === "loading" ? <LoadingContainer /> : <Post item={item} />}
+        <div className="comments">
+          <div className="blank" />
+        </div>
       </div>
     );
   }

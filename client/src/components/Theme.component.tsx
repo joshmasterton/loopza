@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./Button.component";
 import { AppDispatch, RootState } from "../store";
-import { BiSolidMoon } from "react-icons/bi";
-import { BsSunFill } from "react-icons/bs";
 import { changeTheme } from "../features/themeSlice";
+import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 
 export const Theme = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,7 +17,7 @@ export const Theme = () => {
           type="button"
           onClick={() => dispatch(changeTheme(currentTheme))}
         >
-          {currentTheme === "dark" ? <BiSolidMoon /> : <BsSunFill />}
+          {currentTheme === "dark" ? <IoMoonOutline /> : <IoSunnyOutline />}
         </Button>
       </div>
     </div>

@@ -1,7 +1,8 @@
 import { Button } from "./Button.component";
-import { BiSolidComment, BiSolidDislike, BiSolidLike } from "react-icons/bi";
+import { BiHeart } from "react-icons/bi";
 import { Navigation } from "./Navigation.component";
 import { PostCommentTypes } from "../../types/features/features.types";
+import { IoArrowDown, IoChatbubbleOutline } from "react-icons/io5";
 
 export const Post = ({ item }: { item: PostCommentTypes }) => {
   return (
@@ -23,16 +24,16 @@ export const Post = ({ item }: { item: PostCommentTypes }) => {
         </div>
       </main>
       <footer>
-        <Button id="" className="small" type="button">
-          <BiSolidLike />
+        <Button id="" className="small like" type="button">
+          <BiHeart />
           <p>{item.likes}</p>
         </Button>
-        <Button id="" className="small" type="button">
-          <BiSolidDislike />
+        <Button id="" className="small danger" type="button">
+          <IoArrowDown />
           <p>{item.dislikes}</p>
         </Button>
         <Button id="" className="small" type="button">
-          <BiSolidComment />
+          <IoChatbubbleOutline />
           <p>{item.comments}</p>
         </Button>
       </footer>

@@ -1,6 +1,6 @@
 import { Button } from "../components/Button.component";
 import { Input } from "../components/Input.component";
-import { IoEye, IoEyeOff } from "react-icons/io5";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import {
   SignupFormTypes,
@@ -10,13 +10,13 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Navigation } from "../components/Navigation.component";
 import { useEffect, useRef, useState } from "react";
-import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, signupUser } from "../features/authSlice";
 import { AppDispatch, RootState } from "../store";
 import { useNavigate } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 import { LoadingSpinner } from "../components/Loading.component";
+import { TiUserOutline } from "react-icons/ti";
 import logo from "../assets/loopza.png";
 import logo_dark from "../assets/loopza_dark.png";
 import * as yup from "yup";
@@ -53,7 +53,7 @@ const LoginForm = () => {
 
   return (
     <form id="auth" method="POST" onSubmit={handleSubmit(onSubmit)}>
-      <img src={currentTheme === "dark" ? logo : logo_dark} alt="logo" />
+      <img src={currentTheme === "dark" ? logo_dark : logo} alt="logo" />
       <Navigation link="/" type="button">
         <CgClose />
       </Navigation>
@@ -82,7 +82,7 @@ const LoginForm = () => {
             type="button"
             onClick={() => setShowPassword(!showPassword)}
           >
-            {showPassword ? <IoEyeOff /> : <IoEye />}
+            {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
           </Button>
           {errors.password && (
             <div className="error">{errors.password.message}</div>
@@ -218,7 +218,7 @@ const SignupForm = () => {
           register={register("profilePicture", { required: true })}
           placeholder="Profile picture"
         >
-          {imagePreview ? <img src={imagePreview} alt="" /> : <FaUser />}
+          {imagePreview ? <img src={imagePreview} alt="" /> : <TiUserOutline />}
           {errors.profilePicture && (
             <div className="error">{errors.profilePicture.message}</div>
           )}
@@ -255,7 +255,7 @@ const SignupForm = () => {
             type="button"
             onClick={() => showPassword("password")}
           >
-            {showPasswords.password ? <IoEyeOff /> : <IoEye />}
+            {showPasswords.password ? <IoEyeOffOutline /> : <IoEyeOutline />}
           </Button>
           {errors.password && (
             <div className="error">{errors.password.message}</div>
@@ -273,7 +273,11 @@ const SignupForm = () => {
             type="button"
             onClick={() => showPassword("confirmPassword")}
           >
-            {showPasswords.confirmPassword ? <IoEyeOff /> : <IoEye />}
+            {showPasswords.confirmPassword ? (
+              <IoEyeOffOutline />
+            ) : (
+              <IoEyeOutline />
+            )}
           </Button>
           {errors.confirmPassword && (
             <div className="error">{errors.confirmPassword.message}</div>

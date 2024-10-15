@@ -23,7 +23,6 @@
   justify-content: center;
   align-items: center;
   height: calc($height + ($paddingSmall * 2));
-  gap: $gapSmall;
   padding: $paddingSmall;
   max-width: $widthContainerForm;
   border-radius: $round;
@@ -47,10 +46,4 @@
 #popup > div > button {
   width: fit-content;
   color: white;
-}
-
-#popup > div > svg {
-  width: $width;
-  height: $height;
-  padding: calc($padding / 1.5);
 }

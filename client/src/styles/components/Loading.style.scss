@@ -11,7 +11,7 @@
   border-radius: $round;
   backdrop-filter: blur(1rem);
   -webkit-backdrop-filter: blur(1rem);
-  background: var(--primaryContainer);
+  background: var(--container);
 }
 
 .loadingSpinner {
@@ -21,7 +21,7 @@
   height: $height;
   padding: $paddingSmall;
   border-radius: $roundExtra;
-  stroke: var(--colorPrimary);
+  stroke: var(--primary);
   animation: 0.5s infinite rotate linear;
 }
 

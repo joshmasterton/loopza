@@ -35,7 +35,7 @@
 }
 
 nav #theme > div {
-  background: var(--background);
+  background: var(--container);
 }
 
 .side #theme > div {
@@ -53,7 +53,7 @@ nav #theme > div {
   transform: translateY(52%);
 }
 
-@media screen and (min-width: $widthContainerLarge) {
+@media screen and (min-width: $widthContainerMedium) {
   .side #theme > div {
     width: calc($width * 2);
     height: $height;

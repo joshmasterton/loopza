@@ -79,6 +79,7 @@
   width: calc(100% - ($padding * 2));
   height: $height;
   border-radius: $round;
+  transform-origin: top;
   transition: transform $animationCubic;
   background: var(--background);
 }
@@ -95,6 +96,10 @@
   transform: translateY(($height * 3) + ($padding * 3));
 }
 
+.side div.hover.post {
+  transform: translateY(-200%);
+}
+
 @media screen and (min-width: $widthContainer) {
   .side {
     top: $padding;
@@ -106,12 +111,6 @@
 }
 
 @media screen and (min-width: calc($widthContainerMedium)) {
-  .side.right {
-    display: flex;
-  }
-}
-
-@media screen and (min-width: calc($widthContainerLarge)) {
   .side.left > div {
     width: calc($widthContainerSmall);
   }
@@ -119,6 +118,12 @@
   .side.left > div > ul a > div,
   .side.left > div > ul button > div {
     display: block;
+  }
+}
+
+@media screen and (min-width: calc($widthContainerLarge)) {
+  .side.right {
+    display: flex;
   }
 }
 

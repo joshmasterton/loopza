@@ -132,7 +132,11 @@ export const NewPost = () => {
             {post && post.length ? post?.length : 0}
           </div>
           <Button id="" type="submit">
-            {status === "loading" ? <LoadingSpinner isPrimary /> : "Post"}
+            {status === "loading" ? (
+              <LoadingSpinner isPrimary />
+            ) : (
+              <div>Post</div>
+            )}
           </Button>
         </main>
       </form>

@@ -51,7 +51,8 @@ input {
 }
 
 textarea {
-  padding: calc($paddingLarge / 1.25);
+  margin-top: 0.2rem;
+  padding: calc($paddingLarge / 1.15);
   min-height: 100%;
   border-radius: $round;
   color: inherit;

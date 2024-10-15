@@ -3,8 +3,8 @@ import { AppDispatch, RootState } from "../store";
 import { Button } from "../components/Button.component";
 import { hidePopup } from "../features/popupSlice";
 import { CgClose } from "react-icons/cg";
-import { IoNotifications } from "react-icons/io5";
 import { useEffect } from "react";
+import { RiNotification4Line } from "react-icons/ri";
 
 export const Popup = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +17,7 @@ export const Popup = () => {
 
     const popupInterval = setInterval(() => {
       if (messages.length > 0) {
-        // dispatch(hidePopup({ index: messages.length - 1 }));
+        dispatch(hidePopup({ index: messages.length - 1 }));
       }
     }, interval);
 
@@ -29,7 +29,7 @@ export const Popup = () => {
       <div id="popup">
         {messages.map((message, index) => (
           <div key={message + index}>
-            <IoNotifications />
+            <RiNotification4Line />
             <main>
               <div>{message}</div>
             </main>

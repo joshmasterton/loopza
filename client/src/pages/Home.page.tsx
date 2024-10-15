@@ -1,14 +1,18 @@
 import { Post } from "../components/Post.component";
-import { IoCreate } from "react-icons/io5";
-import { Navigation } from "../components/Navigation.component";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { useEffect } from "react";
 import { getPostsComments } from "../features/postsCommentsSlice";
 import { LoadingContainer } from "../components/Loading.component";
+import { Button } from "../components/Button.component";
+import { useNavigate } from "react-router-dom";
+import { showPopup } from "../features/popupSlice";
+import { MdOutlineCreate } from "react-icons/md";
 
 export const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { user } = useSelector((state: RootState) => state.auth);
   const { items, status } = useSelector(
     (state: RootState) => state.postsComments
   );
@@ -28,9 +32,22 @@ export const Home = () => {
           <div className="blank" />
         )}
       </div>
-      <Navigation link="/newPost" type="button" className="fixed">
-        <IoCreate />
-      </Navigation>
+      <Button
+        type="button"
+        className="fixed"
+        id="newPost"
+        onClick={() => {
+          if (user) {
+            navigate("/newPost");
+          } else {
+            dispatch(
+              showPopup({ messages: ["Please login to use this feature"] })
+            );
+          }
+        }}
+      >
+        <MdOutlineCreate />
+      </Button>
     </>
   );
 };

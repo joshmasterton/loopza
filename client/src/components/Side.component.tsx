@@ -1,6 +1,4 @@
-import { GoHomeFill } from "react-icons/go";
 import { Navigation } from "./Navigation.component";
-import { HiUser, HiUsers } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { Button } from "./Button.component";
@@ -9,9 +7,11 @@ import { logoutUser } from "../features/authSlice";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Theme } from "./Theme.component";
-import { IoCreate } from "react-icons/io5";
 import { LoadingSpinner } from "./Loading.component";
 import { showPopup } from "../features/popupSlice";
+import { MdOutlineCreate } from "react-icons/md";
+import { TiGroupOutline, TiUserOutline } from "react-icons/ti";
+import { TbBuildingArch } from "react-icons/tb";
 
 export const Side = ({ type }: { type: "left" | "right" }) => {
   const { user, status } = useSelector((state: RootState) => state.auth);
@@ -21,7 +21,14 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    const currentPath = location.pathname.split("/").pop();
+    let currentPath: string | undefined;
+
+    if (location.pathname.split("/").length > 2) {
+      currentPath = location.pathname.split("/").splice(0, 2).pop();
+    } else {
+      currentPath = location.pathname.split("/").pop();
+    }
+
     if (currentPath === "") {
       setCurrentPage("home");
     } else {
@@ -42,16 +49,16 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
               </Navigation>
             ) : (
               <Navigation link="/login" type="button">
-                <HiUser />
+                <TiUserOutline />
                 <div>Login</div>
               </Navigation>
             )}
             <Navigation link="/" type="button">
-              <GoHomeFill />
+              <TbBuildingArch />
               <div>Home</div>
             </Navigation>
             <Navigation link="/following" type="button">
-              <HiUsers />
+              <TiGroupOutline />
               <div>Following</div>
             </Navigation>
             <Button
@@ -70,7 +77,7 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
                 }
               }}
             >
-              <IoCreate />
+              <MdOutlineCreate />
               <div>New post</div>
             </Button>
             <Button
@@ -82,7 +89,7 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
               }}
             >
               <CgLogOut />
-              {status === "loading" ? <div>Loading</div> : <div>Logout</div>}
+              {status === "loading" ? <LoadingSpinner /> : <div>Logout</div>}
             </Button>
             <Theme />
           </ul>
