@@ -34,6 +34,10 @@
   width: fit-content;
 }
 
+nav #theme > div {
+  background: $dark;
+}
+
 .side #theme > div {
   flex-direction: column;
   width: calc($width);

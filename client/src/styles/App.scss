@@ -44,7 +44,7 @@
 html,
 body {
   height: 100%;
-  background: var(--container);
+  background: var(--background);
 }
 
 #root {
@@ -54,7 +54,6 @@ body {
   padding: $padding;
   gap: $gap;
   color: var(--color);
-  background: var(--background);
 }
 
 h1,
