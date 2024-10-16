@@ -4,9 +4,11 @@ WORKDIR /app
 
 COPY package*.json .
 
-RUN npm install --only=development
+RUN npm install
 
 COPY . .
+
+RUN echo "Files in WORKDIR after npm install:" && ls -la
 
 RUN npm run build
 
