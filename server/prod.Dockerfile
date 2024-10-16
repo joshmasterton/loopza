@@ -10,8 +10,6 @@ COPY . .
 
 RUN npm run build
 
-COPY dist/src .
-
 EXPOSE 80
 
 CMD ["node", "dist/src/app.js"]
