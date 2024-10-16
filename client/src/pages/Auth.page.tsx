@@ -89,7 +89,7 @@ const LoginForm = () => {
           )}
         </Input>
       </main>
-      <Button id="login" type="submit">
+      <Button id="login" type="submit" className="primary">
         {status === "loading" ? <LoadingSpinner isPrimary /> : <div>Login</div>}
       </Button>
       <footer>
@@ -284,7 +284,7 @@ const SignupForm = () => {
           )}
         </Input>
       </main>
-      <Button id="signup" type="submit">
+      <Button id="signup" type="submit" className="primary">
         {status === "loading" ? (
           <LoadingSpinner isPrimary />
         ) : (

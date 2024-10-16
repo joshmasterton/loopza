@@ -5,6 +5,8 @@ import * as yup from "yup";
 
 const getPostsCommentsSchema = yup.object().shape({
   page: yup.number().optional(),
+  parent_id: yup.number().optional(),
+  comment_parent_id: yup.number().optional(),
   type: yup
     .mixed<"comment" | "post">()
     .oneOf(["comment", "post"], "Type must be comment or post")
@@ -19,7 +21,13 @@ export const getPostsComments = async (req: UserRequest, res: Response) => {
 
     return res
       .status(200)
-      .json(await postsComments.getPostsComments(validatedData.type));
+      .json(
+        await postsComments.getPostsComments(
+          validatedData.type,
+          validatedData.parent_id,
+          validatedData.comment_parent_id
+        )
+      );
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ error: error.message });

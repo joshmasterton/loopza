@@ -15,9 +15,14 @@
 }
 
 #main > .comments {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-height: calc($height + ($padding * 2));
+  overflow: hidden;
+  padding-bottom: $padding;
+  border-radius: $round;
+  background: var(--container);
 }
 
 @media screen and (min-width: $widthContainer) {

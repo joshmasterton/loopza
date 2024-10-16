@@ -27,6 +27,7 @@
 
 #errorPage > a {
   padding: $padding;
-  background: var(--primaryElement);
+  padding-top: $padding + $fontAdjust;
+  background: var(--primary);
   color: white;
 }

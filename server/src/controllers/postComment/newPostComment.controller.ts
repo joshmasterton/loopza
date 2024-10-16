@@ -5,7 +5,8 @@ import validator from "validator";
 import { PostComment } from "../../models/postComment/postComment.model";
 
 const newPostCommentSchema = yup.object().shape({
-  post: yup.string().min(1, "Post cannot be empty").required(),
+  comment: yup.string().min(1, "Comment cannot be empty").optional(),
+  post: yup.string().min(1, "Post cannot be empty").optional(),
   parent_id: yup.number(),
   comment_parent_id: yup.number(),
   type: yup
@@ -23,7 +24,15 @@ export const newPostComment = async (req: UserRequest, res: Response) => {
     }
 
     const validatedData = await newPostCommentSchema.validate(req.body);
-    const serializedPost = validator.escape(validatedData.post);
+    let serializedPostComment: string;
+
+    if (validatedData.post) {
+      serializedPostComment = validator.escape(validatedData.post);
+    } else if (validatedData.comment) {
+      serializedPostComment = validator.escape(validatedData.comment);
+    } else {
+      throw new Error("No text provided");
+    }
 
     const file = req.file;
 
@@ -31,18 +40,22 @@ export const newPostComment = async (req: UserRequest, res: Response) => {
 
     if (!file) {
       postComment = new PostComment(
-        serializedPost,
+        serializedPostComment,
         validatedData.type,
         user?.id,
         undefined
       );
     } else {
       postComment = new PostComment(
-        serializedPost,
+        serializedPostComment,
         validatedData.type,
         user?.id,
         file
       );
+    }
+
+    if (validatedData.type === "comment" && !validatedData.parent_id) {
+      throw new Error("Comment must have a parent_id");
     }
 
     await postComment.new(

@@ -15,20 +15,11 @@ a {
 a.fixed {
   position: fixed;
   display: flex;
-  bottom: $padding;
+  width: fit-content;
   right: $padding;
-  width: calc($width + ($paddingSmall * 2));
-  min-height: calc($height + ($paddingSmall * 2));
+  bottom: $padding;
   animation: $animationCubic emerge;
-  background: var(--primary);
-  color: white !important;
   z-index: 2;
-}
-
-a.fixed > svg {
-  width: calc($width + ($paddingSmall * 2));
-  min-height: calc($height + ($paddingSmall * 2));
-  padding: calc($padding * 1.1);
 }
 
 @media screen and (min-width: $widthContainer) {

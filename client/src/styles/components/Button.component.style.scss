@@ -12,7 +12,7 @@ button {
   gap: $gapSmall;
   cursor: pointer;
   border-radius: $round;
-  color: white;
+  color: inherit;
   white-space: nowrap;
   background: var(--primary);
   z-index: 1;
@@ -21,20 +21,11 @@ button {
 button.fixed {
   position: fixed;
   display: flex;
-  bottom: $padding;
+  width: fit-content;
   right: $padding;
-  width: calc($width + ($paddingSmall * 2));
-  min-height: calc($height + ($paddingSmall * 2));
+  bottom: $padding;
   animation: $animationCubic emerge;
-  background: var(--primary);
-  color: white !important;
   z-index: 2;
-}
-
-button.fixed > svg {
-  width: calc($width + ($paddingSmall * 2));
-  min-height: calc($height + ($paddingSmall * 2));
-  padding: calc($padding * 1.1);
 }
 
 @media screen and (min-width: $widthContainer) {
@@ -54,6 +45,11 @@ button.clear {
 button[type="submit"] {
   justify-content: center;
   width: 100%;
+}
+
+button.primary {
+  color: white;
+  background: var(--primary);
 }
 
 button.transparent {

@@ -8,14 +8,20 @@
   flex-direction: column;
   justify-content: end;
   align-items: end;
+  height: fit-content;
   gap: $gap;
-  bottom: 0;
+  top: 0;
   right: 50%;
+  transform-origin: center;
+  border-radius: $round;
   transform: translateX(50%);
+  transition: height $animationCubic;
   pointer-events: none;
   touch-action: none;
   padding: $padding;
   z-index: 4;
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
 }
 
 #popup > div {
@@ -32,7 +38,7 @@
   touch-action: auto;
   transform-origin: right;
   color: white;
-  animation: $animationCubic comeFromBottom;
+  animation: $animationCubic comeFromTopScale;
 }
 
 #popup > div > main {
