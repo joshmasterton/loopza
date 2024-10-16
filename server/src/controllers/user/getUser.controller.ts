@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { UserRequest } from "../../../types/model/auth/user.type";
 
-export const getUser = (req: UserRequest, res: Response) => {
+export const getUser = (_req: UserRequest, res: Response) => {
   try {
     return res.status(200).json({ message: "getUser" });
   } catch (error) {

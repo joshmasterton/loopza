@@ -8,6 +8,10 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build
+
+COPY dist/src .
+
 EXPOSE 80
 
-CMD ["npm", "run", "prod"]
+CMD ["node", "dist/src/app.js"]
