@@ -6,7 +6,7 @@
   flex-direction: column;
   border-radius: $round;
   transform-origin: top;
-  border-radius: $round;
+  overflow: hidden;
   background: var(--container);
 }
 
@@ -28,6 +28,10 @@
 .post > header > div {
   display: flex;
   flex-direction: column;
+}
+
+.post > header > div:last-of-type {
+  overflow: hidden;
 }
 
 .post > header > div > p {
@@ -73,4 +77,30 @@
   flex-wrap: wrap;
   padding: calc($padding * 1.25);
   gap: $gap;
+}
+
+.post > footer > .reply {
+  flex: 1;
+  display: flex;
+  justify-content: start;
+}
+
+.post > form {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: $gap;
+  padding: $padding;
+  padding-top: 0;
+}
+
+.post > form textarea {
+  margin-top: 0;
+  padding: calc($padding * 1.25);
+  background: var(--background);
+}
+
+.post > form > button {
+  width: fit-content;
+  padding: $padding;
 }

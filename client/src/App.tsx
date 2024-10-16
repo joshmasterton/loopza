@@ -44,7 +44,7 @@ export const routes = [
     errorElement: <Error />,
   },
   {
-    path: "/newPost",
+    path: "/new",
     element: (
       <Wrapper isReturn>
         <Protected>

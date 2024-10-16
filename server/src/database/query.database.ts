@@ -19,16 +19,26 @@ const { Pool } = pg;
 const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_DB, POSTGRES_PASSWORD } =
   process.env;
 
+const pool = new Pool({
+  user: POSTGRES_USER,
+  host: POSTGRES_HOST,
+  password: POSTGRES_PASSWORD,
+  database: POSTGRES_DB,
+});
+
 export const queryDatabase = async <T>(query: string, parameters?: T[]) => {
-  const pool = new Pool({
-    user: POSTGRES_USER,
-    host: POSTGRES_HOST,
-    password: POSTGRES_PASSWORD,
-    database: POSTGRES_DB,
-  });
+  const client = await pool.connect();
 
   if (POSTGRES_HOST && POSTGRES_USER && POSTGRES_PASSWORD && POSTGRES_DB) {
-    return await pool.query(query, parameters);
+    try {
+      return await client.query(query, parameters);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    } finally {
+      client.release();
+    }
   }
 
   throw new Error("Environment variables not found");

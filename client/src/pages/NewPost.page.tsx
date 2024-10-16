@@ -9,12 +9,9 @@ import { Button } from "../components/Button.component";
 import { MdAttachFile } from "react-icons/md";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
-import {
-  getPostsComments,
-  newPostComment,
-} from "../features/postsCommentsSlice";
-import * as yup from "yup";
+import { getPosts, newPostComment } from "../features/postsCommentsSlice";
 import { LoadingSpinner } from "../components/Loading.component";
+import * as yup from "yup";
 
 export const NewPost = () => {
   const navigate = useNavigate();
@@ -23,7 +20,9 @@ export const NewPost = () => {
   const [imagePreview, setImagePreview] = useState<string | undefined>(
     undefined
   );
-  const { status } = useSelector((state: RootState) => state.postsComments);
+  const { newItemStatus } = useSelector(
+    (state: RootState) => state.postsComments
+  );
   const { user } = useSelector((state: RootState) => state.auth);
 
   const postSchema = yup.object().shape({
@@ -66,7 +65,7 @@ export const NewPost = () => {
 
     await dispatch(newPostComment(formData));
     navigate("/");
-    await dispatch(getPostsComments("post"));
+    await dispatch(getPosts());
   };
 
   const post = watch("post");
@@ -131,8 +130,8 @@ export const NewPost = () => {
           <div className="boxElement">
             {post && post.length ? post?.length : 0}
           </div>
-          <Button id="" type="submit">
-            {status === "loading" ? (
+          <Button id="" type="submit" className="primary">
+            {newItemStatus === "loading" ? (
               <LoadingSpinner isPrimary />
             ) : (
               <div>Post</div>

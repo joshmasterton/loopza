@@ -33,6 +33,20 @@ export class PostComment {
     let query: string;
     let queryParameters: (string | number | undefined)[];
 
+    if (parent_id) {
+      const checkParentExists = await queryDatabase(
+        `
+					SELECT * FROM ${tableConfig.getPostsCommentsTable()}
+					WHERE id = $1
+				`,
+        [parent_id]
+      );
+
+      if (!checkParentExists.rows[0]) {
+        throw new Error("No post exists");
+      }
+    }
+
     try {
       if (!this.file) {
         query = `
@@ -109,7 +123,12 @@ export class PostComment {
     }
   }
 
-  async getPostsComments(type: "comment" | "post", page: number = 0) {
+  async getPostsComments(
+    type: "comment" | "post",
+    parent_id: number | null = null,
+    comment_parent_id: number | null = null,
+    page: number = 0
+  ) {
     try {
       const postsCommentsFromDb = await queryDatabase(
         `
@@ -118,6 +137,12 @@ export class PostComment {
 					JOIN ${tableConfig.getUsersTable()} u
 					ON pc.user_id = u.id
 					WHERE pc.type = $1
+					${parent_id === null ? "AND parent_id IS NULL" : `AND parent_id = ${parent_id}`}
+					${
+            comment_parent_id === null
+              ? "AND comment_parent_id IS NULL"
+              : `AND comment_parent_id = ${comment_parent_id}`
+          }
 					ORDER BY created_at DESC
 					LIMIT 10 OFFSET $2
 				`,

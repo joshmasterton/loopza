@@ -67,7 +67,7 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
               id="newPost"
               onClick={() => {
                 if (user) {
-                  navigate("/newPost");
+                  navigate("/new");
                 } else {
                   dispatch(
                     showPopup({

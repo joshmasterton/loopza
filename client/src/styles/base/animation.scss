@@ -48,12 +48,30 @@ $animationEase: 0.5s ease;
   }
 }
 
+@keyframes comeFromTopScale {
+  0% {
+    transform: translatey(-200%) scale(0);
+  }
+  100% {
+    transform: translatey(0%) scale(1);
+  }
+}
+
 @keyframes comeFromBottom {
   0% {
     transform: translatey(200%) scale(0);
   }
   100% {
     transform: translatey(0%) scale(1);
+  }
+}
+
+@keyframes comeFromTop50 {
+  0% {
+    transform: translate(50%, -200%) scale(0);
+  }
+  100% {
+    transform: translate(50%, 0%) scale(1);
   }
 }
 

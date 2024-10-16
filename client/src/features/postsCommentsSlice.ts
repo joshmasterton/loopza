@@ -6,50 +6,80 @@ import { API_URL } from "../utilities/request.utilities";
 import { showPopup } from "./popupSlice";
 
 const initialState: {
-  item: PostCommentTypes | undefined;
-  items: PostCommentTypes[] | undefined;
+  post: PostCommentTypes | undefined;
+  posts: PostCommentTypes[] | undefined;
+  comments: PostCommentTypes[] | undefined;
   error: string | null;
-  status: "idle" | "loading" | "failed";
+  newItemStatus: "idle" | "loading" | "failed";
+  postStatus: "idle" | "loading" | "failed";
+  postsStatus: "idle" | "loading" | "failed";
+  commentsStatus: "idle" | "loading" | "failed";
 } = {
-  item: undefined,
-  items: undefined,
+  post: undefined,
+  posts: undefined,
+  comments: undefined,
   error: null,
-  status: "idle",
+  newItemStatus: "idle",
+  postStatus: "idle",
+  postsStatus: "idle",
+  commentsStatus: "idle",
 };
 
 const postsCommentsSlice = createSlice({
   name: "postsComments",
   initialState,
   reducers: {
-    setLoading: (state) => {
-      state.status = "loading";
+    setLoading: (state, action) => {
+      if (action.payload.type === "post") {
+        state.postStatus = "loading";
+      } else if (action.payload.type === "posts") {
+        state.postsStatus = "loading";
+      } else if (action.payload.type === "comments") {
+        state.commentsStatus = "loading";
+      } else {
+        state.newItemStatus = "loading";
+      }
     },
-    setIdle: (state) => {
-      state.status = "idle";
+    setIdle: (state, action) => {
+      if (action.payload.type === "post") {
+        state.postStatus = "idle";
+      } else if (action.payload.type === "posts") {
+        state.postsStatus = "idle";
+      } else if (action.payload.type === "comments") {
+        state.commentsStatus = "idle";
+      } else {
+        state.newItemStatus = "idle";
+      }
     },
-    setPostsComments: (state, action) => {
-      state.items = action.payload.items;
+    setPost: (state, action) => {
+      state.post = action.payload.post;
     },
-    setPostComment: (state, action) => {
-      state.item = action.payload.item;
+    setPosts: (state, action) => {
+      state.posts = action.payload.posts;
     },
-    clearPostsComments: (state, action) => {
-      state.items = action.payload.items;
+    setComments: (state, action) => {
+      state.comments = action.payload.comments;
     },
   },
 });
 
-export const {
-  setLoading,
-  setIdle,
-  setPostComment,
-  setPostsComments,
-  clearPostsComments,
-} = postsCommentsSlice.actions;
+export const { setLoading, setIdle, setPost, setPosts, setComments } =
+  postsCommentsSlice.actions;
 
 export const newPostComment =
-  (data: FormData) => async (dispatch: AppDispatch) => {
-    dispatch(setLoading());
+  (
+    data:
+      | FormData
+      | {
+          post?: string;
+          comment?: string;
+          parent_id?: number;
+          type?: "post" | "comment";
+          comment_parent_id?: number;
+        }
+  ) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setLoading({ type: "newItem" }));
 
     try {
       await axios.post(`${API_URL}/postComment/new`, data, {
@@ -63,24 +93,24 @@ export const newPostComment =
         dispatch(showPopup({ messages: [error.message] }));
       }
     } finally {
-      dispatch(setIdle());
+      dispatch(setIdle({ type: "newItem" }));
     }
   };
 
-export const getPostsComments =
-  (type: "comment" | "post", page: number = 0) =>
+export const getPosts =
+  (page: number = 0) =>
   async (dispatch: AppDispatch) => {
-    dispatch(setLoading());
+    dispatch(setLoading({ type: "posts" }));
 
     try {
       const response = await axios.get(`${API_URL}/postComment/gets`, {
         params: {
-          type,
+          type: "post",
           page,
         },
       });
 
-      dispatch(setPostsComments({ items: response.data }));
+      dispatch(setPosts({ posts: response.data }));
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
@@ -88,36 +118,61 @@ export const getPostsComments =
         console.error(error);
       }
     } finally {
-      dispatch(setIdle());
+      dispatch(setIdle({ type: "posts" }));
     }
   };
 
-export const getPostComment =
-  (type: "comment" | "post", id: number) => async (dispatch: AppDispatch) => {
-    dispatch(setLoading());
+export const getComments =
+  (parent_id: number, page: number = 0) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setLoading({ type: "comments" }));
 
     try {
-      const response = await axios.get(`${API_URL}/postComment/get`, {
+      const response = await axios.get(`${API_URL}/postComment/gets`, {
         params: {
-          type,
-          id,
+          type: "comment",
+          page,
+          parent_id,
         },
       });
 
-      dispatch(setPostComment({ item: response.data }));
+      dispatch(setComments({ comments: response.data }));
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
-        dispatch(showPopup({ messages: [error.response.data.error] }));
       } else if (error instanceof Error) {
         console.error(error);
-        dispatch(showPopup({ messages: [error.message] }));
-      } else {
-        dispatch(showPopup({ messages: ["An error has occured"] }));
       }
     } finally {
-      dispatch(setIdle());
+      dispatch(setIdle({ type: "comments" }));
     }
   };
+
+export const getPost = (id: number) => async (dispatch: AppDispatch) => {
+  dispatch(setLoading({ type: "post" }));
+
+  try {
+    const response = await axios.get(`${API_URL}/postComment/get`, {
+      params: {
+        type: "post",
+        id,
+      },
+    });
+
+    dispatch(setPost({ post: response.data }));
+  } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      console.error(error.response?.data);
+      dispatch(showPopup({ messages: [error.response.data.error] }));
+    } else if (error instanceof Error) {
+      console.error(error);
+      dispatch(showPopup({ messages: [error.message] }));
+    } else {
+      dispatch(showPopup({ messages: ["An error has occured"] }));
+    }
+  } finally {
+    dispatch(setIdle({ type: "post" }));
+  }
+};
 
 export default postsCommentsSlice.reducer;

@@ -112,7 +112,7 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
             id="newPost"
             onClick={() => {
               if (user) {
-                navigate("/newPost");
+                navigate("/new");
               } else {
                 dispatch(
                   showPopup({ messages: ["Please login to use this feature"] })

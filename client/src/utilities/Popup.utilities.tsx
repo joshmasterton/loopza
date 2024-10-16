@@ -17,11 +17,17 @@ export const Popup = () => {
 
     const popupInterval = setInterval(() => {
       if (messages.length > 0) {
-        dispatch(hidePopup({ index: messages.length - 1 }));
+        dispatch(hidePopup({ index: 0 }));
       }
     }, interval);
 
     return () => clearInterval(popupInterval);
+  }, [messages]);
+
+  useEffect(() => {
+    if (messages.length > 3) {
+      dispatch(hidePopup({ index: 0 }));
+    }
   }, [messages]);
 
   if (isPopupVisible) {
