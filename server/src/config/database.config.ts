@@ -20,13 +20,10 @@ dotenv.config({
 
 const { Pool } = pg;
 
-const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_DB, POSTGRES_PASSWORD } =
-  process.env;
+const { POSTGRES_ADMIN_URL, POSTGRES_DB } = process.env;
 
 export const adminPool = new Pool({
-  user: POSTGRES_USER,
-  host: POSTGRES_HOST,
-  password: POSTGRES_PASSWORD,
+  connectionString: POSTGRES_ADMIN_URL,
 });
 
 export class TableConfig {

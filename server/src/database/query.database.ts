@@ -16,20 +16,16 @@ dotenv.config({
 
 const { Pool } = pg;
 
-const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_DB, POSTGRES_PASSWORD } =
-  process.env;
+const { POSTGRES_URL } = process.env;
 
 const pool = new Pool({
-  user: POSTGRES_USER,
-  host: POSTGRES_HOST,
-  password: POSTGRES_PASSWORD,
-  database: POSTGRES_DB,
+  connectionString: POSTGRES_URL,
 });
 
 export const queryDatabase = async <T>(query: string, parameters?: T[]) => {
   const client = await pool.connect();
 
-  if (POSTGRES_HOST && POSTGRES_USER && POSTGRES_PASSWORD && POSTGRES_DB) {
+  if (POSTGRES_URL) {
     try {
       return await client.query(query, parameters);
     } catch (error) {
