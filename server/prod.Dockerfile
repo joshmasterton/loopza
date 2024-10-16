@@ -2,13 +2,11 @@ FROM node:18
 
 WORKDIR /app
 
+COPY ./dist ./dist
+
 COPY package*.json .
 
-RUN NODE_ENV=development npm install
-
-COPY . .
-
-COPY dist ./dist
+RUN npm ci
 
 EXPOSE 80
 
