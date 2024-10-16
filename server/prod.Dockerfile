@@ -2,11 +2,11 @@ FROM node:18
 
 WORKDIR /app
 
-COPY ./dist ./dist
-
 COPY package*.json .
 
-RUN npm ci
+RUN npm install
+
+COPY . .
 
 EXPOSE 80
 
