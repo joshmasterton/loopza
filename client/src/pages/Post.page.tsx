@@ -25,28 +25,28 @@ export const PostPage = () => {
     }
   }, []);
 
-  if (post) {
-    return (
-      <div id="main">
-        {postStatus === "loading" ? (
-          <LoadingContainer />
-        ) : (
-          <Post item={post} canComment />
-        )}
-        {commentsStatus === "loading" ? (
-          <LoadingContainer />
-        ) : (
-          <div className="comments">
-            {comments && comments.length > 0 ? (
-              comments.map((post) => (
-                <Comment key={post.id} item={post} canComment />
-              ))
-            ) : (
-              <div className="blank" />
-            )}
-          </div>
-        )}
-      </div>
-    );
-  }
+  return (
+    <div id="main">
+      {postStatus === "loading" ? (
+        <LoadingContainer />
+      ) : post ? (
+        <Post item={post} canComment />
+      ) : (
+        <div className="blank" />
+      )}
+      {commentsStatus === "loading" ? (
+        <LoadingContainer />
+      ) : (
+        <div className="comments">
+          {comments && comments.length > 0 ? (
+            comments.map((post) => (
+              <Comment key={post.id} item={post} canComment />
+            ))
+          ) : (
+            <div className="blank" />
+          )}
+        </div>
+      )}
+    </div>
+  );
 };

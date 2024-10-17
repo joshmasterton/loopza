@@ -16,6 +16,8 @@
   left: 0;
   width: 100%;
   height: calc(100% - $height - ($paddingSmall * 2));
+  box-shadow: none;
+  outline: none;
 }
 
 .post > header {

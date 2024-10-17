@@ -11,9 +11,10 @@ import { useState } from "react";
 import { getComments, newPostComment } from "../features/postsCommentsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
-import * as yup from "yup";
 import { CgClose } from "react-icons/cg";
 import { LoadingSpinner } from "./Loading.component";
+import { withUserCheck } from "../utilities/Protected.utilities";
+import * as yup from "yup";
 
 export const Post = ({
   item,
@@ -23,6 +24,7 @@ export const Post = ({
   canComment?: boolean;
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { user } = useSelector((state: RootState) => state.auth);
   const { newItemStatus } = useSelector(
     (state: RootState) => state.postsComments
   );
@@ -35,6 +37,7 @@ export const Post = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<{ comment: string }>({
     mode: "onChange",
@@ -42,18 +45,22 @@ export const Post = ({
   });
 
   const onSubmit = async (data: { comment: string }) => {
-    await dispatch(
-      newPostComment({
-        comment: data.comment,
-        parent_id: item.id,
-        type: "comment",
-      })
-    );
+    await withUserCheck(user, dispatch, async () => {
+      await dispatch(
+        newPostComment({
+          comment: data.comment,
+          parent_id: item.id,
+          type: "comment",
+        })
+      );
 
-    setShowReplyOption(false);
-    if (item.id) {
-      await dispatch(getComments(item.id));
-    }
+      setShowReplyOption(false);
+      reset();
+
+      if (item.id) {
+        await dispatch(getComments(item.id));
+      }
+    });
   };
 
   return (

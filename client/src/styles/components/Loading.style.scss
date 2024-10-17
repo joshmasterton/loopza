@@ -15,6 +15,7 @@
 }
 
 .comment .loading {
+  margin-top: $padding;
   margin-bottom: $padding;
 }
 
@@ -37,6 +38,6 @@
   fill: transparent;
   stroke-width: 5;
   stroke-linecap: round;
-  stroke-dasharray: calc(3.14 * $width);
+  stroke-dasharray: 7.85rem;
   animation: 2s infinite spinner ease-in-out alternate-reverse;
 }

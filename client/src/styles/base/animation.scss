@@ -83,12 +83,12 @@ $animationEase: 0.5s ease;
 
 @keyframes spinner {
   0% {
-    stroke-dashoffset: calc(1.2 * $width);
+    stroke-dashoffset: 3rem;
   }
   50% {
-    stroke-dashoffset: calc(3.14 * $width);
+    stroke-dashoffset: 7.85rem;
   }
   100% {
-    stroke-dashoffset: calc(1.2 * $width);
+    stroke-dashoffset: 3rem;
   }
 }

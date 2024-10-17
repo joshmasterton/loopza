@@ -27,7 +27,12 @@ export const Home = () => {
         {postsStatus === "loading" ? (
           <LoadingContainer />
         ) : posts && posts.length > 0 ? (
-          posts.map((post) => <Post key={post.id} item={post} />)
+          <>
+            {posts.map((post) => (
+              <Post key={post.id} item={post} />
+            ))}
+            <div className="blank" />
+          </>
         ) : (
           <div className="blank" />
         )}

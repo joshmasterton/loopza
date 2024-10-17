@@ -8,13 +8,13 @@ import { logoutUser } from "../features/authSlice";
 import { useEffect, useState } from "react";
 import { Theme } from "./Theme.component";
 import { useLocation, useNavigate } from "react-router-dom";
-import { showPopup } from "../features/popupSlice";
 import { TbBuildingArch } from "react-icons/tb";
 import { TiGroupOutline, TiUserOutline } from "react-icons/ti";
 import { MdOutlineCreate } from "react-icons/md";
+import { LoadingSpinner } from "./Loading.component";
+import { withUserCheck } from "../utilities/Protected.utilities";
 import logo from "../assets/loopza.png";
 import logo_dark from "../assets/loopza_dark.png";
-import { LoadingSpinner } from "./Loading.component";
 
 export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
   const location = useLocation();
@@ -110,14 +110,10 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
             type="button"
             className="transparent"
             id="newPost"
-            onClick={() => {
-              if (user) {
+            onClick={async () => {
+              await withUserCheck(user, dispatch, () => {
                 navigate("/new");
-              } else {
-                dispatch(
-                  showPopup({ messages: ["Please login to use this feature"] })
-                );
-              }
+              });
               setIsMenu(!isMenu);
             }}
           >

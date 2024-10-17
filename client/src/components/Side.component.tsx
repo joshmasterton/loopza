@@ -8,10 +8,10 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Theme } from "./Theme.component";
 import { LoadingSpinner } from "./Loading.component";
-import { showPopup } from "../features/popupSlice";
 import { MdOutlineCreate } from "react-icons/md";
 import { TiGroupOutline, TiUserOutline } from "react-icons/ti";
 import { TbBuildingArch } from "react-icons/tb";
+import { withUserCheck } from "../utilities/Protected.utilities";
 
 export const Side = ({ type }: { type: "left" | "right" }) => {
   const { user, status } = useSelector((state: RootState) => state.auth);
@@ -65,16 +65,10 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
               type="button"
               className="transparent"
               id="newPost"
-              onClick={() => {
-                if (user) {
+              onClick={async () => {
+                await withUserCheck(user, dispatch, () => {
                   navigate("/new");
-                } else {
-                  dispatch(
-                    showPopup({
-                      messages: ["Please login to use this feature"],
-                    })
-                  );
-                }
+                });
               }}
             >
               <MdOutlineCreate />

@@ -88,6 +88,7 @@ export const newPostComment =
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
+        dispatch(showPopup({ messages: [error.response.data.error] }));
       } else if (error instanceof Error) {
         console.error(error);
         dispatch(showPopup({ messages: [error.message] }));
