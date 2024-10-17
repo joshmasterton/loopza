@@ -1,6 +1,6 @@
 import { tableConfig } from "../../app";
 import { queryDatabase } from "../../database/query.database";
-import { UserTypes } from "../../../types/model/auth/user.type";
+import { UserTypes } from "../../types/model/auth/user.type";
 import { uploadImage } from "../../config/cloudinary.config";
 import bcrypt from "bcryptjs";
 

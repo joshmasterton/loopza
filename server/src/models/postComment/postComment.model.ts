@@ -1,7 +1,7 @@
 import { tableConfig } from "../../app";
 import { uploadImage } from "../../config/cloudinary.config";
 import { queryDatabase } from "../../database/query.database";
-import { PostCommentTypes } from "../../../types/model/postComment/postComment.type";
+import { PostCommentTypes } from "../../types/model/postComment/postComment.type";
 
 export class PostComment {
   public id?: number;

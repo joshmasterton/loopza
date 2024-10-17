@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { UserRequest } from "../../../types/model/auth/user.type";
+import { UserRequest } from "../../types/model/auth/user.type";
 
 export const getUser = (_req: UserRequest, res: Response) => {
   try {

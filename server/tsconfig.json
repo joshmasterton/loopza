@@ -21,7 +21,11 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
     "outDir": "./dist",
-    "rootDir": "./"
+    "rootDir": "./src"
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "verbose": false
   },
   "include": ["src"]
 }

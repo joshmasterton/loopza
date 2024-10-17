@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { User } from "../../models/auth/user.model";
-import { UserRequest } from "../../../types/model/auth/user.type";
+import { UserRequest } from "../../types/model/auth/user.type";
 
 export const logout = (req: UserRequest, res: Response) => {
   try {

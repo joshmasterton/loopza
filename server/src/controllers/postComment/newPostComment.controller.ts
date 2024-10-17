@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { UserRequest } from "../../../types/model/auth/user.type";
+import { UserRequest } from "../../types/model/auth/user.type";
 import * as yup from "yup";
 import validator from "validator";
 import { PostComment } from "../../models/postComment/postComment.model";
