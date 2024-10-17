@@ -3,7 +3,7 @@ $dark: rgb(35, 35, 42);
 [data-theme="dark"] {
   --color: white;
   --primary: #525aec;
-  --colorDanger: rgb(255, 57, 57);
+  --colorDanger: rgb(246, 94, 94);
   --outlineColor: rgb(70, 70, 78);
   --outline: 0.1rem solid rgb(70, 70, 78);
   --gradient: linear-gradient(90deg, #7e898f 0%, #636c75 100%),
@@ -26,7 +26,7 @@ $dark: rgb(35, 35, 42);
 [data-theme="light"] {
   --color: black;
   --primary: #5962ff;
-  --colorDanger: rgb(220, 53, 53);
+  --colorDanger: rgb(234, 82, 82);
   --outline: 0.1rem solid rgb(215, 215, 220);
   --outlineColor: rgb(215, 215, 220);
   --background: rgb(245, 245, 250);
