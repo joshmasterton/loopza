@@ -6,8 +6,8 @@ import { getPosts } from "../features/postsCommentsSlice";
 import { LoadingContainer } from "../components/Loading.component";
 import { Button } from "../components/Button.component";
 import { useNavigate } from "react-router-dom";
-import { showPopup } from "../features/popupSlice";
 import { MdOutlineCreate } from "react-icons/md";
+import { withUserCheck } from "../utilities/Protected.utilities";
 
 export const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,14 +41,10 @@ export const Home = () => {
         type="button"
         className="fixed primary"
         id="newPost"
-        onClick={() => {
-          if (user) {
+        onClick={async () => {
+          await withUserCheck(user, dispatch, () => {
             navigate("/new");
-          } else {
-            dispatch(
-              showPopup({ messages: ["Please login to use this feature"] })
-            );
-          }
+          });
         }}
       >
         <MdOutlineCreate />

@@ -22,9 +22,11 @@
   padding: 0;
   border-style: none;
   resize: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-family: "Comfortaa Variable";
   line-height: 100%;
-  font-weight: 800;
+  font-weight: 600;
   font-size: $font;
 }
 
