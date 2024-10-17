@@ -6,9 +6,21 @@ $dark: rgb(35, 35, 42);
   --colorDanger: rgb(255, 57, 57);
   --outlineColor: rgb(70, 70, 78);
   --outline: 0.1rem solid rgb(70, 70, 78);
-  --background: rgb(20, 20, 23);
+  --gradient: linear-gradient(90deg, #7e898f 0%, #636c75 100%),
+    radial-gradient(
+      at top,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(0, 0, 0, 0.55) 100%
+    ),
+    radial-gradient(
+      at top,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(0, 0, 0, 0.08) 63%
+    );
+  --blend: multiply, screen;
+  --background: rgb(25, 25, 29);
   --shadow: 0.1rem 0.2rem 0.75rem rgba(0, 0, 0, 0.2);
-  --container: rgb(27, 27, 32);
+  --container: rgb(29, 29, 34);
 }
 
 [data-theme="light"] {
