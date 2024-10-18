@@ -16,7 +16,14 @@ export const LoadingSpinner = ({
       className={`loadingSpinner ${isPrimary ? "primary" : ""}`}
       viewBox="0 0 40 40"
     >
-      <circle cx={20} cy={20} r={18}></circle>
+      <circle
+        cx={20}
+        cy={20}
+        r={18}
+        strokeDasharray={"7.85rem"}
+        strokeLinecap="round"
+        strokeWidth={6}
+      ></circle>
     </svg>
   );
 };
