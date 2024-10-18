@@ -1,9 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, Mock, test, vitest } from "vitest";
 import { act } from "react";
-import { API_URL, Test } from "../utilities/Test.utilities";
+import { Test } from "../utilities/Test.utilities";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
+import { API_URL } from "../../src/utilities/request.utilities";
 
 vitest.mock("axios");
 

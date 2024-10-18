@@ -89,6 +89,7 @@ svg {
   max-width: $width;
   max-height: $height;
   outline: $outline;
+  padding-top: $fontAdjust;
   border-radius: $roundExtra;
 }
 

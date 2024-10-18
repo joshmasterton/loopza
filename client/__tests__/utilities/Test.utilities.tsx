@@ -56,8 +56,6 @@ export const mockPostTwo: PostCommentTypes = {
   profile_picture_url: "http://www.random.com",
 };
 
-export const API_URL = "http://localhost:80";
-
 export const Test = ({ initialEntry }: { initialEntry: string }) => {
   return (
     <Provider store={store}>

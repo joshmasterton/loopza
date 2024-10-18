@@ -13,8 +13,6 @@ import { TiGroupOutline, TiUserOutline } from "react-icons/ti";
 import { MdOutlineCreate } from "react-icons/md";
 import { LoadingSpinner } from "./Loading.component";
 import { withUserCheck } from "../utilities/Protected.utilities";
-import logo from "../assets/loopza.png";
-import logo_dark from "../assets/loopza_dark.png";
 
 export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
   const location = useLocation();
@@ -23,7 +21,6 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
   const [currentPage, setCurrentPage] = useState<string | undefined>(undefined);
   const [isMenu, setIsMenu] = useState(false);
   const { user, status } = useSelector((state: RootState) => state.auth);
-  const { currentTheme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
     let currentPath: string | undefined;
@@ -65,7 +62,17 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
             <IoChevronBack />
           </Navigation>
         ) : (
-          <img src={currentTheme === "dark" ? logo_dark : logo} alt="" />
+          <>
+            {user ? (
+              <Navigation link={`/profile/${user.username}`} type="button">
+                <img src={user.profile_picture_url} alt="" />
+              </Navigation>
+            ) : (
+              <Navigation link="/login" type="button">
+                <TiUserOutline />
+              </Navigation>
+            )}
+          </>
         )}
         <h5>
           {currentPage &&

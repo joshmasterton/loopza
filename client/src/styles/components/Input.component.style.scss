@@ -80,23 +80,18 @@ label.file:focus-within > svg {
 
 label > img,
 label > svg {
-  width: $width + $paddingExtraLarge;
-  height: $height + $paddingExtraLarge;
+  width: $width;
+  height: $height;
   border-radius: $round;
   border-radius: $roundExtra;
   outline: $outline;
-}
-
-label.file > img,
-label.file > svg {
-  width: $width;
-  height: $height;
 }
 
 #auth label.file > img,
 #auth label.file > svg {
   width: $width + $paddingLarge;
   height: $height + $paddingLarge;
+  padding: $padding + $paddingSmall;
 }
 
 input[type="file"] {
