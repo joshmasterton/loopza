@@ -21,12 +21,14 @@ export const login = async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
+            domain: process.env.NODE_ENV === "production" ? ".zonomaly.com" : "",
             maxAge: 15 * 60 * 1000,
         })
             .cookie("refreshToken", tokens?.refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
+            domain: process.env.NODE_ENV === "production" ? ".zonomaly.com" : "",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         })
             .json({ message: "Login successful" });
