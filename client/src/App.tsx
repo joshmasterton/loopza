@@ -15,7 +15,6 @@ import { Protected } from "./utilities/Protected.utilities";
 import { Popup } from "./utilities/Popup.utilities";
 import "@fontsource-variable/comfortaa";
 import "./styles/App.scss";
-import { LoadingSpinner } from "./components/Loading.component";
 
 export const Wrapper = ({
   children,
@@ -98,7 +97,6 @@ const router = createBrowserRouter(routes, { basename: "/" });
 
 export const App = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { status } = useSelector((state: RootState) => state.auth);
   const { currentTheme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
@@ -111,14 +109,8 @@ export const App = () => {
 
   return (
     <>
-      {status === "loading" ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <Popup />
-          <RouterProvider router={router} />
-        </>
-      )}
+      <Popup />
+      <RouterProvider router={router} />
     </>
   );
 };

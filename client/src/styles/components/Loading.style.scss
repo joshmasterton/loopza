@@ -35,7 +35,7 @@
   stroke: white;
 }
 
-.loadingSpinner > circle {
+.loadingSpinner > path {
   fill: transparent;
   animation: 2s infinite spinner ease-in-out alternate-reverse;
 }
