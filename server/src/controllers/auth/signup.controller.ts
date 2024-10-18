@@ -42,14 +42,14 @@ export const signup = async (req: Request, res: Response) => {
       .cookie("accessToken", tokens?.accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "none",
         domain: process.env.NODE_ENV === "production" ? ".zonomaly.com" : "",
         maxAge: 15 * 60 * 1000,
       })
       .cookie("refreshToken", tokens?.refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "none",
         domain: process.env.NODE_ENV === "production" ? ".zonomaly.com" : "",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       })
