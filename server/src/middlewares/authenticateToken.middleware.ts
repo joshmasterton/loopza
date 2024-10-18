@@ -37,12 +37,16 @@ export const authenticateToken = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
+      domain: process.env.NODE_ENV === "production" ? ".zonomaly.com" : "",
+      maxAge: 15 * 60 * 1000,
     });
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
+      domain: process.env.NODE_ENV === "production" ? ".zonomaly.com" : "",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     req.user = serializedUser;
@@ -79,7 +83,7 @@ export const authenticateToken = async (
       res.cookie("accessToken", newAccessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "none",
+        sameSite: "strict",
         domain: process.env.NODE_ENV === "production" ? ".zonomaly.com" : "",
         maxAge: 15 * 60 * 1000,
       });
@@ -87,7 +91,7 @@ export const authenticateToken = async (
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "none",
+        sameSite: "strict",
         domain: process.env.NODE_ENV === "production" ? ".zonomaly.com" : "",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
