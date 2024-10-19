@@ -1,4 +1,8 @@
-export const LoadingContainer = ({ isContainer }: { isContainer: boolean }) => {
+export const LoadingContainer = ({
+  isContainer,
+}: {
+  isContainer?: boolean;
+}) => {
   return (
     <div className="loading">
       <LoadingSpinner isContainer={isContainer} />
