@@ -21,6 +21,9 @@ const signupSchema = yup.object().shape({
 
 export const signup = async (req: Request, res: Response) => {
   try {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
     const validatedData = await signupSchema.validate(req.body);
     const file = req.file;
 
