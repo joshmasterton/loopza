@@ -27,7 +27,6 @@
   height: $height;
   padding: $paddingSmall;
   border-radius: $roundExtra;
-  stroke: var(--primary);
   animation: 0.5s infinite rotate linear;
 }
 
@@ -35,7 +34,34 @@
   stroke: white;
 }
 
-.loadingSpinner > path {
-  fill: transparent;
-  animation: 2s infinite spinner ease-in-out alternate-reverse;
+.loadingSpinner > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: calc($paddingSmall / 2);
+  border-radius: $roundExtra;
+  background: linear-gradient(
+    45deg,
+    var(--primary),
+    var(--primary),
+    transparent,
+    transparent
+  );
+  animation: 0.5s infinite spinner ease-in-out alternate-reverse;
+}
+
+.loadingSpinner > div > div {
+  width: 100%;
+  height: 100%;
+  border-radius: $roundExtra;
+}
+
+.loadingSpinner > div > div.container {
+  background: var(--container);
+}
+
+.loadingSpinner > div > div.background {
+  background: var(--background);
 }

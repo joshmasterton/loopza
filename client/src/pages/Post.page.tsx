@@ -27,25 +27,23 @@ export const PostPage = () => {
 
   return (
     <div id="main">
-      {postStatus === "loading" ? (
+      {postStatus === "loading" || commentsStatus === "loading" ? (
         <LoadingContainer />
       ) : post ? (
-        <Post item={post} canComment />
+        <>
+          <Post item={post} canComment />
+          <div className="comments">
+            {comments && comments.length > 0 ? (
+              comments.map((post) => (
+                <Comment key={post.id} item={post} canComment />
+              ))
+            ) : (
+              <div className="blank" />
+            )}
+          </div>
+        </>
       ) : (
         <div className="blank" />
-      )}
-      {commentsStatus === "loading" ? (
-        <LoadingContainer />
-      ) : (
-        <div className="comments">
-          {comments && comments.length > 0 ? (
-            comments.map((post) => (
-              <Comment key={post.id} item={post} canComment />
-            ))
-          ) : (
-            <div className="blank" />
-          )}
-        </div>
       )}
     </div>
   );

@@ -85,6 +85,28 @@ export class PostComment {
 
       const newPostComment = await queryDatabase(query, queryParameters);
 
+      if (parent_id) {
+        await queryDatabase(
+          `
+      			UPDATE ${tableConfig.getPostsCommentsTable()}
+      			SET comments = comments + 1
+      			WHERE id = $1
+      		`,
+          [parent_id]
+        );
+      }
+
+      if (comment_parent_id) {
+        await queryDatabase(
+          `
+      			UPDATE ${tableConfig.getPostsCommentsTable()}
+      			SET comments = comments + 1
+      			WHERE id = $1
+      		`,
+          [comment_parent_id]
+        );
+      }
+
       this.id = newPostComment.rows[0].id;
       this.type = newPostComment.rows[0].type;
 

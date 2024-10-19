@@ -24,7 +24,8 @@ describe("/postComment/gets", () => {
         post: "Some random post",
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"]);
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
 
     await request(app)
       .post("/postComment/new")
@@ -36,7 +37,8 @@ describe("/postComment/gets", () => {
         "postPicture",
         path.resolve(__dirname, "..", "mocks", "mockImage.jpg")
       )
-      .set("Cookie", signup.header["set-cookie"]);
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
 
     const getPostsComments = await request(app)
       .get("/postComment/gets")
@@ -44,7 +46,8 @@ describe("/postComment/gets", () => {
         id: 1,
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"]);
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
 
     expect(getPostsComments.body).toHaveLength(2);
   });
@@ -69,7 +72,8 @@ describe("/postComment/gets", () => {
         post: "Some random post",
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"]);
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
 
     const newPost = await request(app)
       .post("/postComment/new")
@@ -81,7 +85,8 @@ describe("/postComment/gets", () => {
         "postPicture",
         path.resolve(__dirname, "..", "mocks", "mockImage.jpg")
       )
-      .set("Cookie", signup.header["set-cookie"]);
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
 
     const newComment = await request(app)
       .post("/postComment/new")
@@ -90,7 +95,8 @@ describe("/postComment/gets", () => {
         type: "comment",
         parent_id: newPost.body.id,
       })
-      .set("Cookie", signup.header["set-cookie"]);
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
 
     await request(app)
       .post("/postComment/new")
@@ -100,7 +106,8 @@ describe("/postComment/gets", () => {
         parent_id: newPost.body.id,
         comment_parent_id: newComment.body.id,
       })
-      .set("Cookie", signup.header["set-cookie"]);
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
 
     const getPostsComments = await request(app)
       .get("/postComment/gets")
@@ -108,7 +115,8 @@ describe("/postComment/gets", () => {
         type: "comment",
         parent_id: newPost.body.id,
       })
-      .set("Cookie", signup.header["set-cookie"]);
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
 
     const getPostsCommentsReplies = await request(app)
       .get("/postComment/gets")
@@ -117,7 +125,8 @@ describe("/postComment/gets", () => {
         parent_id: newPost.body.id,
         comment_parent_id: newComment.body.id,
       })
-      .set("Cookie", signup.header["set-cookie"]);
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
 
     expect(getPostsComments.body).toHaveLength(1);
     expect(getPostsComments.body[0].id).toBe(3);

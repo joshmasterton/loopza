@@ -20,7 +20,8 @@ describe("/logout", () => {
 
     const logout = await request(app)
       .post("/auth/logout")
-      .set("Cookie", signup.header["set-cookie"]);
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
 
     expect(logout.body.message).toBe("Logout successful");
   });
