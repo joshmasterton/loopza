@@ -1,5 +1,5 @@
 import { Button } from "./Button.component";
-import { BiHeart } from "react-icons/bi";
+import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { Navigation } from "./Navigation.component";
 import { PostCommentTypes } from "../../types/features/features.types";
 import { IoArrowDown, IoChatbubbleOutline } from "react-icons/io5";
@@ -8,7 +8,11 @@ import { Input } from "./Input.component";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { getComments, newPostComment } from "../features/postsCommentsSlice";
+import {
+  getComments,
+  likeDislike,
+  newPostComment,
+} from "../features/postsCommentsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { CgClose } from "react-icons/cg";
@@ -24,6 +28,9 @@ export const Post = ({
   canComment?: boolean;
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [currentPost, setCurrentPost] = useState(item);
+  const [likeStatus, setLikeStatus] = useState(false);
+  const [dislikeStatus, setDislikeStatus] = useState(false);
   const { user } = useSelector((state: RootState) => state.auth);
   const { newItemStatus } = useSelector(
     (state: RootState) => state.postsComments
@@ -49,7 +56,7 @@ export const Post = ({
       await dispatch(
         newPostComment({
           comment: data.comment,
-          parent_id: item.id,
+          parent_id: currentPost.id,
           type: "comment",
         })
       );
@@ -57,42 +64,95 @@ export const Post = ({
       setShowReplyOption(false);
       reset();
 
-      if (item.id) {
-        await dispatch(getComments(item.id));
+      if (currentPost.id) {
+        await dispatch(getComments(currentPost.id));
       }
     });
   };
 
   return (
     <div className="post">
-      {!canComment && <Navigation link={`/post/${item?.id}`} type="button" />}
+      {!canComment && (
+        <Navigation link={`/post/${currentPost?.id}`} type="button" />
+      )}
       <header>
         <div>
-          <img src={item?.profile_picture_url} alt="" />
+          <img src={currentPost?.profile_picture_url} alt="" />
         </div>
         <div>
-          {item?.username}
-          <p>{item?.email}</p>
+          {currentPost?.username}
+          <p>{currentPost?.email}</p>
         </div>
       </header>
       <main>
         <div>
-          {item.text_image_url && <img src={item.text_image_url} alt="" />}
-          <div>{item.text}</div>
+          {currentPost.text_image_url && (
+            <img src={currentPost.text_image_url} alt="" />
+          )}
+          <div>{currentPost.text}</div>
         </div>
       </main>
       <footer>
-        <Button id="" className="small like" type="button">
-          <BiHeart />
-          <p>{item.likes}</p>
+        <Button
+          id=""
+          className="small like"
+          type="button"
+          onClick={async () =>
+            await withUserCheck(user, dispatch, async () => {
+              setLikeStatus(true);
+              const updatedComment = await dispatch(
+                likeDislike(currentPost.id, "like", currentPost.type)
+              );
+
+              if (updatedComment) {
+                setCurrentPost(updatedComment);
+              }
+
+              setLikeStatus(false);
+            })
+          }
+        >
+          {likeStatus ? (
+            <LoadingSpinner isSmall />
+          ) : (
+            <>
+              {currentPost.reaction === "like" ? <BiSolidHeart /> : <BiHeart />}
+              <p>{currentPost.likes}</p>
+            </>
+          )}
         </Button>
-        <Button id="" className="small danger" type="button">
-          <IoArrowDown />
-          <p>{item.dislikes}</p>
+        <Button
+          id=""
+          className="small danger"
+          type="button"
+          onClick={async () =>
+            await withUserCheck(user, dispatch, async () => {
+              setDislikeStatus(true);
+
+              const updatedComment = await dispatch(
+                likeDislike(currentPost.id, "dislike", currentPost.type)
+              );
+
+              if (updatedComment) {
+                setCurrentPost(updatedComment);
+              }
+
+              setDislikeStatus(false);
+            })
+          }
+        >
+          {dislikeStatus ? (
+            <LoadingSpinner isSmall />
+          ) : (
+            <>
+              <IoArrowDown />
+              <p>{currentPost.dislikes}</p>
+            </>
+          )}
         </Button>
         <Button id="" className="small" type="button">
           <IoChatbubbleOutline />
-          <p>{item.comments}</p>
+          <p>{currentPost.comments}</p>
         </Button>
         {canComment && (
           <div className="reply">

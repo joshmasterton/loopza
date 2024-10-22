@@ -176,4 +176,32 @@ export const getPost = (id: number) => async (dispatch: AppDispatch) => {
   }
 };
 
+export const likeDislike =
+  (id: number, reaction: "like" | "dislike", type: "post" | "comment") =>
+  async (dispatch: AppDispatch) => {
+    try {
+      const response = await axios.put(
+        `${API_URL}/postComment/likeDislike`,
+        {
+          reaction,
+          type,
+          id,
+        },
+        { withCredentials: true }
+      );
+
+      return response.data as PostCommentTypes;
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        console.error(error.response?.data);
+        dispatch(showPopup({ messages: [error.response.data.error] }));
+      } else if (error instanceof Error) {
+        console.error(error);
+        dispatch(showPopup({ messages: [error.message] }));
+      } else {
+        dispatch(showPopup({ messages: ["An error has occured"] }));
+      }
+    }
+  };
+
 export default postsCommentsSlice.reducer;

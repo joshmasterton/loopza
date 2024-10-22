@@ -1,7 +1,10 @@
 import { tableConfig } from "../../app";
 import { uploadImage } from "../../config/cloudinary.config";
 import { queryDatabase } from "../../database/query.database";
-import { PostCommentTypes } from "../../types/model/postComment/postComment.type";
+import {
+  LikeDislikeTypes,
+  PostCommentTypes,
+} from "../../types/model/postComment/postComment.type";
 
 export class PostComment {
   public id?: number;
@@ -118,18 +121,20 @@ export class PostComment {
     }
   }
 
-  async getPostComment() {
+  async getPostComment(userId?: number) {
     try {
       const postCommentFromDb = await queryDatabase(
         `
-					SELECT pc.*, u.username, u.email, u.profile_picture_url
+					SELECT pc.*, u.username, u.email, u.profile_picture_url, ld.reaction
 					FROM ${tableConfig.getPostsCommentsTable()} pc
 					JOIN ${tableConfig.getUsersTable()} u
 					ON pc.user_id = u.id
+					LEFT JOIN ${tableConfig.getLikesDislikesTable()} ld
+					ON pc.id = ld.origin_id AND ld.user_id = $3
 					WHERE pc.id = $1
 					AND pc.type = $2
 				`,
-        [this.id, this.type]
+        [this.id, this.type, userId]
       );
 
       const postComment = postCommentFromDb.rows[0] as PostCommentTypes;
@@ -149,7 +154,8 @@ export class PostComment {
     type: "comment" | "post",
     parent_id: number | null = null,
     comment_parent_id: number | null = null,
-    page: number = 0
+    page: number = 0,
+    userId?: number
   ) {
     try {
       const postsCommentsFromDb = await queryDatabase(
@@ -158,6 +164,8 @@ export class PostComment {
 					FROM ${tableConfig.getPostsCommentsTable()} pc
 					JOIN ${tableConfig.getUsersTable()} u
 					ON pc.user_id = u.id
+					LEFT JOIN ${tableConfig.getLikesDislikesTable()} ld
+					ON pc.id = ld.origin_id AND ld.user_id = $3
 					WHERE pc.type = $1
 					${parent_id === null ? "AND parent_id IS NULL" : `AND parent_id = ${parent_id}`}
 					${
@@ -168,7 +176,7 @@ export class PostComment {
 					ORDER BY created_at DESC
 					LIMIT 10 OFFSET $2
 				`,
-        [type, page]
+        [type, page, userId]
       );
 
       const postsComments: PostCommentTypes[] = await Promise.all(
@@ -181,6 +189,108 @@ export class PostComment {
       );
 
       return postsComments;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  }
+
+  async likeDislike(userId: number, reaction: "like" | "dislike") {
+    try {
+      const existingPostComment = await queryDatabase(
+        `
+					SELECT * FROM ${tableConfig.getPostsCommentsTable()}
+					WHERE id = $1
+				`,
+        [this.id]
+      );
+
+      const existingLikeDislike = await queryDatabase(
+        `
+					SELECT * FROM ${tableConfig.getLikesDislikesTable()}
+					WHERE origin_id = $1
+				`,
+        [this.id]
+      );
+
+      if (!existingPostComment.rows[0]) {
+        throw new Error(`Post or comment does not exist`);
+      }
+
+      if (!existingLikeDislike.rows[0]) {
+        await queryDatabase(
+          `
+						INSERT INTO ${tableConfig.getLikesDislikesTable()}(
+							origin_id, user_id, reaction
+						) VALUES (
+							$1, $2, $3
+						)
+					`,
+          [this.id, userId, reaction]
+        );
+
+        await queryDatabase(
+          `
+						UPDATE ${tableConfig.getPostsCommentsTable()}
+						SET ${reaction}s = ${reaction}s + 1
+						WHERE id = $1
+					`,
+          [this.id]
+        );
+      } else {
+        const likeDislike = existingLikeDislike.rows[0] as LikeDislikeTypes;
+        const oppositeReaction = reaction === "like" ? "dislike" : "like";
+
+        if (likeDislike.reaction === reaction) {
+          await queryDatabase(
+            `
+							UPDATE ${tableConfig.getPostsCommentsTable()}
+							SET ${reaction}s = ${reaction}s - 1
+							WHERE id = $1
+						`,
+            [this.id]
+          );
+
+          await queryDatabase(
+            `
+							DELETE FROM ${tableConfig.getLikesDislikesTable()}
+							WHERE origin_id = $1
+							AND user_id = $2
+						`,
+            [this.id, userId]
+          );
+        } else {
+          await queryDatabase(
+            `
+							UPDATE ${tableConfig.getLikesDislikesTable()}
+							SET reaction = $1
+							WHERE origin_id = $2
+							AND user_id = $3
+						`,
+            [reaction, this.id, userId]
+          );
+
+          await queryDatabase(
+            `
+							UPDATE ${tableConfig.getPostsCommentsTable()}
+							SET ${reaction}s = ${reaction}s + 1
+							WHERE id = $1
+						`,
+            [this.id]
+          );
+          await queryDatabase(
+            `
+							UPDATE ${tableConfig.getPostsCommentsTable()}
+							SET ${oppositeReaction}s = ${oppositeReaction}s - 1
+							WHERE id = $1
+						`,
+            [this.id]
+          );
+        }
+      }
+
+      return await this.getPostComment(userId);
     } catch (error) {
       if (error instanceof Error) {
         throw error;

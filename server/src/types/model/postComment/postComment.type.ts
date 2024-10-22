@@ -13,4 +13,12 @@ export type PostCommentTypes = {
   username: string;
   email: string;
   profile_picture_url: string;
+  reaction: "like" | "dislike" | null;
+};
+
+export type LikeDislikeTypes = {
+  id: number;
+  origin_id: number;
+  user_id: number;
+  reaction: "like" | "dislike";
 };

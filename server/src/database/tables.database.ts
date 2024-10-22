@@ -27,7 +27,7 @@ export const createUserTable = async (usersTable = "users") => {
 };
 
 export const createPostsCommentsTable = async (
-  postsCommentsTable = "postsComments"
+  postsCommentsTable = "posts_comments"
 ) => {
   try {
     await queryDatabase(
@@ -52,13 +52,34 @@ export const createPostsCommentsTable = async (
   }
 };
 
+export const createLikesDislikesTable = async (
+  likesDislikesTable = "likes_dislikes"
+) => {
+  try {
+    await queryDatabase(
+      `CREATE TABLE IF NOT EXISTS ${likesDislikesTable}(
+				id SERIAL PRIMARY KEY,
+				origin_id INT,
+				user_id INT,
+				reaction VARCHAR(10)
+			)`
+    );
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+  }
+};
+
 export const dropTables = async (
   usersTable = "users",
-  postsCommentsTable = "posts_comments"
+  postsCommentsTable = "posts_comments",
+  likesDislikesTable = "likes_dislikes"
 ) => {
   try {
     await queryDatabase(`DROP TABLE IF EXISTS ${usersTable}`);
     await queryDatabase(`DROP TABLE IF EXISTS ${postsCommentsTable}`);
+    await queryDatabase(`DROP TABLE IF EXISTS ${likesDislikesTable}`);
   } catch (error) {
     if (error instanceof Error) {
       throw error;

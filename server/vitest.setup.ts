@@ -35,16 +35,21 @@ beforeEach(async () => {
   tableConfig.setPostsCommentsTable(
     `test_posts_comments_${v4().replace(/-/g, "_")}`
   );
+  tableConfig.setLikesDislikesTable(
+    `test_likes_dislikes_${v4().replace(/-/g, "_")}`
+  );
 
   await initializeDatabase(
     tableConfig.getUsersTable(),
-    tableConfig.getPostsCommentsTable()
+    tableConfig.getPostsCommentsTable(),
+    tableConfig.getLikesDislikesTable()
   );
 });
 
 afterEach(async () => {
   await dropTables(
     tableConfig.getUsersTable(),
-    tableConfig.getPostsCommentsTable()
+    tableConfig.getPostsCommentsTable(),
+    tableConfig.getLikesDislikesTable()
   );
 });

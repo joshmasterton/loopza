@@ -26,4 +26,5 @@ export type PostCommentTypes = {
   username: string;
   email: string;
   profile_picture_url: string;
+  reaction: "like" | "dislike" | null;
 };
