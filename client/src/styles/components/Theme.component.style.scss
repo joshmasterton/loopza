@@ -15,15 +15,17 @@
   width: calc($width * 2);
   height: $height;
   border-radius: $round;
+  outline: var(--outline);
+  outline-offset: $outlineOffset;
   background: var(--container);
 }
 
 #theme > div > button.dark {
-  transform: translateX(-52%);
+  transform: translateX(-50%);
 }
 
 #theme > div > button.light {
-  transform: translateX(52%);
+  transform: translateX(50%);
 }
 
 #theme > div > button {
@@ -47,11 +49,11 @@ nav #theme > div {
 }
 
 .side #theme > div > button.dark {
-  transform: translateY(-52%);
+  transform: translateY(-50%);
 }
 
 .side #theme > div > button.light {
-  transform: translateY(52%);
+  transform: translateY(50%);
 }
 
 @media screen and (min-width: $widthContainerMedium) {
@@ -62,10 +64,10 @@ nav #theme > div {
   }
 
   .side #theme > div > button.dark {
-    transform: translateX(-52%);
+    transform: translateX(-50%);
   }
 
   .side #theme > div > button.light {
-    transform: translateX(52%);
+    transform: translateX(50%);
   }
 }

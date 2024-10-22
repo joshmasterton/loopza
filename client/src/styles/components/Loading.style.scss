@@ -12,12 +12,13 @@
   width: 100%;
   height: 100%;
   border-radius: $round;
+  outline: var(--outline);
+  outline-offset: $outlineOffset;
   background: var(--container);
 }
 
-.comment .loading {
+.comment .loadingSpinner {
   margin-top: $padding;
-  margin-bottom: $padding;
 }
 
 .loadingSpinner {
@@ -41,14 +42,26 @@
   width: calc(100% - $padding);
   min-height: calc(100% - $padding);
   height: calc(100% - $padding);
-  padding: calc($paddingSmall / 3);
+  padding: calc($paddingSmall / 2);
   border-radius: $roundExtra;
   animation: 0.5s rotate infinite linear;
-  background: conic-gradient(transparent, var(--primary));
+  background: conic-gradient(transparent, transparent, var(--primary));
+  z-index: 1;
 }
 
 .loadingSpinner.primary > div {
-  background: conic-gradient(transparent, white);
+  background: conic-gradient(transparent, transparent, white);
+}
+
+.loadingSpinner > div:nth-child(2) {
+  background: var(--background);
+  opacity: 100%;
+  z-index: 0;
+}
+
+.loadingSpinner.primary > div:nth-child(2) {
+  opacity: 15%;
+  background: white;
 }
 
 .loadingSpinner > div > div {

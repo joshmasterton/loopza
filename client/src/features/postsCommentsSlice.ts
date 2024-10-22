@@ -99,7 +99,7 @@ export const newPostComment =
   };
 
 export const getPosts =
-  (page: number = 0) =>
+  (page: number = 0, userId: number | null = null) =>
   async (dispatch: AppDispatch) => {
     dispatch(setLoading({ type: "posts" }));
 
@@ -108,6 +108,7 @@ export const getPosts =
         params: {
           type: "post",
           page,
+          userId,
         },
       });
 
@@ -124,7 +125,7 @@ export const getPosts =
   };
 
 export const getComments =
-  (parent_id: number, page: number = 0) =>
+  (parent_id: number, page: number = 0, userId: number | null = null) =>
   async (dispatch: AppDispatch) => {
     dispatch(setLoading({ type: "comments" }));
 
@@ -134,6 +135,7 @@ export const getComments =
           type: "comment",
           page,
           parent_id,
+          userId,
         },
       });
 
@@ -149,32 +151,35 @@ export const getComments =
     }
   };
 
-export const getPost = (id: number) => async (dispatch: AppDispatch) => {
-  dispatch(setLoading({ type: "post" }));
+export const getPost =
+  (id: number, userId: number | null = null) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setLoading({ type: "post" }));
 
-  try {
-    const response = await axios.get(`${API_URL}/postComment/get`, {
-      params: {
-        type: "post",
-        id,
-      },
-    });
+    try {
+      const response = await axios.get(`${API_URL}/postComment/get`, {
+        params: {
+          type: "post",
+          id,
+          userId,
+        },
+      });
 
-    dispatch(setPost({ post: response.data }));
-  } catch (error) {
-    if (error instanceof AxiosError && error.response) {
-      console.error(error.response?.data);
-      dispatch(showPopup({ messages: [error.response.data.error] }));
-    } else if (error instanceof Error) {
-      console.error(error);
-      dispatch(showPopup({ messages: [error.message] }));
-    } else {
-      dispatch(showPopup({ messages: ["An error has occured"] }));
+      dispatch(setPost({ post: response.data }));
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        console.error(error.response?.data);
+        dispatch(showPopup({ messages: [error.response.data.error] }));
+      } else if (error instanceof Error) {
+        console.error(error);
+        dispatch(showPopup({ messages: [error.message] }));
+      } else {
+        dispatch(showPopup({ messages: ["An error has occured"] }));
+      }
+    } finally {
+      dispatch(setIdle({ type: "post" }));
     }
-  } finally {
-    dispatch(setIdle({ type: "post" }));
-  }
-};
+  };
 
 export const likeDislike =
   (id: number, reaction: "like" | "dislike", type: "post" | "comment") =>

@@ -140,4 +140,61 @@ describe("/postComment/likeDislike", () => {
     expect(likeDislikePost.body.likes).toBe(0);
     expect(likeDislikePost.body.reaction).toBe("dislike");
   });
+
+  test("Should return new like on different user liking same post", async () => {
+    const signup = await request(app)
+      .post("/auth/signup")
+      .field({
+        username: "testUser",
+        email: "testEmail@email.com",
+        password: "Password",
+        confirmPassword: "Password",
+      })
+      .attach(
+        "profilePicture",
+        path.resolve(__dirname, "..", "mocks", "mockImage.jpg")
+      );
+
+    const signupTwo = await request(app)
+      .post("/auth/signup")
+      .field({
+        username: "testUserTwo",
+        email: "testEmail@email.com",
+        password: "Password",
+        confirmPassword: "Password",
+      })
+      .attach(
+        "profilePicture",
+        path.resolve(__dirname, "..", "mocks", "mockImage.jpg")
+      );
+
+    const newPostComment = await request(app)
+      .post("/postComment/new")
+      .send({
+        post: "Some random post",
+        type: "post",
+      })
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
+
+    await request(app)
+      .put("/postComment/likeDislike")
+      .send({
+        id: newPostComment.body.id,
+        type: newPostComment.body.type,
+        reaction: "like",
+      })
+      .set("Cookie", signup.header["set-cookie"][2])
+      .set("Cookie", signup.header["set-cookie"][3]);
+
+    await request(app)
+      .put("/postComment/likeDislike")
+      .send({
+        id: newPostComment.body.id,
+        type: newPostComment.body.type,
+        reaction: "like",
+      })
+      .set("Cookie", signupTwo.header["set-cookie"][2])
+      .set("Cookie", signupTwo.header["set-cookie"][3]);
+  });
 });

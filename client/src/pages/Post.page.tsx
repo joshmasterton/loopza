@@ -10,6 +10,7 @@ import { Comment } from "../components/Comment.component";
 export const PostPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useSelector((state: RootState) => state.auth);
   const { post, comments, postStatus, commentsStatus } = useSelector(
     (state: RootState) => state.postsComments
   );
@@ -18,8 +19,8 @@ export const PostPage = () => {
   useEffect(() => {
     const postId = location.pathname.split("/").pop();
     if (postId) {
-      dispatch(getPost(parseInt(postId)));
-      dispatch(getComments(parseInt(postId)));
+      dispatch(getPost(parseInt(postId), user?.id));
+      dispatch(getComments(parseInt(postId), 0, user?.id));
     } else {
       navigate("/");
     }

@@ -18,7 +18,7 @@ export const Home = () => {
   );
 
   useEffect(() => {
-    dispatch(getPosts());
+    dispatch(getPosts(0, user?.id));
   }, []);
 
   return (

@@ -98,7 +98,7 @@ svg {
   flex: 1;
   padding: $padding;
   border-radius: $round;
-  backdrop-filter: blur(1rem);
-  -webkit-backdrop-filter: blur(1rem);
+  outline: var(--outline);
+  outline-offset: $outlineOffset;
   background: var(--container);
 }

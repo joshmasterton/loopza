@@ -4,6 +4,7 @@ import { PostComment } from "../../models/postComment/postComment.model";
 import * as yup from "yup";
 
 const getPostsCommentsSchema = yup.object().shape({
+  userId: yup.number().optional(),
   page: yup.number().optional(),
   parent_id: yup.number().optional(),
   comment_parent_id: yup.number().optional(),
@@ -25,7 +26,9 @@ export const getPostsComments = async (req: UserRequest, res: Response) => {
         await postsComments.getPostsComments(
           validatedData.type,
           validatedData.parent_id,
-          validatedData.comment_parent_id
+          validatedData.comment_parent_id,
+          0,
+          validatedData.userId
         )
       );
   } catch (error) {

@@ -160,7 +160,7 @@ export class PostComment {
     try {
       const postsCommentsFromDb = await queryDatabase(
         `
-					SELECT pc.*, u.username, u.email, u.profile_picture_url
+					SELECT pc.*, u.username, u.email, u.profile_picture_url, ld.reaction
 					FROM ${tableConfig.getPostsCommentsTable()} pc
 					JOIN ${tableConfig.getUsersTable()} u
 					ON pc.user_id = u.id
@@ -209,9 +209,9 @@ export class PostComment {
       const existingLikeDislike = await queryDatabase(
         `
 					SELECT * FROM ${tableConfig.getLikesDislikesTable()}
-					WHERE origin_id = $1
+					WHERE origin_id = $1 AND user_id = $2
 				`,
-        [this.id]
+        [this.id, userId]
       );
 
       if (!existingPostComment.rows[0]) {

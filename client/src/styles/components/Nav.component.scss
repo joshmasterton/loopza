@@ -38,9 +38,9 @@ nav > header > h5 {
 }
 
 nav > header img {
-  width: calc($width);
-  height: calc($height);
-  padding: calc($padding / 2.5);
+  width: calc($width - $paddingSmall * 1.5);
+  height: calc($height - $paddingSmall * 1.5);
+  margin: calc($padding / 2.5);
   border-radius: $round;
 }
 
@@ -91,9 +91,9 @@ nav > main > ul {
 }
 
 nav > main > ul img {
-  width: calc($width);
-  height: calc($height);
-  padding: calc($paddingSmall);
+  width: calc($width - $paddingSmall * 1.5);
+  height: calc($height - $paddingSmall * 1.5);
+  margin: calc($padding / 2.5);
   border-radius: $round;
 }
 
@@ -103,6 +103,8 @@ nav div.hover {
   height: $height;
   border-radius: $round;
   transition: transform $animationCubic;
+  outline: var(--outline);
+  outline-offset: $outlineOffset;
   background: var(--container);
 }
 

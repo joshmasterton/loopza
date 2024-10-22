@@ -17,7 +17,7 @@ import { likeDislike, newPostComment } from "../features/postsCommentsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { CgClose } from "react-icons/cg";
-import { LoadingContainer, LoadingSpinner } from "./Loading.component";
+import { LoadingSpinner } from "./Loading.component";
 import { API_URL } from "../utilities/request.utilities";
 import { withUserCheck } from "../utilities/Protected.utilities";
 import * as yup from "yup";
@@ -246,7 +246,7 @@ export const Comment = ({
           </form>
         )}
         {loadingReplies ? (
-          <LoadingContainer />
+          <LoadingSpinner />
         ) : (
           replies &&
           replies?.length > 0 &&
