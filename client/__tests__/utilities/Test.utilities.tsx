@@ -37,6 +37,7 @@ export const mockPost: PostCommentTypes = {
   username: "testUser",
   email: "testEmail@email.com",
   profile_picture_url: "http://www.random.com",
+  reaction: "like",
 };
 
 export const mockPostTwo: PostCommentTypes = {
@@ -54,6 +55,7 @@ export const mockPostTwo: PostCommentTypes = {
   username: "testUser",
   email: "testEmail@email.com",
   profile_picture_url: "http://www.random.com",
+  reaction: "like",
 };
 
 export const Test = ({ initialEntry }: { initialEntry: string }) => {
