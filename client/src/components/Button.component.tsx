@@ -6,10 +6,12 @@ export const Button = ({
   onClick,
   className,
   children,
+  disabled,
 }: ButtonTypes) => {
   return (
     <button
       id={id}
+      disabled={disabled}
       type={type}
       onClick={(e) => {
         e.currentTarget.blur();

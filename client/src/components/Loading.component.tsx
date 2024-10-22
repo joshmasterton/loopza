@@ -12,7 +12,7 @@ export const LoadingContainer = ({
 
 export const LoadingSpinner = ({
   isPrimary = false,
-  isContainer,
+  isContainer = true,
   isSmall = false,
 }: {
   isPrimary?: boolean;
@@ -23,16 +23,11 @@ export const LoadingSpinner = ({
     <div
       className={`loadingSpinner ${isPrimary ? "primary" : ""} ${
         isSmall ? "small" : ""
-      }`}
+      } ${isContainer ? "container" : ""}`}
     >
-      <svg viewBox="0 0 100 100">
-        <circle
-          r={50}
-          cy={50}
-          cx={50}
-          className={isContainer ? "container" : "background"}
-        />
-      </svg>
+      <div>
+        <div />
+      </div>
     </div>
   );
 };

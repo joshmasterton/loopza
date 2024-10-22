@@ -19,6 +19,7 @@ export type ButtonTypes = {
   className?: string;
   type: "button" | "submit" | "reset" | undefined;
   children: ReactNode;
+  disabled?: boolean;
 };
 
 export type NavigationTypes = {

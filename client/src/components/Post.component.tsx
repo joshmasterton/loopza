@@ -1,8 +1,13 @@
 import { Button } from "./Button.component";
-import { BiHeart, BiSolidHeart } from "react-icons/bi";
+import {
+  BiDownvote,
+  BiHeart,
+  BiSolidDownvote,
+  BiSolidHeart,
+} from "react-icons/bi";
 import { Navigation } from "./Navigation.component";
 import { PostCommentTypes } from "../../types/features/features.types";
-import { IoArrowDown, IoChatbubbleOutline } from "react-icons/io5";
+import { IoChatbubbleOutline } from "react-icons/io5";
 import { LuReply } from "react-icons/lu";
 import { Input } from "./Input.component";
 import { useForm } from "react-hook-form";
@@ -111,6 +116,7 @@ export const Post = ({
               setLikeStatus(false);
             })
           }
+          disabled={dislikeStatus || likeStatus}
         >
           {likeStatus ? (
             <LoadingSpinner isSmall />
@@ -140,12 +146,17 @@ export const Post = ({
               setDislikeStatus(false);
             })
           }
+          disabled={dislikeStatus || likeStatus}
         >
           {dislikeStatus ? (
             <LoadingSpinner isSmall />
           ) : (
             <>
-              <IoArrowDown />
+              {currentPost.reaction === "dislike" ? (
+                <BiSolidDownvote />
+              ) : (
+                <BiDownvote />
+              )}
               <p>{currentPost.dislikes}</p>
             </>
           )}
