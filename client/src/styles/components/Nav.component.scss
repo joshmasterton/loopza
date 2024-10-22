@@ -103,8 +103,6 @@ nav div.hover {
   height: $height;
   border-radius: $round;
   transition: transform $animationCubic;
-  outline: var(--outline);
-  outline-offset: $outlineOffset;
   background: var(--container);
 }
 

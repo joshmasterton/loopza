@@ -12,9 +12,12 @@ import { MdOutlineCreate } from "react-icons/md";
 import { TiGroupOutline, TiUserOutline } from "react-icons/ti";
 import { TbBuildingArch } from "react-icons/tb";
 import { withUserCheck } from "../utilities/Protected.utilities";
+import logo from "../assets/loopza.png";
+import logo_dark from "../assets/loopza_dark.png";
 
 export const Side = ({ type }: { type: "left" | "right" }) => {
   const { user, status } = useSelector((state: RootState) => state.auth);
+  const { currentTheme } = useSelector((state: RootState) => state.theme);
   const [currentPage, setCurrentPage] = useState<string | undefined>(undefined);
   const location = useLocation();
   const navigate = useNavigate();
@@ -88,7 +91,9 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
             <Theme />
           </ul>
         ) : (
-          <LoadingSpinner />
+          <>
+            <img src={currentTheme === "dark" ? logo : logo_dark} alt="logo" />
+          </>
         )}
       </div>
     </div>

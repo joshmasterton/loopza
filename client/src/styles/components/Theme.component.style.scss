@@ -15,8 +15,6 @@
   width: calc($width * 2);
   height: $height;
   border-radius: $round;
-  outline: var(--outline);
-  outline-offset: $outlineOffset;
   background: var(--container);
 }
 

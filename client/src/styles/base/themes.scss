@@ -6,7 +6,11 @@ $dark: rgb(35, 35, 42);
   --colorDanger: rgb(255, 85, 85);
   --outlineColor: rgb(50, 50, 58);
   --outline: 0.125rem solid rgb(50, 50, 58);
-  --gradient: linear-gradient(90deg, #7e898f 0%, #636c75 100%),
+  --gradient: linear-gradient(
+      90deg,
+      rgba(58, 58, 76, 0.5) 0%,
+      rgba(63, 63, 76, 0.5) 100%
+    ),
     radial-gradient(
       at top,
       rgba(255, 255, 255, 0.5) 0%,
@@ -28,6 +32,22 @@ $dark: rgb(35, 35, 42);
   --primary: #5962ff;
   --colorDanger: rgb(234, 82, 82);
   --outline: 0.125rem solid rgb(225, 225, 230);
+  --gradient: linear-gradient(
+      90deg,
+      rgba(72, 72, 163, 0.5) 0%,
+      rgba(106, 106, 212, 0.5) 100%
+    ),
+    radial-gradient(
+      at top,
+      rgba(255, 255, 255, 0.25s) 0%,
+      rgba(0, 0, 0, 0.25) 100%
+    ),
+    radial-gradient(
+      at top,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(0, 0, 0, 0.08) 63%
+    );
+  --blend: multiply, screen;
   --outlineColor: rgb(225, 225, 230);
   --background: rgb(245, 245, 250);
   --shadow: 0.2rem 0.2rem 1rem rgba(0, 0, 0, 0.1);

@@ -17,8 +17,6 @@
   min-height: 100%;
   transition: width $animationCubic;
   border-radius: $round;
-  outline: var(--outline);
-  outline-offset: $outlineOffset;
   background: var(--container);
 }
 
@@ -67,8 +65,16 @@
   position: absolute;
   display: flex;
   justify-content: center;
+  align-items: center;
   right: $padding;
   width: calc($width + ($padding * 2));
+}
+
+.side.right > div img {
+  width: calc($width - $paddingSmall * 1.25);
+  height: calc($height - $paddingSmall * 1.25);
+  margin: calc($padding / 2.5);
+  border-radius: $round;
 }
 
 .side.right > div > ul a > div,
@@ -83,8 +89,6 @@
   border-radius: $round;
   transform-origin: center;
   transition: transform $animationCubic;
-  outline: var(--outline);
-  outline-offset: $outlineOffset;
   background: var(--background);
 }
 

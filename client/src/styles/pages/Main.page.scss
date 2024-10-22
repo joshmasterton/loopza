@@ -22,14 +22,10 @@
   overflow: hidden;
   padding-bottom: $padding;
   border-radius: $round;
-  outline: var(--outline);
-  outline-offset: $outlineOffset;
   background: var(--container);
 }
 
 #main.newPost > form {
-  outline: var(--outline);
-  outline-offset: $outlineOffset;
   background: var(--container);
 }
 
