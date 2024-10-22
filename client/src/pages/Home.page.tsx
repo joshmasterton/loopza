@@ -19,7 +19,7 @@ export const Home = () => {
 
   useEffect(() => {
     dispatch(getPosts(0, user?.id));
-  }, []);
+  }, [user]);
 
   return (
     <>
