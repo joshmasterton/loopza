@@ -27,7 +27,11 @@ export const getPostsComments = async (req: UserRequest, res: Response) => {
           validatedData.type,
           validatedData.parent_id,
           validatedData.comment_parent_id,
-          0,
+          validatedData.page != null
+            ? validatedData.page < 0
+              ? 0
+              : validatedData.page
+            : 0,
           validatedData.userId
         )
       );

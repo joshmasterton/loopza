@@ -52,12 +52,11 @@ input {
 
 textarea {
   margin-top: 0.2rem;
-  padding: calc($paddingLarge / 1.35);
+  padding: $paddingSmall;
   min-height: 100%;
   border-radius: $round;
   color: inherit;
-  outline: var(--outline);
-  outline-offset: $outlineOffset;
+  outline: $outline;
   background: transparent;
 }
 

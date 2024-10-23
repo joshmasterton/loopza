@@ -8,8 +8,12 @@ import { showPopup } from "./popupSlice";
 const initialState: {
   post: PostCommentTypes | undefined;
   posts: PostCommentTypes[] | undefined;
+  postsPage: number;
   comments: PostCommentTypes[] | undefined;
+  commentsPage: number;
   error: string | null;
+  previousStatus: "idle" | "loading" | "failed";
+  moreStatus: "idle" | "loading" | "failed";
   newItemStatus: "idle" | "loading" | "failed";
   postStatus: "idle" | "loading" | "failed";
   postsStatus: "idle" | "loading" | "failed";
@@ -17,8 +21,12 @@ const initialState: {
 } = {
   post: undefined,
   posts: undefined,
+  postsPage: 0,
   comments: undefined,
+  commentsPage: 0,
   error: null,
+  previousStatus: "idle",
+  moreStatus: "idle",
   newItemStatus: "idle",
   postStatus: "idle",
   postsStatus: "idle",
@@ -36,6 +44,10 @@ const postsCommentsSlice = createSlice({
         state.postsStatus = "loading";
       } else if (action.payload.type === "comments") {
         state.commentsStatus = "loading";
+      } else if (action.payload.type === "more") {
+        state.moreStatus = "loading";
+      } else if (action.payload.type === "previous") {
+        state.previousStatus = "loading";
       } else {
         state.newItemStatus = "loading";
       }
@@ -47,9 +59,16 @@ const postsCommentsSlice = createSlice({
         state.postsStatus = "idle";
       } else if (action.payload.type === "comments") {
         state.commentsStatus = "idle";
+      } else if (action.payload.type === "more") {
+        state.moreStatus = "idle";
+      } else if (action.payload.type === "previous") {
+        state.previousStatus = "idle";
       } else {
         state.newItemStatus = "idle";
       }
+    },
+    setPostsPage: (state, action) => {
+      state.postsPage = action.payload.page;
     },
     setPost: (state, action) => {
       state.post = action.payload.post;
@@ -60,11 +79,21 @@ const postsCommentsSlice = createSlice({
     setComments: (state, action) => {
       state.comments = action.payload.comments;
     },
+    setCommentsPage: (state, action) => {
+      state.commentsPage = action.payload.page;
+    },
   },
 });
 
-export const { setLoading, setIdle, setPost, setPosts, setComments } =
-  postsCommentsSlice.actions;
+export const {
+  setLoading,
+  setPostsPage,
+  setCommentsPage,
+  setIdle,
+  setPost,
+  setPosts,
+  setComments,
+} = postsCommentsSlice.actions;
 
 export const newPostComment =
   (
@@ -99,20 +128,39 @@ export const newPostComment =
   };
 
 export const getPosts =
-  (page: number = 0, userId: number | null = null) =>
+  (
+    page: number = 0,
+    userId: number | null = null,
+    isPrevious: boolean = false,
+    isMore: boolean = false
+  ) =>
   async (dispatch: AppDispatch) => {
-    dispatch(setLoading({ type: "posts" }));
+    if (isMore) {
+      dispatch(setLoading({ type: "more" }));
+    } else if (isPrevious) {
+      dispatch(setLoading({ type: "previous" }));
+    } else {
+      dispatch(setLoading({ type: "posts" }));
+    }
 
     try {
       const response = await axios.get(`${API_URL}/postComment/gets`, {
         params: {
           type: "post",
-          page,
+          page: isMore ? page + 1 : isPrevious ? Math.max(0, page - 1) : page,
           userId,
         },
       });
 
-      dispatch(setPosts({ posts: response.data }));
+      if (response.data.length !== 0) {
+        dispatch(setPosts({ posts: response.data }));
+      }
+
+      if (response.data.length > 0 && isMore) {
+        dispatch(setPostsPage({ page: page + 1 }));
+      } else if (isPrevious) {
+        dispatch(setPostsPage({ page: Math.max(0, page - 1) }));
+      }
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
@@ -120,26 +168,52 @@ export const getPosts =
         console.error(error);
       }
     } finally {
-      dispatch(setIdle({ type: "posts" }));
+      if (isMore) {
+        dispatch(setIdle({ type: "more" }));
+      } else if (isPrevious) {
+        dispatch(setIdle({ type: "previous" }));
+      } else {
+        dispatch(setIdle({ type: "posts" }));
+      }
     }
   };
 
 export const getComments =
-  (parent_id: number, page: number = 0, userId: number | null = null) =>
+  (
+    parent_id: number,
+    page: number = 0,
+    userId: number | null = null,
+    isPrevious: boolean = false,
+    isMore: boolean = false
+  ) =>
   async (dispatch: AppDispatch) => {
-    dispatch(setLoading({ type: "comments" }));
+    if (isMore) {
+      dispatch(setLoading({ type: "more" }));
+    } else if (isPrevious) {
+      dispatch(setLoading({ type: "previous" }));
+    } else {
+      dispatch(setLoading({ type: "comments" }));
+    }
 
     try {
       const response = await axios.get(`${API_URL}/postComment/gets`, {
         params: {
           type: "comment",
-          page,
+          page: isMore ? page + 1 : isPrevious ? Math.max(0, page - 1) : page,
           parent_id,
           userId,
         },
       });
 
-      dispatch(setComments({ comments: response.data }));
+      if (response.data.length !== 0) {
+        dispatch(setComments({ comments: response.data }));
+      }
+
+      if (response.data.length > 0 && isMore) {
+        dispatch(setCommentsPage({ page: page + 1 }));
+      } else if (isPrevious) {
+        dispatch(setCommentsPage({ page: Math.max(0, page - 1) }));
+      }
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
@@ -147,7 +221,13 @@ export const getComments =
         console.error(error);
       }
     } finally {
-      dispatch(setIdle({ type: "comments" }));
+      if (isMore) {
+        dispatch(setIdle({ type: "more" }));
+      } else if (isPrevious) {
+        dispatch(setIdle({ type: "previous" }));
+      } else {
+        dispatch(setIdle({ type: "comments" }));
+      }
     }
   };
 

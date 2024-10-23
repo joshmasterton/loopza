@@ -15,6 +15,7 @@ import { Protected } from "./utilities/Protected.utilities";
 import { Popup } from "./utilities/Popup.utilities";
 import "@fontsource-variable/comfortaa";
 import "./styles/App.scss";
+import { Profile } from "./pages/Profile.page";
 
 export const Wrapper = ({
   children,
@@ -64,10 +65,10 @@ export const routes = [
     errorElement: <Error />,
   },
   {
-    path: "/profile/:username",
+    path: "/profile/:profileId",
     element: (
-      <Wrapper>
-        <Home />
+      <Wrapper isReturn>
+        <Profile />
       </Wrapper>
     ),
     errorElement: <Error />,

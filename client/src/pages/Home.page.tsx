@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { useEffect } from "react";
 import { getPosts } from "../features/postsCommentsSlice";
-import { LoadingContainer } from "../components/Loading.component";
+import {
+  LoadingContainer,
+  LoadingSpinner,
+} from "../components/Loading.component";
 import { Button } from "../components/Button.component";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineCreate } from "react-icons/md";
@@ -13,12 +16,11 @@ export const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.auth);
-  const { posts, postsStatus } = useSelector(
-    (state: RootState) => state.postsComments
-  );
+  const { postsPage, posts, postsStatus, previousStatus, moreStatus } =
+    useSelector((state: RootState) => state.postsComments);
 
   useEffect(() => {
-    dispatch(getPosts(0, user?.id));
+    dispatch(getPosts(postsPage, user?.id));
   }, [user]);
 
   return (
@@ -28,10 +30,40 @@ export const Home = () => {
           <LoadingContainer />
         ) : posts && posts.length > 0 ? (
           <>
+            {postsPage !== 0 && (
+              <Button
+                type="button"
+                id="loadPrevious"
+                className="transparent more"
+                onClick={async () => {
+                  await dispatch(getPosts(postsPage, user?.id, true, false));
+                }}
+              >
+                {previousStatus === "loading" ? (
+                  <LoadingSpinner />
+                ) : (
+                  <div>Load previous</div>
+                )}
+              </Button>
+            )}
             {posts.map((post) => (
               <Post key={post.id} item={post} />
             ))}
-            <div className="blank" />
+            {posts.length < 3 && <div className="blank" />}
+            <Button
+              type="button"
+              id="loadMore"
+              className="transparent more"
+              onClick={async () => {
+                await dispatch(getPosts(postsPage, user?.id, false, true));
+              }}
+            >
+              {moreStatus === "loading" ? (
+                <LoadingSpinner />
+              ) : (
+                <div>Load more</div>
+              )}
+            </Button>
           </>
         ) : (
           <div className="blank" />

@@ -37,7 +37,7 @@ export const Post = ({
   const [likeStatus, setLikeStatus] = useState(false);
   const [dislikeStatus, setDislikeStatus] = useState(false);
   const { user } = useSelector((state: RootState) => state.auth);
-  const { newItemStatus } = useSelector(
+  const { newItemStatus, commentsPage } = useSelector(
     (state: RootState) => state.postsComments
   );
   const [showReplyOption, setShowReplyOption] = useState(false);
@@ -70,7 +70,7 @@ export const Post = ({
       reset();
 
       if (currentPost.id) {
-        await dispatch(getComments(currentPost.id));
+        await dispatch(getComments(currentPost.id, commentsPage));
       }
     });
   };
@@ -81,12 +81,12 @@ export const Post = ({
         <Navigation link={`/post/${currentPost?.id}`} type="button" />
       )}
       <header>
-        <div>
+        <Navigation type="link" link={`/profile/${currentPost.user_id}`}>
           <img src={currentPost?.profile_picture_url} alt="" />
-        </div>
+        </Navigation>
         <div>
-          {currentPost?.username}
-          <p>{currentPost?.email}</p>
+          <div>{currentPost?.username}</div>
+          <p>{currentPost?.created_at}</p>
         </div>
       </header>
       <main>

@@ -56,6 +56,7 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
 
   return (
     <nav className={isMenu ? "active" : "hidden"}>
+      <div />
       <header>
         {isReturn ? (
           <Navigation link="/" type="button">
@@ -64,7 +65,7 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
         ) : (
           <>
             {user ? (
-              <Navigation link={`/profile/${user.username}`} type="button">
+              <Navigation link={`/profile/${user.id}`} type="button">
                 <img src={user.profile_picture_url} alt="" />
               </Navigation>
             ) : (
@@ -95,7 +96,7 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
         <ul>
           <div className={`hover ${currentPage}`} />
           {user ? (
-            <Navigation link={`/profile/${user.username}`} type="button">
+            <Navigation link={`/profile/${user.id}`} type="button">
               <img src={user.profile_picture_url} alt="" />
               <div>{user.username}</div>
             </Navigation>

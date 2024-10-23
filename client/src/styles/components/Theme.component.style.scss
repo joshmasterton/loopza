@@ -14,8 +14,9 @@
   align-items: center;
   width: calc($width * 2);
   height: $height;
+  outline: $outline;
   border-radius: $round;
-  background: var(--container);
+  background: var(--background);
 }
 
 #theme > div > button.dark {
@@ -36,14 +37,13 @@
 }
 
 nav #theme > div {
-  background: var(--container);
+  background: var(--background);
 }
 
 .side #theme > div {
   flex-direction: column;
   width: calc($width);
   height: calc($width * 2);
-  background: var(--background);
 }
 
 .side #theme > div > button.dark {

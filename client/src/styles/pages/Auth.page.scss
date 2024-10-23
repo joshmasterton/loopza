@@ -6,7 +6,8 @@
   align-self: center;
   animation: $animationCubic comeFromLeft;
   z-index: 1;
-  background: var(--container);
+  outline: $outline;
+  background: var(--background);
 }
 
 #auth > a {

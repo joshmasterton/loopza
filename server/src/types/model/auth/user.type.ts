@@ -9,7 +9,7 @@ export type UserTypes = {
   comments: number;
   likes: number;
   dislikes: number;
-  created_at: Date;
+  created_at: string;
   profile_picture_url: string;
 };
 

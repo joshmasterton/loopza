@@ -176,7 +176,7 @@ export class PostComment {
 					ORDER BY created_at DESC
 					LIMIT 10 OFFSET $2
 				`,
-        [type, page, userId]
+        [type, page * 10, userId]
       );
 
       const postsComments: PostCommentTypes[] = await Promise.all(

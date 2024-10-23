@@ -44,6 +44,8 @@ export const Comment = ({
   );
   const [showReplyOption, setShowReplyOption] = useState(false);
   const [loadingReplies, setLoadingReplies] = useState(false);
+  const [page, setPage] = useState(0);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [replies, setReplies] = useState<PostCommentTypes[] | undefined>(
     undefined
   );
@@ -75,22 +77,38 @@ export const Comment = ({
 
       reset();
       setShowReplyOption(false);
-      await getReplies(depth);
+      await getReplies(depth, page);
     });
   };
 
-  const getReplies = async (depth: number = 0) => {
+  const getReplies = async (
+    depth: number = 0,
+    page: number = 0,
+    isPrevious: boolean = false,
+    isMore: boolean = false
+  ) => {
     if (depth < 2) {
       try {
-        setLoadingReplies(true);
+        if (isMore) {
+          setLoadingMore(true);
+        } else {
+          setLoadingReplies(true);
+        }
+
         const response = await axios.get(`${API_URL}/postComment/gets`, {
           params: {
             type: "comment",
-            page: 0,
+            page: isMore ? page + 1 : isPrevious ? Math.max(0, page - 1) : 0,
             parent_id: currentComment.parent_id,
             comment_parent_id: currentComment.id,
           },
         });
+
+        if (response.data.length > 0 && isMore) {
+          setPage(page + 1);
+        } else if (isPrevious) {
+          setPage(Math.max(0, page - 1));
+        }
 
         if (response.data.length > 0) {
           setReplies(response.data);
@@ -100,13 +118,14 @@ export const Comment = ({
           throw error;
         }
       } finally {
+        setLoadingMore(false);
         setLoadingReplies(false);
       }
     }
   };
 
   useEffect(() => {
-    getReplies(depth);
+    getReplies(depth, page, false, false);
   }, []);
 
   if (depth < 3) {
@@ -114,14 +133,43 @@ export const Comment = ({
       <div className={`comment ${type}`}>
         <div className="bar">
           <div />
+          {depth < 2 && (
+            <>
+              <Button
+                type="button"
+                id="remove"
+                className="small previous"
+                onClick={() => {
+                  setReplies(undefined);
+                  setPage(0);
+                }}
+              >
+                <div>-</div>
+              </Button>
+              <Button
+                type="button"
+                id="loadMore"
+                className="small"
+                onClick={async () => {
+                  if (replies?.length === 0 || replies === undefined) {
+                    await getReplies(depth, page, false, false);
+                  } else {
+                    await getReplies(depth, page, false, true);
+                  }
+                }}
+              >
+                {loadingMore ? <LoadingSpinner /> : <div>+</div>}
+              </Button>
+            </>
+          )}
         </div>
         {!canComment && (
           <Navigation link={`/post/${currentComment?.id}`} type="button" />
         )}
         <header>
-          <div>
+          <Navigation type="link" link={`/profile/${currentComment.user_id}`}>
             <img src={currentComment?.profile_picture_url} alt="" />
-          </div>
+          </Navigation>
           <div>
             {currentComment?.username}
             <p>{currentComment?.email}</p>

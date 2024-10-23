@@ -193,9 +193,18 @@ export class User {
         [value]
       );
 
-      return user.rows[0] as UserTypes;
+      const serializedUser = user.rows[0] as UserTypes;
+
+      if (serializedUser) {
+        serializedUser.created_at = new Date(
+          serializedUser.created_at
+        ).toLocaleString();
+      }
+
+      return serializedUser;
     } catch (error) {
       if (error instanceof Error) {
+        console.log(error);
         throw error;
       }
     }

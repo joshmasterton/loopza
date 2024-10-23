@@ -13,7 +13,7 @@ export const Theme = () => {
       <div>
         <Button
           id="themeButton"
-          className={currentTheme}
+          className={`${currentTheme} primary`}
           type="button"
           onClick={() => dispatch(changeTheme(currentTheme))}
         >

@@ -6,8 +6,11 @@
   flex-direction: column;
   border-radius: $round;
   transform-origin: top;
-  overflow: hidden;
-  background: var(--container);
+  border-radius: 0;
+  gap: $gap;
+  padding-bottom: $padding;
+  border-bottom: $outline;
+  background: var(--background);
 }
 
 .post > a {
@@ -23,7 +26,6 @@
 .post > header {
   display: flex;
   align-items: center;
-  padding: calc($padding * 1.25);
   gap: $gap;
 }
 
@@ -40,12 +42,6 @@
   opacity: $opacity;
 }
 
-.post > header > div > img {
-  border-radius: $round;
-  width: $width - $paddingSmall;
-  height: $height - $paddingSmall;
-}
-
 .post > main {
   display: flex;
   flex-direction: column;
@@ -56,13 +52,13 @@
   flex-direction: column;
   height: fit-content;
   word-break: break-all;
+  gap: $gap;
   min-height: calc($height * 2);
 }
 
 .post > main > div > div {
-  padding: calc($padding * 1.25);
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-left: $paddingSmall;
+  padding-right: $paddingSmall;
   flex: 1;
 }
 
@@ -70,15 +66,15 @@
   width: 100%;
   height: fit-content;
   object-fit: contain;
-  margin-bottom: calc($padding * 1.25);
   border-radius: $round;
+  padding: 0;
 }
 
 .post > footer {
   display: flex;
   flex-wrap: wrap;
-  padding: calc($padding * 1.25);
   gap: $gap;
+  padding-left: $fontAdjust;
 }
 
 .post > footer > .reply {
@@ -87,13 +83,15 @@
   justify-content: start;
 }
 
+.post > footer > .reply svg {
+  padding: calc($fontAdjust / 1.5);
+}
+
 .post > form {
   display: flex;
   flex-direction: column;
   align-items: end;
   gap: $gap;
-  padding: $padding;
-  padding-top: 0;
 }
 
 .post > form textarea {

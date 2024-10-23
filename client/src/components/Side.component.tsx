@@ -46,7 +46,7 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
           <ul>
             <div className={`hover ${currentPage}`} />
             {user ? (
-              <Navigation link={`/profile/${user.username}`} type="button">
+              <Navigation link={`/profile/${user.id}`} type="button">
                 <img src={user.profile_picture_url} alt="" />
                 <div>{user.username}</div>
               </Navigation>

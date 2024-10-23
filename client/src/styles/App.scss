@@ -56,6 +56,7 @@ body {
   justify-content: center;
   padding: $padding;
   gap: $gap;
+  overflow: visible;
   color: var(--color);
 }
 
@@ -71,12 +72,14 @@ p {
 img {
   width: $width;
   height: $height;
+  padding: calc($padding / 4);
+  border-radius: $round;
 }
 
 svg {
   min-width: calc($width);
   min-height: calc($height);
-  padding: calc($padding / 1.5);
+  padding: calc($padding / 2);
   border-radius: $round;
 }
 
@@ -98,5 +101,5 @@ svg {
   flex: 1;
   padding: $padding;
   border-radius: $round;
-  background: var(--container);
+  background: var(--background);
 }
