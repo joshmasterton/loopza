@@ -16,6 +16,7 @@ export const mockUser: UserTypes = {
   followers: 0,
   following: 0,
   comments: 0,
+  posts: 0,
   likes: 0,
   dislikes: 0,
   created_at: new Date(Date.now()).toLocaleString(),
