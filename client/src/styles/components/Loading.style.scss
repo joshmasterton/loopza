@@ -51,6 +51,8 @@
 
 .loadingSpinner > div > div:nth-child(1) {
   top: $fontAdjust;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .loadingSpinner > div > div:nth-child(2) {
