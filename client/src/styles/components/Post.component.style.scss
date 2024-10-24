@@ -6,11 +6,8 @@
   flex-direction: column;
   border-radius: $round;
   transform-origin: top;
-  border-radius: 0;
-  gap: $gap;
-  padding-bottom: $padding;
-  border-bottom: $outline;
-  background: var(--background);
+  border-radius: $round;
+  background: var(--container);
 }
 
 .post > a {
@@ -27,6 +24,7 @@
   display: flex;
   align-items: center;
   gap: $gap;
+  padding: $padding;
 }
 
 .post > header > div {
@@ -52,13 +50,12 @@
   flex-direction: column;
   height: fit-content;
   word-break: break-all;
-  gap: $gap;
   min-height: calc($height * 2);
 }
 
 .post > main > div > div {
-  padding-left: $paddingSmall;
-  padding-right: $paddingSmall;
+  padding: $padding;
+  padding-top: 0;
   flex: 1;
 }
 
@@ -67,6 +64,7 @@
   height: fit-content;
   object-fit: contain;
   border-radius: $round;
+  margin-bottom: $padding;
   padding: 0;
 }
 
@@ -74,7 +72,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: $gap;
-  padding-left: $fontAdjust;
+  padding: $padding;
+  padding-top: 0;
 }
 
 .post > footer > .reply {
@@ -91,6 +90,7 @@
   display: flex;
   flex-direction: column;
   align-items: end;
+  padding: $padding;
   gap: $gap;
 }
 

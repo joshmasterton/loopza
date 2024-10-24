@@ -31,7 +31,7 @@ label > p {
 label > button {
   position: absolute;
   width: fit-content;
-  top: calc($paddingLarge / 1.6);
+  top: calc($paddingLarge / 1.5);
   right: 0;
   background: transparent;
   box-shadow: none;
@@ -51,17 +51,16 @@ input {
 }
 
 textarea {
-  margin-top: 0.2rem;
-  padding: $paddingSmall;
+  padding: $padding;
   min-height: 100%;
   border-radius: $round;
   color: inherit;
-  outline: $outline;
-  background: transparent;
+  background: var(--background);
 }
 
 #main.newPost textarea {
   outline: none;
+  background: transparent;
 }
 
 label.file {

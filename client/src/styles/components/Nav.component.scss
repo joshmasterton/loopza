@@ -20,27 +20,15 @@ nav > header {
   display: flex;
   justify-content: start;
   align-items: center;
-  width: calc(100% - $padding * 2);
+  width: calc(100%);
   gap: $gap;
+  padding: $padding;
   min-height: calc($height + ($padding * 2));
-  margin: $padding;
-  margin-top: 0;
-  background: var(--background);
   transition: transform $animationCubic;
-  border-bottom: $outline;
   animation: $animationCubic comeFromTop;
   z-index: 1;
-}
-
-nav > div {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: calc($height + ($padding * 2));
-  animation: $animationCubic comeFromTop;
-  transition: transform $animationCubic;
-  z-index: 1;
+  border-bottom-left-radius: $round;
+  border-bottom-right-radius: $round;
   background: var(--background);
 }
 
@@ -53,6 +41,7 @@ nav > header > div {
   justify-content: end;
   align-items: end;
   width: 100%;
+  background: var(--background);
 }
 
 nav > header > div > button {
@@ -63,9 +52,11 @@ nav > main {
   position: fixed;
   top: 0;
   left: 0;
-  padding-top: calc($height + $padding * 2);
+  padding-top: calc($height + $padding + $fontAdjust);
   width: 100%;
   border-radius: $round;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   transition: transform $animationCubic;
   transform-origin: top;
   background: var(--background);
@@ -84,7 +75,7 @@ nav > header > div {
 }
 
 nav.hidden > main {
-  transform: translateY(-28rem);
+  transform: translateY(-29rem);
 }
 
 nav > main > ul {
@@ -111,7 +102,7 @@ nav div.hover.following {
   transform: translateY(($height * 2) + ($padding * 2));
 }
 
-nav div.hover.newPost {
+nav div.hover.new {
   border: none;
   transform: translateY(($height * 3) + ($padding * 3));
 }
@@ -144,11 +135,11 @@ nav div.hover.post {
   }
 
   nav.active > main {
-    transform: translateY(-28rem);
+    transform: translateY(-29rem);
   }
 
   nav.hidden > main {
-    transform: translateY(-28rem);
+    transform: translateY(-29rem);
   }
 }
 

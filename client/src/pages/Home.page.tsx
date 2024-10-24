@@ -34,7 +34,7 @@ export const Home = () => {
               <Button
                 type="button"
                 id="loadPrevious"
-                className="transparent more"
+                className="container more"
                 onClick={async () => {
                   await dispatch(getPosts(postsPage, user?.id, true, false));
                 }}
@@ -50,20 +50,22 @@ export const Home = () => {
               <Post key={post.id} item={post} />
             ))}
             {posts.length < 3 && <div className="blank" />}
-            <Button
-              type="button"
-              id="loadMore"
-              className="transparent more"
-              onClick={async () => {
-                await dispatch(getPosts(postsPage, user?.id, false, true));
-              }}
-            >
-              {moreStatus === "loading" ? (
-                <LoadingSpinner />
-              ) : (
-                <div>Load more</div>
-              )}
-            </Button>
+            {posts.length === 10 && (
+              <Button
+                type="button"
+                id="loadMore"
+                className="container more"
+                onClick={async () => {
+                  await dispatch(getPosts(postsPage, user?.id, false, true));
+                }}
+              >
+                {moreStatus === "loading" ? (
+                  <LoadingSpinner />
+                ) : (
+                  <div>Load more</div>
+                )}
+              </Button>
+            )}
           </>
         ) : (
           <div className="blank" />

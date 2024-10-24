@@ -56,7 +56,6 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
 
   return (
     <nav className={isMenu ? "active" : "hidden"}>
-      <div />
       <header>
         {isReturn ? (
           <Navigation link="/" type="button">

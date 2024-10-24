@@ -147,7 +147,7 @@ export class User {
       const user = await queryDatabase(
         `
 					SELECT id, username, email, followers, following,
-					comments, likes, dislikes, created_at, profile_picture_url
+					posts, comments, likes, dislikes, created_at, profile_picture_url
 					FROM ${tableConfig.getUsersTable()} 
 					WHERE ${method} = $1
 				`,
@@ -186,7 +186,7 @@ export class User {
       const user = await queryDatabase(
         `
 					SELECT id, username, email, followers, following,
-					comments, likes, dislikes, created_at, profile_picture_url
+					posts, comments, likes, dislikes, created_at, profile_picture_url
 					FROM ${tableConfig.getUsersTable()} 
 					WHERE ${method} = $1
 				`,

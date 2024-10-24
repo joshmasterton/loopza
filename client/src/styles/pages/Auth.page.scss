@@ -6,8 +6,8 @@
   align-self: center;
   animation: $animationCubic comeFromLeft;
   z-index: 1;
-  outline: $outline;
-  background: var(--background);
+  box-shadow: var(--shadow);
+  background: var(--container);
 }
 
 #auth > a {
@@ -16,9 +16,14 @@
   right: calc($paddingLarge / 1.25);
 }
 
+#auth main img {
+  padding: 0 !important;
+}
+
 #auth > img {
   position: absolute;
   top: -(calc($paddingLarge / 1.5));
   left: 50%;
+  padding: 0;
   transform: translateX(-50%);
 }

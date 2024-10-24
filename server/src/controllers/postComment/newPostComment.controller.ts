@@ -19,10 +19,6 @@ export const newPostComment = async (req: UserRequest, res: Response) => {
   try {
     const { user } = req;
 
-    if (!user) {
-      throw new Error("No user present");
-    }
-
     const validatedData = await newPostCommentSchema.validate(req.body);
     let serializedPostComment: string;
 

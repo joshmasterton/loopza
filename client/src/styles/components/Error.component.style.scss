@@ -2,7 +2,7 @@
 
 .error {
   font-size: $fontSmall;
-  padding-left: $paddingSmall;
+  padding-left: $paddingSmall + $fontAdjust;
   color: var(--colorDanger);
 }
 

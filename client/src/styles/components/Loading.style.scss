@@ -12,63 +12,53 @@
   width: 100%;
   height: 100%;
   border-radius: $round;
-  background: var(--background);
+  background: var(--container);
 }
 
 .loadingSpinner {
-  position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   align-self: center;
   min-width: $width;
+  max-width: $width;
   min-height: $height;
+  max-height: $height;
 }
 
 .loadingSpinner > div {
-  position: absolute;
+  position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
-  top: calc($paddingSmall * 1.25);
-  left: calc($paddingSmall * 1.25);
-  min-width: calc(100% - $padding);
-  width: calc(100% - $padding);
-  min-height: calc(100% - $padding);
-  height: calc(100% - $padding);
-  padding: calc($paddingSmall / 2);
-  border-radius: $roundExtra;
-  animation: 0.5s rotate infinite linear;
-  background: conic-gradient(transparent, transparent, var(--primary));
-  z-index: 1;
-}
-
-.loadingSpinner.primary > div {
-  background: conic-gradient(transparent, transparent, white);
-}
-
-.loadingSpinner > div:nth-child(2) {
-  background: var(--background);
-  opacity: 75%;
-  z-index: 0;
-}
-
-.loadingSpinner.primary > div:nth-child(2) {
-  opacity: 15%;
-  background: white;
+  min-width: calc($width - $paddingSmall);
+  max-width: calc($width - $paddingSmall);
+  min-height: calc($height - $paddingSmall);
+  max-height: calc($height - $paddingSmall);
+  animation: 0.75s infinite ease-in-out spinner;
 }
 
 .loadingSpinner > div > div {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  width: $paddingSmall;
+  height: $paddingSmall;
   border-radius: $roundExtra;
-  background: var(--background);
-}
-
-.loadingSpinner.container > div > div {
-  background: var(--background);
+  background: var(--primary);
 }
 
 .loadingSpinner.primary > div > div {
-  background: var(--primary);
+  background: white;
+}
+
+.loadingSpinner > div > div:nth-child(1) {
+  top: $fontAdjust;
+}
+
+.loadingSpinner > div > div:nth-child(2) {
+  bottom: $fontAdjust;
+  left: $fontAdjust;
+}
+
+.loadingSpinner > div > div:nth-child(3) {
+  bottom: $fontAdjust;
+  right: $fontAdjust;
 }

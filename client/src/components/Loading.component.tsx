@@ -20,15 +20,16 @@ export const LoadingSpinner = ({
   isSmall?: boolean;
 }) => {
   return (
-    <div
+    <main
       className={`loadingSpinner ${isPrimary ? "primary" : ""} ${
         isSmall ? "small" : ""
       } ${isContainer ? "container" : ""}`}
     >
       <div>
         <div />
+        <div />
+        <div />
       </div>
-      <div />
-    </div>
+    </main>
   );
 };

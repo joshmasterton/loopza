@@ -15,6 +15,7 @@ import { getPostCommentRouter } from "./routes/postComment/getPostComment.route"
 import { getPostsCommentsRouter } from "./routes/postComment/getPostsComments.route";
 import { likeDislikePostCommentRouter } from "./routes/postComment/likeDislikePostComment.routes";
 import { getUserRouter } from "./routes/user/getUser.route";
+import { followUserRoute } from "./routes/user/followUser.route";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -52,6 +53,7 @@ app.use("/postComment", getPostsCommentsRouter);
 app.use("/postComment", likeDislikePostCommentRouter);
 
 app.use("/user", getUserRouter);
+app.use("/user", followUserRoute);
 
 const startServer = async () => {
   try {

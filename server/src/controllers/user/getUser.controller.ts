@@ -10,7 +10,6 @@ const getUserSchema = yup.object().shape({
 export const getUser = async (req: UserRequest, res: Response) => {
   try {
     const validatedData = await getUserSchema.validate(req.query);
-
     const user = await new User().getUser("id", validatedData.userId);
 
     return res.status(200).json(user);
@@ -19,6 +18,6 @@ export const getUser = async (req: UserRequest, res: Response) => {
       return res.status(400).json({ error: error.message });
     }
 
-    return res.status(400).json({ error: "get posts or comments has occured" });
+    return res.status(400).json({ error: "get user error has occured" });
   }
 };

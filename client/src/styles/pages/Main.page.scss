@@ -3,7 +3,7 @@
 #main {
   display: flex;
   flex-direction: column;
-  margin-top: calc($height + $padding * 2);
+  margin-top: calc($height + $padding);
   gap: $gap;
   width: 100%;
   max-width: $widthContainerMain;
@@ -11,8 +11,6 @@
   transform-origin: center;
   animation: $animationCubic emerge;
   transition: margin $animationCubic;
-  padding-top: $fontAdjust;
-  padding-bottom: $fontAdjust;
   z-index: 2;
 }
 
@@ -22,11 +20,23 @@
   flex: 1;
   min-height: calc($height + ($padding * 2));
   gap: $gap;
-  background: var(--background);
+  padding: $padding;
+  border-radius: $round;
+  background: var(--container);
+}
+
+#main.newPost {
+  border-radius: $round;
+  background: var(--container);
 }
 
 #main.newPost > form {
-  background: var(--background);
+  padding-top: $fontAdjust;
+}
+
+#main.newPost > form > main {
+  padding: $padding;
+  padding-top: 0;
 }
 
 @media screen and (min-width: $widthContainer) {
@@ -35,7 +45,7 @@
   }
 
   #main {
-    margin-left: calc(($height) + $padding * 2);
+    margin-left: calc(($height) + $padding * 3);
   }
 }
 
@@ -47,7 +57,7 @@
 
 @media screen and (min-width: calc($widthContainerLarge)) {
   #main {
-    margin-right: calc(($height) + $padding * 2);
+    margin-right: calc(($height) + $padding * 3);
   }
 }
 

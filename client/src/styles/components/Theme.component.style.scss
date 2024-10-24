@@ -14,17 +14,16 @@
   align-items: center;
   width: calc($width * 2);
   height: $height;
-  outline: $outline;
   border-radius: $round;
   background: var(--background);
 }
 
 #theme > div > button.dark {
-  transform: translateX(-50%);
+  transform: translateX(-1.225rem);
 }
 
 #theme > div > button.light {
-  transform: translateX(50%);
+  transform: translateX(1.275rem);
 }
 
 #theme > div > button {
@@ -37,7 +36,7 @@
 }
 
 nav #theme > div {
-  background: var(--background);
+  background: var(--container);
 }
 
 .side #theme > div {
@@ -47,11 +46,11 @@ nav #theme > div {
 }
 
 .side #theme > div > button.dark {
-  transform: translateY(-50%);
+  transform: translateY(-1.25rem);
 }
 
 .side #theme > div > button.light {
-  transform: translateY(50%);
+  transform: translateY(1.25rem);
 }
 
 @media screen and (min-width: $widthContainerMedium) {
@@ -62,10 +61,10 @@ nav #theme > div {
   }
 
   .side #theme > div > button.dark {
-    transform: translateX(-50%);
+    transform: translateX(-1.225rem);
   }
 
   .side #theme > div > button.light {
-    transform: translateX(50%);
+    transform: translateX(1.275rem);
   }
 }

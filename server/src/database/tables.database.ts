@@ -13,6 +13,7 @@ export const createUserTable = async (usersTable = "users") => {
 				refresh_token TEXT DEFAULT NULL,
 				followers INT DEFAULT 0,
 				following INT DEFAULT 0,
+				posts INT DEFAULT 0,
 				comments INT DEFAULT 0,
 				likes INT DEFAULT 0,
 				dislikes INT DEFAULT 0,
@@ -71,15 +72,37 @@ export const createLikesDislikesTable = async (
   }
 };
 
+export const createFollowersTable = async (followersTable = "followers") => {
+  try {
+    await queryDatabase(
+      `CREATE TABLE IF NOT EXISTS ${followersTable}(
+				id SERIAL PRIMARY KEY,
+				follower_initiator INT,
+				follower_one_id INT,
+				follower_two_id INT,
+				is_accepted BOOLEAN DEFAULT false,
+				pending_user_id INT,
+				created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+			)`
+    );
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+  }
+};
+
 export const dropTables = async (
   usersTable = "users",
   postsCommentsTable = "posts_comments",
-  likesDislikesTable = "likes_dislikes"
+  likesDislikesTable = "likes_dislikes",
+  followersTable = "followers"
 ) => {
   try {
     await queryDatabase(`DROP TABLE IF EXISTS ${usersTable}`);
     await queryDatabase(`DROP TABLE IF EXISTS ${postsCommentsTable}`);
     await queryDatabase(`DROP TABLE IF EXISTS ${likesDislikesTable}`);
+    await queryDatabase(`DROP TABLE IF EXISTS ${followersTable}`);
   } catch (error) {
     if (error instanceof Error) {
       throw error;

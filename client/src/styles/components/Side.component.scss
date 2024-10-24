@@ -15,9 +15,10 @@
   display: flex;
   width: 100%;
   min-height: 100%;
-  padding-top: $fontAdjust;
-  padding-bottom: $fontAdjust;
+  padding: $padding;
+  border-radius: $round;
   transition: width $animationCubic;
+  background: var(--container);
 }
 
 .side > div > ul {
@@ -38,9 +39,7 @@
 .side.left > div {
   position: absolute;
   left: $padding;
-  width: calc($width + $padding);
-  padding-right: $padding;
-  border-right: $outline;
+  width: calc($width + $padding * 2);
 }
 
 .side.left > div > ul a > div,
@@ -61,9 +60,7 @@
   justify-content: center;
   align-items: center;
   right: $padding;
-  padding-left: $padding;
-  width: calc($width + $padding);
-  border-left: $outline;
+  width: calc($width + $padding * 2);
 }
 
 .side.right > div > ul a > div,
@@ -73,12 +70,12 @@
 
 .side div.hover {
   position: absolute;
-  width: calc(100% - $padding);
+  width: calc(100% - $padding * 2);
   height: $height;
   border-radius: $round;
   transform-origin: center;
   transition: transform $animationCubic;
-  background: var(--container);
+  background: var(--background);
 }
 
 .side div.hover.home {
@@ -89,7 +86,7 @@
   transform: translateY(($height * 2) + ($padding * 2));
 }
 
-.side div.hover.newPost {
+.side div.hover.new {
   border: none;
   transform: translateY(($height * 3) + ($padding * 3));
 }

@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import path from "path";
 import pg from "pg";
 import {
+  createFollowersTable,
   createLikesDislikesTable,
   createPostsCommentsTable,
   createUserTable,
@@ -31,15 +32,18 @@ export class TableConfig {
   private usersTable: string;
   private postsCommentsTable: string;
   private likesDislikesTable: string;
+  private followersTable: string;
 
   constructor(
     usersTable = "users",
     postsCommentsTable = "posts_comments",
-    likesDislikesTable = "likes_dislikes"
+    likesDislikesTable = "likes_dislikes",
+    followersTable = "followers"
   ) {
     this.usersTable = usersTable;
     this.postsCommentsTable = postsCommentsTable;
     this.likesDislikesTable = likesDislikesTable;
+    this.followersTable = followersTable;
   }
 
   getUsersTable() {
@@ -54,6 +58,10 @@ export class TableConfig {
     return this.likesDislikesTable;
   }
 
+  getFollowersTable() {
+    return this.followersTable;
+  }
+
   setUsersTable(name: string) {
     this.usersTable = name;
   }
@@ -64,6 +72,10 @@ export class TableConfig {
 
   setLikesDislikesTable(name: string) {
     this.likesDislikesTable = name;
+  }
+
+  setFollowersTable(name: string) {
+    this.followersTable = name;
   }
 }
 
@@ -91,10 +103,12 @@ export const createDatabase = async () => {
 export const initializeDatabase = async (
   usersTable = "users",
   postsCommentsTable = "posts_comments",
-  likesDislikesTable = "likes_dislikes"
+  likesDislikesTable = "likes_dislikes",
+  followersTable = "followers"
 ) => {
   await createDatabase();
   await createUserTable(usersTable);
   await createPostsCommentsTable(postsCommentsTable);
   await createLikesDislikesTable(likesDislikesTable);
+  await createFollowersTable(followersTable);
 };

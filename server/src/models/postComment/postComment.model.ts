@@ -88,6 +88,16 @@ export class PostComment {
 
       const newPostComment = await queryDatabase(query, queryParameters);
 
+      // Add posts or comments to user stats
+      await queryDatabase(
+        `
+      		UPDATE ${tableConfig.getUsersTable()}
+      		SET ${this.type}s = ${this.type}s + 1
+      		WHERE id = $1
+      	`,
+        [this.user_id]
+      );
+
       if (parent_id) {
         await queryDatabase(
           `
@@ -206,6 +216,13 @@ export class PostComment {
         [this.id]
       );
 
+      if (!existingPostComment.rows[0]) {
+        throw new Error(`Post or comment does not exist`);
+      }
+
+      const existingPostCommentUserId = existingPostComment.rows[0]
+        .user_id as number;
+
       const existingLikeDislike = await queryDatabase(
         `
 					SELECT * FROM ${tableConfig.getLikesDislikesTable()}
@@ -213,10 +230,6 @@ export class PostComment {
 				`,
         [this.id, userId]
       );
-
-      if (!existingPostComment.rows[0]) {
-        throw new Error(`Post or comment does not exist`);
-      }
 
       if (!existingLikeDislike.rows[0]) {
         await queryDatabase(
@@ -238,6 +251,16 @@ export class PostComment {
 					`,
           [this.id]
         );
+
+        // Add like or dislike in user stats
+        await queryDatabase(
+          `
+						UPDATE ${tableConfig.getUsersTable()}
+						SET ${reaction}s = ${reaction}s + 1
+						WHERE id = $1
+					`,
+          [existingPostCommentUserId]
+        );
       } else {
         const likeDislike = existingLikeDislike.rows[0] as LikeDislikeTypes;
         const oppositeReaction = reaction === "like" ? "dislike" : "like";
@@ -250,6 +273,16 @@ export class PostComment {
 							WHERE id = $1
 						`,
             [this.id]
+          );
+
+          // Remove like or dislike in user stats
+          await queryDatabase(
+            `
+							UPDATE ${tableConfig.getUsersTable()}
+							SET ${reaction}s = ${reaction}s - 1
+							WHERE id = $1
+						`,
+            [existingPostCommentUserId]
           );
 
           await queryDatabase(
@@ -279,6 +312,17 @@ export class PostComment {
 						`,
             [this.id]
           );
+
+          // Remove like or dislike in user stats
+          await queryDatabase(
+            `
+							UPDATE ${tableConfig.getUsersTable()}
+							SET ${reaction}s = ${reaction}s + 1
+							WHERE id = $1
+						`,
+            [existingPostCommentUserId]
+          );
+
           await queryDatabase(
             `
 							UPDATE ${tableConfig.getPostsCommentsTable()}
@@ -286,6 +330,16 @@ export class PostComment {
 							WHERE id = $1
 						`,
             [this.id]
+          );
+
+          // Remove like or dislike in user stats
+          await queryDatabase(
+            `
+							UPDATE ${tableConfig.getUsersTable()}
+							SET ${oppositeReaction}s = ${oppositeReaction}s - 1
+							WHERE id = $1
+						`,
+            [existingPostCommentUserId]
           );
         }
       }

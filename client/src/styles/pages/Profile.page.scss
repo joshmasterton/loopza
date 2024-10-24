@@ -2,5 +2,91 @@
 @import "../base/themes.scss";
 
 #profile {
-  background: red;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-radius: $round;
+  background: var(--container);
+}
+
+#profile > header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: $padding;
+  gap: $gap;
+  border-radius: $round;
+}
+
+#profile > header > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+#profile > header > img:first-of-type {
+  width: calc($width * 2);
+  height: calc($height * 2);
+  padding: 0;
+  z-index: 1;
+}
+
+#profile > header > img:last-of-type {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  padding: 0;
+  opacity: 50%;
+  object-fit: cover;
+  object-position: center;
+  filter: blur(5rem);
+}
+
+#profile > main {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: $padding;
+  gap: $gap;
+}
+
+#profile > main > div {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: start;
+  align-items: center;
+  gap: $gap;
+  border-radius: $round;
+}
+
+#profile > main > div > div {
+  flex: 1;
+  padding-top: 0.2rem;
+  min-width: calc($height * 2);
+}
+
+#profile > main > div > p {
+  display: flex;
+  justify-content: center;
+  align-items: centers;
+  width: $width;
+  padding-top: 0.2rem;
+}
+
+#profile > footer {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  flex: 1;
+  padding: $padding;
+  padding-top: 0;
 }

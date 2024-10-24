@@ -47,7 +47,7 @@ export const PostPage = () => {
             <Button
               type="button"
               id="loadPrevious"
-              className="transparent more"
+              className="container more"
               onClick={async () => {
                 await dispatch(
                   getComments(
@@ -80,28 +80,30 @@ export const PostPage = () => {
                   <div className="blank" />
                 )}
               </div>
-              <Button
-                type="button"
-                id="loadMore"
-                className="transparent more"
-                onClick={async () => {
-                  await dispatch(
-                    getComments(
-                      parseInt(postId ?? ""),
-                      commentsPage,
-                      user?.id,
-                      false,
-                      true
-                    )
-                  );
-                }}
-              >
-                {moreStatus === "loading" ? (
-                  <LoadingSpinner />
-                ) : (
-                  <div>Load more</div>
-                )}
-              </Button>
+              {comments?.length === 10 && (
+                <Button
+                  type="button"
+                  id="loadMore"
+                  className="container more"
+                  onClick={async () => {
+                    await dispatch(
+                      getComments(
+                        parseInt(postId ?? ""),
+                        commentsPage,
+                        user?.id,
+                        false,
+                        true
+                      )
+                    );
+                  }}
+                >
+                  {moreStatus === "loading" ? (
+                    <LoadingSpinner />
+                  ) : (
+                    <div>Load more</div>
+                  )}
+                </Button>
+              )}
             </>
           )}
         </>
