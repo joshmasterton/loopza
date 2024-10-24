@@ -81,7 +81,7 @@ export const Profile = () => {
           </main>
           <footer>
             <Button type="button" id="follow" className="padding">
-              Follow
+              <div>Follow</div>
             </Button>
           </footer>
         </div>
