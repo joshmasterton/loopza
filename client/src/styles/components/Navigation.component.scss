@@ -39,6 +39,30 @@ a.button {
   color: var(--color);
 }
 
+a.small {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: calc($padding * 2.35);
+  max-width: calc($padding * 2.35);
+  overflow: visible;
+  min-height: calc($height - $paddingSmall);
+  max-height: calc($height - $paddingSmall);
+  background: transparent;
+}
+
+a.small > p {
+  padding-right: calc($fontAdjust / 2);
+  display: flex;
+}
+
+a.small > svg {
+  padding: 0;
+  overflow: visible;
+  min-width: calc($padding * 1.35);
+  min-height: calc($padding * 1.35);
+}
+
 a > p {
   display: none;
 }

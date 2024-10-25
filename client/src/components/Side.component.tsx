@@ -60,9 +60,9 @@ export const Side = ({ type }: { type: "left" | "right" }) => {
               <TbBuildingArch />
               <div>Home</div>
             </Navigation>
-            <Navigation link="/following" type="button">
+            <Navigation link="/followers" type="button">
               <TiGroupOutline />
-              <div>Following</div>
+              <div>Followers</div>
             </Navigation>
             <Button
               type="button"

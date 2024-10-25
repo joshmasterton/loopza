@@ -42,9 +42,10 @@
   opacity: $opacity;
 }
 
-.comment > header > div > img {
+.comment > header > a > img {
   width: $width;
   height: $height;
+  object-fit: cover;
 }
 
 .comment > main {

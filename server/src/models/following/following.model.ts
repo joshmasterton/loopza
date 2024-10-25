@@ -1,5 +1,6 @@
 import { tableConfig } from "../../app";
 import { queryDatabase } from "../../database/query.database";
+import { UserTypes } from "../../types/model/auth/user.type";
 
 export class Following {
   public id?: number;
@@ -11,9 +12,9 @@ export class Following {
   public created_at?: string;
 
   constructor(
-    follower_initiator_id: number,
-    follower_one_id: number,
-    follower_two_id: number
+    follower_initiator_id?: number,
+    follower_one_id?: number,
+    follower_two_id?: number
   ) {
     this.follower_initiator_id = follower_initiator_id;
     this.follower_one_id = follower_one_id;
@@ -87,6 +88,73 @@ export class Following {
       }
 
       return;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  }
+
+  async gets(
+    type: "all" | "followers",
+    userId?: number,
+    search?: string,
+    page: number = 0
+  ) {
+    try {
+      const searchQuery = search ? `%${search}%` : null;
+
+      if (type == "all") {
+        const users = await queryDatabase(
+          `
+						SELECT u.id, u.username, u.email, u.followers, u.following,
+						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted
+						FROM ${tableConfig.getUsersTable()} u
+						LEFT JOIN ${tableConfig.getFollowersTable()} f
+						ON (f.follower_one_id = $1 AND f.follower_two_id = u.id)
+						OR (f.follower_one_id = u.id AND f.follower_two_id = $1)
+						${search ? "WHERE u.username_lower_case ILIKE $3" : ""}
+						LIMIT 10 OFFSET $2
+					`,
+          search ? [userId, page * 10, searchQuery] : [userId, page * 10]
+        );
+
+        const allUsers: UserTypes[] = await Promise.all(
+          users.rows.map((user: UserTypes) => {
+            return {
+              ...user,
+              created_at: new Date(user.created_at).toLocaleString(),
+            };
+          })
+        );
+
+        return allUsers;
+      } else {
+        const followers = await queryDatabase(
+          `
+						SELECT u.id, u.username, u.email, u.followers, u.following,
+						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted
+						FROM ${tableConfig.getUsersTable()} u
+						JOIN ${tableConfig.getFollowersTable()} f
+						ON (f.follower_one_id = $1 AND f.follower_two_id = u.id)
+						OR (f.follower_one_id = u.id AND f.follower_two_id = $1)
+						${search ? "WHERE u.username_lower_case ILIKE $3" : ""}
+						LIMIT 10 OFFSET $2
+					`,
+          search ? [userId, page * 10, searchQuery] : [userId, page * 10]
+        );
+
+        const allFollowers: UserTypes[] = await Promise.all(
+          followers.rows.map((follower: UserTypes) => {
+            return {
+              ...follower,
+              created_at: new Date(follower.created_at).toLocaleString(),
+            };
+          })
+        );
+
+        return allFollowers;
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw error;

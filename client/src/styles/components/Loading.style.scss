@@ -26,6 +26,10 @@
   max-height: $height;
 }
 
+button.small .loadingSpinner {
+  margin: 0;
+}
+
 .loadingSpinner > div {
   position: relative;
   display: flex;

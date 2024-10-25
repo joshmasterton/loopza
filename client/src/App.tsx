@@ -13,9 +13,10 @@ import { Error } from "./pages/Error.page";
 import { PostPage } from "./pages/Post.page";
 import { Protected } from "./utilities/Protected.utilities";
 import { Popup } from "./utilities/Popup.utilities";
+import { Profile } from "./pages/Profile.page";
+import { Followers } from "./pages/Followers.page";
 import "@fontsource-variable/comfortaa";
 import "./styles/App.scss";
-import { Profile } from "./pages/Profile.page";
 
 export const Wrapper = ({
   children,
@@ -74,10 +75,10 @@ export const routes = [
     errorElement: <Error />,
   },
   {
-    path: "/following",
+    path: "/followers",
     element: (
       <Wrapper>
-        <Home />
+        <Followers />
       </Wrapper>
     ),
     errorElement: <Error />,

@@ -161,10 +161,21 @@ export const Post = ({
             </>
           )}
         </Button>
-        <Button id="" className="small" type="button">
-          <IoChatbubbleOutline />
-          <p>{currentPost.comments}</p>
-        </Button>
+        {!canComment ? (
+          <Navigation
+            type="button"
+            className="small"
+            link={`/post/${currentPost?.id}`}
+          >
+            <IoChatbubbleOutline />
+            <p>{currentPost.comments}</p>
+          </Navigation>
+        ) : (
+          <Button id="" className="small" type="button">
+            <IoChatbubbleOutline />
+            <p>{currentPost.comments}</p>
+          </Button>
+        )}
         {canComment && (
           <div className="reply">
             <Button

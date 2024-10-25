@@ -20,8 +20,6 @@
   touch-action: none;
   padding: $padding;
   z-index: 4;
-  backdrop-filter: blur(1rem);
-  -webkit-backdrop-filter: blur(1rem);
 }
 
 #popup > div {

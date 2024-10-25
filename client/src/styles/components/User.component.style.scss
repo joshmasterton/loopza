@@ -1,0 +1,60 @@
+@import "../base/variables.scss";
+
+.user {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: $round;
+  transform-origin: top;
+  border-radius: $round;
+  background: var(--background);
+}
+
+.user > a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - $height - ($paddingSmall * 2));
+  box-shadow: none;
+  outline: none;
+}
+
+.user > header {
+  display: flex;
+  align-items: center;
+  gap: $gap;
+  padding: $padding;
+}
+
+.user > header > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: $fontAdjust;
+}
+
+.user > header > div:last-of-type {
+  overflow: hidden;
+}
+
+.user > header > div > p {
+  opacity: $opacity;
+}
+
+.user > header > a > img {
+  object-fit: cover;
+}
+
+.user > main {
+  display: flex;
+  flex-direction: column;
+}
+
+.user > footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+  padding: $padding;
+  padding-top: 0;
+}

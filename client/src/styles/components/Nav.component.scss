@@ -102,6 +102,10 @@ nav div.hover.following {
   transform: translateY(($height * 2) + ($padding * 2));
 }
 
+nav img {
+  object-fit: cover;
+}
+
 nav div.hover.new {
   border: none;
   transform: translateY(($height * 3) + ($padding * 3));

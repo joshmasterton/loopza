@@ -12,6 +12,7 @@ export type UserTypes = {
   dislikes: number;
   created_at: string;
   profile_picture_url: string;
+  is_accepted?: boolean;
 };
 
 export interface UserRequest extends Request {

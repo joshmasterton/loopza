@@ -1,0 +1,29 @@
+@import "../base/variables.scss";
+
+#main.followers {
+  display: flex;
+  flex-direction: column;
+  border-radius: $round;
+  background-color: var(--container);
+}
+
+.followers > header > form {
+  display: flex;
+  flex-direction: row;
+  padding: $padding;
+  padding-bottom: 0;
+  gap: $gap;
+}
+
+.followers > header > form > button {
+  width: fit-content;
+}
+
+.followers > main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: $padding;
+  padding-top: 0;
+  gap: $gap;
+}

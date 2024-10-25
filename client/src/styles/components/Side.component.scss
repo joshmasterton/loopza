@@ -63,6 +63,10 @@
   width: calc($width + $padding * 2);
 }
 
+.side img {
+  object-fit: cover;
+}
+
 .side.right > div > ul a > div,
 .side.right > div > ul button > div {
   display: none;

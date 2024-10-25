@@ -40,6 +40,10 @@
   opacity: $opacity;
 }
 
+.post > header > a > img {
+  object-fit: cover;
+}
+
 .post > main {
   display: flex;
   flex-direction: column;

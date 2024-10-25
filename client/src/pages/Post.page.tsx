@@ -2,7 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Post } from "../components/Post.component";
 import { AppDispatch, RootState } from "../store";
 import { useEffect } from "react";
-import { getComments, getPost } from "../features/postsCommentsSlice";
+import {
+  getComments,
+  getPost,
+  setComments,
+} from "../features/postsCommentsSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   LoadingContainer,
@@ -28,13 +32,16 @@ export const PostPage = () => {
   const postId = location.pathname.split("/").pop();
 
   useEffect(() => {
+    dispatch(setComments({ comments: undefined }));
+
     if (postId) {
-      dispatch(getPost(parseInt(postId), user?.id));
-      dispatch(getComments(parseInt(postId), 0, user?.id));
+      dispatch(getPost(parseInt(postId), user?.id)).then(async () => {
+        await dispatch(getComments(parseInt(postId), commentsPage, user?.id));
+      });
     } else {
       navigate("/");
     }
-  }, [user]);
+  }, [user, postId]);
 
   return (
     <div id="main">

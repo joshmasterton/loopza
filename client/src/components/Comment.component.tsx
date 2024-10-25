@@ -44,8 +44,8 @@ export const Comment = ({
   );
   const [showReplyOption, setShowReplyOption] = useState(false);
   const [loadingReplies, setLoadingReplies] = useState(false);
-  const [page, setPage] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [page, setPage] = useState(0);
   const [replies, setReplies] = useState<PostCommentTypes[] | undefined>(
     undefined
   );
