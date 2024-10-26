@@ -28,9 +28,41 @@ button.fixed {
   z-index: 2;
 }
 
+div.fixed {
+  position: absolute;
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  max-width: $widthContainerExtraLargeTwo;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: $padding;
+  padding-left: $padding;
+  padding-right: $padding;
+  z-index: 2;
+  pointer-events: none;
+}
+
+div.fixed > button {
+  animation: $animationCubic emerge;
+  width: fit-content;
+  gap: 0;
+  pointer-events: all;
+}
+
+div.fixed > button > div {
+  display: none;
+  padding-right: $padding;
+  width: fit-content;
+}
+
 @media screen and (min-width: $widthContainer) {
   button.fixed {
     display: none !important;
+  }
+
+  div.fixed > button > div {
+    display: flex;
   }
 }
 

@@ -15,15 +15,17 @@ import {
   LoadingContainer,
   LoadingSpinner,
 } from "../components/Loading.component";
+import { MdOutlineAdd } from "react-icons/md";
 
 const searchUsersSchema = yup.object().shape({
   search: yup.string().optional(),
 });
 
 export const Followers = () => {
-  const [users, setUsers] = useState<UserTypes[] | undefined>(undefined);
   const { user } = useSelector((state: RootState) => state.auth);
+  const [users, setUsers] = useState<UserTypes[] | undefined>(undefined);
   const [page, setPage] = useState(0);
+  const [isAllUsers, setIsAllUsers] = useState(false);
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
 
@@ -51,12 +53,14 @@ export const Followers = () => {
     try {
       const response = await axios.get(`${API_URL}/user/gets`, {
         params: {
-          type: "all",
+          type: isAllUsers ? "all" : "followers",
           userId: user?.id,
           search,
           page: isMore ? page + 1 : isPrevious ? Math.max(0, page - 1) : 0,
         },
       });
+
+      console.log(response.data);
 
       if (response.data.length > 0 && isMore) {
         setPage(page + 1);
@@ -69,8 +73,6 @@ export const Followers = () => {
       } else {
         setUsers(undefined);
       }
-
-      console.log(response.data);
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
@@ -88,61 +90,76 @@ export const Followers = () => {
   };
 
   useEffect(() => {
+    setUsers(undefined);
     getUsers(undefined, page);
-  }, []);
+  }, [isAllUsers, user]);
 
   return (
-    <div id="main" className="followers">
-      <header>
-        <form method="GET" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            id="searchUsername"
-            type="text"
-            register={register("search", { required: true })}
-            placeholder="Search for user..."
+    <>
+      <div id="main" className="followers">
+        <header>
+          <form method="GET" onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              id="searchUsername"
+              type="text"
+              register={register("search", { required: true })}
+              placeholder={`Search for ${isAllUsers ? "user" : "follower"}...`}
+            >
+              {errors.search && (
+                <div className="error">{errors.search.message}</div>
+              )}
+            </Input>
+            <Button type="submit" id="searchSubmit" className="primary">
+              <BiSearch />
+            </Button>
+          </form>
+        </header>
+        {page > 0 && (
+          <Button
+            type="button"
+            id="loadPrevious"
+            className="container more"
+            onClick={async () => {
+              await getUsers("", page, false, true);
+            }}
           >
-            {errors.search && (
-              <div className="error">{errors.search.message}</div>
-            )}
-          </Input>
-          <Button type="submit" id="searchSubmit" className="primary">
-            <BiSearch />
+            {loadingMore ? <LoadingSpinner /> : <div>Load previous</div>}
           </Button>
-        </form>
-      </header>
-      {page > 0 && (
-        <Button
-          type="button"
-          id="loadPrevious"
-          className="container more"
-          onClick={async () => {
-            await getUsers("", page, false, true);
-          }}
-        >
-          {loadingMore ? <LoadingSpinner /> : <div>Load previous</div>}
-        </Button>
-      )}
-      <main>
-        {loadingUsers ? (
-          <LoadingContainer />
-        ) : (
-          users &&
-          users?.length > 0 &&
-          users.map((user) => <User key={user.id} user={user} />)
         )}
-      </main>
-      {users?.length === 10 && (
+        <main>
+          {loadingUsers ? (
+            <LoadingContainer />
+          ) : (
+            users &&
+            users?.length > 0 &&
+            users.map((user) => <User key={user.id} userItem={user} />)
+          )}
+          <div className="blank" />
+        </main>
+        {users?.length === 10 && (
+          <Button
+            type="button"
+            id="loadMore"
+            className="container more"
+            onClick={async () => {
+              await getUsers("", page, true, false);
+            }}
+          >
+            {loadingMore ? <LoadingSpinner /> : <div>Load more</div>}
+          </Button>
+        )}
+      </div>
+      <div className="fixed">
         <Button
           type="button"
-          id="loadMore"
-          className="container more"
-          onClick={async () => {
-            await getUsers("", page, true, false);
-          }}
+          className="primary"
+          id="addFollower"
+          onClick={() => setIsAllUsers(!isAllUsers)}
         >
-          {loadingMore ? <LoadingSpinner /> : <div>Load more</div>}
+          <MdOutlineAdd />
+          <div>Add Follower</div>
         </Button>
-      )}
-    </div>
+      </div>
+    </>
   );
 };

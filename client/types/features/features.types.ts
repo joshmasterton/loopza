@@ -11,6 +11,7 @@ export type UserTypes = {
   created_at: string;
   profile_picture_url: string;
   is_accepted?: boolean;
+  pending_user_id?: number;
 };
 
 export type PostCommentTypes = {

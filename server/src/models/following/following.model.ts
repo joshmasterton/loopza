@@ -26,32 +26,38 @@ export class Following {
       const existingFollowing = await this.get();
 
       if (existingFollowing) {
-        if (existingFollowing.pending_user_id === this.follower_initiator_id) {
-          await queryDatabase(
-            `
-							UPDATE ${tableConfig.getFollowersTable()}
-							SET is_accepted = true
-							WHERE (follower_one_id = $1
-							AND follower_two_id = $2)
-							OR (follower_one_id = $2
-							AND follower_two_id = $1)
-						`,
-            [this.follower_one_id, this.follower_two_id]
-          );
-
-          return await this.get();
+        if (existingFollowing.is_accepted) {
+          throw new Error("Already followers");
         } else {
-          throw new Error("Waiting for response");
+          if (
+            existingFollowing.pending_user_id === this.follower_initiator_id
+          ) {
+            await queryDatabase(
+              `
+								UPDATE ${tableConfig.getFollowersTable()}
+								SET is_accepted = true
+								WHERE (follower_one_id = $1
+								AND follower_two_id = $2)
+								OR (follower_one_id = $2
+								AND follower_two_id = $1)
+							`,
+              [this.follower_one_id, this.follower_two_id]
+            );
+
+            return await this.get();
+          } else {
+            throw new Error("Waiting for response");
+          }
         }
       } else {
-        const newFollower = await queryDatabase(
+        await queryDatabase(
           `
 						INSERT INTO ${tableConfig.getFollowersTable()} (
 							follower_initiator, follower_one_id, follower_two_id,
 							pending_user_id
 						) VALUES (
 							 $1, $2, $3, $4
-						) RETURNING *
+						)
 					`,
           [
             this.follower_initiator_id,
@@ -61,8 +67,35 @@ export class Following {
           ]
         );
 
-        return newFollower.rows[0];
+        return await this.get();
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  }
+
+  async delete() {
+    try {
+      const existingFollowing = await this.get();
+
+      if (!existingFollowing) {
+        throw new Error("No following to remove");
+      }
+
+      await queryDatabase(
+        `
+					DELETE FROM ${tableConfig.getFollowersTable()}
+					WHERE (follower_one_id = $1
+					AND follower_two_id = $2)
+					OR (follower_one_id = $2
+					AND follower_two_id = $1)
+				`,
+        [this.follower_one_id, this.follower_two_id]
+      );
+
+      return { message: "Deleted following successfully" };
     } catch (error) {
       if (error instanceof Error) {
         throw error;
@@ -74,11 +107,14 @@ export class Following {
     try {
       const following = await queryDatabase(
         `
-					SELECT * FROM ${tableConfig.getFollowersTable()}
-					WHERE (follower_one_id = $1
-					AND follower_two_id = $2)
-					OR (follower_one_id = $2
-					AND follower_two_id = $1)
+					SELECT u.id, u.username, u.email, u.followers, u.following,
+					u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted,
+					f.pending_user_id
+					FROM ${tableConfig.getUsersTable()} u
+					JOIN ${tableConfig.getFollowersTable()} f
+					ON (f.follower_one_id = $1 AND f.follower_two_id = $2)
+					OR (f.follower_one_id = $2 AND f.follower_two_id = $1)
+					WHERE u.id = $2
 				`,
         [this.follower_one_id, this.follower_two_id]
       );
@@ -108,12 +144,14 @@ export class Following {
         const users = await queryDatabase(
           `
 						SELECT u.id, u.username, u.email, u.followers, u.following,
-						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted
+						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted,
+						f.pending_user_id
 						FROM ${tableConfig.getUsersTable()} u
 						LEFT JOIN ${tableConfig.getFollowersTable()} f
 						ON (f.follower_one_id = $1 AND f.follower_two_id = u.id)
 						OR (f.follower_one_id = u.id AND f.follower_two_id = $1)
-						${search ? "WHERE u.username_lower_case ILIKE $3" : ""}
+						${userId ? "WHERE u.id != $1" : ""}
+						${search ? "AND WHERE u.username_lower_case ILIKE $3" : ""}
 						LIMIT 10 OFFSET $2
 					`,
           search ? [userId, page * 10, searchQuery] : [userId, page * 10]
@@ -133,12 +171,14 @@ export class Following {
         const followers = await queryDatabase(
           `
 						SELECT u.id, u.username, u.email, u.followers, u.following,
-						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted
+						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted,
+						f.pending_user_id
 						FROM ${tableConfig.getUsersTable()} u
 						JOIN ${tableConfig.getFollowersTable()} f
 						ON (f.follower_one_id = $1 AND f.follower_two_id = u.id)
 						OR (f.follower_one_id = u.id AND f.follower_two_id = $1)
-						${search ? "WHERE u.username_lower_case ILIKE $3" : ""}
+						${userId ? "WHERE u.id != $1" : ""}
+						${search ? "AND WHERE u.username_lower_case ILIKE $3" : ""}
 						LIMIT 10 OFFSET $2
 					`,
           search ? [userId, page * 10, searchQuery] : [userId, page * 10]

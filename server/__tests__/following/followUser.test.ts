@@ -39,8 +39,7 @@ describe("/user/followUser", () => {
       .set("Cookie", signup.header["set-cookie"][2])
       .set("Cookie", signup.header["set-cookie"][3]);
 
-    expect(followUser.body.id).toBe(1);
-    expect(followUser.body.follower_initiator).toBe(1);
+    expect(followUser.body.id).toBe(2);
     expect(followUser.body.pending_user_id).toBe(2);
     expect(followUser.body.is_accepted).toBeFalsy();
   });
@@ -89,7 +88,6 @@ describe("/user/followUser", () => {
       .set("Cookie", signupTwo.header["set-cookie"][3]);
 
     expect(followUserTwo.body.id).toBe(1);
-    expect(followUserTwo.body.follower_initiator).toBe(1);
     expect(followUserTwo.body.pending_user_id).toBe(2);
     expect(followUserTwo.body.is_accepted).toBeTruthy();
   });
