@@ -120,6 +120,9 @@ export class Following {
       );
 
       if (following.rows[0]) {
+        following.rows[0].created_at = new Date(
+          following.rows[0].created_at
+        ).toLocaleString();
         return following.rows[0];
       }
 
