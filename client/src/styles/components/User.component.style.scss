@@ -3,6 +3,7 @@
 .user {
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   justify-content: start;
   align-items: start;
   border-radius: $round;
@@ -12,6 +13,7 @@
   max-height: fit-content;
   padding: $padding;
   margin: 0;
+  gap: $gap;
   border-radius: $round;
   background: var(--container);
 }
@@ -19,8 +21,8 @@
 .user > a {
   left: 0;
   top: 0;
-  width: calc(100% - $height - ($padding * 3));
-  min-height: calc($height + ($padding * 2));
+  width: 100%;
+  min-height: calc($height + ($padding * 1.5));
   position: absolute;
 }
 
@@ -52,12 +54,9 @@
 
 .user > main {
   display: flex;
-  flex-direction: column;
-}
-
-.user > footer {
-  display: flex;
   flex-wrap: wrap;
+  align-items: end;
+  justify-content: end;
   gap: $gap;
-  padding-top: 0;
+  flex: 1;
 }

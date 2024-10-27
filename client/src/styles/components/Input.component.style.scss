@@ -89,6 +89,7 @@ label > svg {
   border-radius: $round;
   border-radius: $roundExtra;
   outline: $outline;
+  object-fit: cover;
 }
 
 #auth label.file > img,

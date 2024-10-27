@@ -15,7 +15,6 @@ import {
   LoadingContainer,
   LoadingSpinner,
 } from "../components/Loading.component";
-import { MdOutlineAdd } from "react-icons/md";
 
 const searchUsersSchema = yup.object().shape({
   search: yup.string().optional(),
@@ -59,8 +58,6 @@ export const Followers = () => {
           page: isMore ? page + 1 : isPrevious ? Math.max(0, page - 1) : 0,
         },
       });
-
-      console.log(response.data);
 
       if (response.data.length > 0 && isMore) {
         setPage(page + 1);
@@ -114,6 +111,24 @@ export const Followers = () => {
             </Button>
           </form>
         </header>
+        <div>
+          <Button
+            id="allUsers"
+            type="button"
+            className={`${isAllUsers ? "container" : "primary"} padding`}
+            onClick={() => setIsAllUsers(false)}
+          >
+            Followers
+          </Button>
+          <Button
+            id="allUsers"
+            type="button"
+            className={`${isAllUsers ? "primary" : "container"} padding`}
+            onClick={() => setIsAllUsers(true)}
+          >
+            All
+          </Button>
+        </div>
         {page > 0 && (
           <Button
             type="button"
@@ -130,11 +145,15 @@ export const Followers = () => {
           {loadingUsers ? (
             <LoadingContainer />
           ) : (
-            users &&
-            users?.length > 0 &&
-            users.map((user) => <User key={user.id} userItem={user} />)
+            <>
+              {users &&
+                users?.length > 0 &&
+                users.map((user) => (
+                  <User key={user.id} profile={user} type="component" />
+                ))}
+              <div className="blank" />
+            </>
           )}
-          <div className="blank" />
         </main>
         {users?.length === 10 && (
           <Button
@@ -148,17 +167,6 @@ export const Followers = () => {
             {loadingMore ? <LoadingSpinner /> : <div>Load more</div>}
           </Button>
         )}
-      </div>
-      <div className="fixed">
-        <Button
-          type="button"
-          className="primary"
-          id="addFollower"
-          onClick={() => setIsAllUsers(!isAllUsers)}
-        >
-          <MdOutlineAdd />
-          <div>Add Follower</div>
-        </Button>
       </div>
     </>
   );

@@ -5,12 +5,17 @@ import { User } from "../../models/auth/user.model";
 
 const getUserSchema = yup.object().shape({
   userId: yup.number().required(),
+  requesterId: yup.number().optional(),
 });
 
 export const getUser = async (req: UserRequest, res: Response) => {
   try {
     const validatedData = await getUserSchema.validate(req.query);
-    const user = await new User().getUser("id", validatedData.userId);
+    const user = await new User().getUser(
+      "id",
+      validatedData.userId,
+      validatedData.requesterId
+    );
 
     return res.status(200).json(user);
   } catch (error) {

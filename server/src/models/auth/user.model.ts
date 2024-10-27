@@ -181,16 +181,20 @@ export class User {
     }
   }
 
-  async getUser<T>(method: string, value: T) {
+  async getUser<T>(method: string, value: T, requesterId?: number) {
     try {
       const user = await queryDatabase(
         `
-					SELECT id, username, email, followers, following,
-					posts, comments, likes, dislikes, created_at, profile_picture_url
-					FROM ${tableConfig.getUsersTable()} 
-					WHERE ${method} = $1
+					SELECT u.id, u.username, u.email, u.followers, u.following,
+					u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted,
+					f.pending_user_id
+					FROM ${tableConfig.getUsersTable()} u
+					LEFT JOIN ${tableConfig.getFollowersTable()} f
+					ON (f.follower_one_id = u.id AND f.follower_two_id = $2)
+					OR (f.follower_one_id = $2 AND f.follower_two_id = u.id)
+					WHERE u.${method} = $1
 				`,
-        [value]
+        [value, requesterId ?? null]
       );
 
       const serializedUser = user.rows[0] as UserTypes;

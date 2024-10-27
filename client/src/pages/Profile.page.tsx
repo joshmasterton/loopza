@@ -4,13 +4,12 @@ import { UserTypes } from "../../types/features/features.types";
 import { API_URL } from "../utilities/request.utilities";
 import { useLocation } from "react-router-dom";
 import { LoadingContainer } from "../components/Loading.component";
-import { Button } from "../components/Button.component";
-import { TiGroupOutline } from "react-icons/ti";
-import { MdOutlineLocalPostOffice } from "react-icons/md";
-import { IoChatbubbleOutline } from "react-icons/io5";
-import { FaRegStar } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { User } from "../components/User.component";
 
 export const Profile = () => {
+  const { user } = useSelector((state: RootState) => state.auth);
   const [profile, setProfile] = useState<UserTypes | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
@@ -22,6 +21,7 @@ export const Profile = () => {
       const response = await axios.get(`${API_URL}/user/get`, {
         params: {
           userId: profileId,
+          requesterId: user?.id,
         },
       });
 
@@ -40,6 +40,7 @@ export const Profile = () => {
   };
 
   useEffect(() => {
+    setProfile(undefined);
     getProfile();
   }, [profileId]);
 
@@ -48,43 +49,7 @@ export const Profile = () => {
       {loading ? (
         <LoadingContainer />
       ) : (
-        <div id="profile">
-          <header>
-            <img src={profile?.profile_picture_url} alt="" />
-            <img src={profile?.profile_picture_url} alt="" />
-            <div>
-              <div>{profile?.username}</div>
-              <p>{profile?.email}</p>
-            </div>
-          </header>
-          <main>
-            <div>
-              <TiGroupOutline />
-              <div>Followers</div>
-              <p>{profile?.followers}</p>
-            </div>
-            <div>
-              <MdOutlineLocalPostOffice />
-              <div>Posts</div>
-              <p>{profile?.posts}</p>
-            </div>
-            <div>
-              <IoChatbubbleOutline />
-              <div>Comments</div>
-              <p>{profile?.comments}</p>
-            </div>
-            <div>
-              <FaRegStar />
-              <div>Karma</div>
-              <p>{(profile?.likes ?? 0) - (profile?.dislikes ?? 0)}</p>
-            </div>
-          </main>
-          <footer>
-            <Button type="button" id="follow" className="padding primary">
-              <div>Follow</div>
-            </Button>
-          </footer>
-        </div>
+        profile && <User profile={profile} type="page" />
       )}
     </div>
   );

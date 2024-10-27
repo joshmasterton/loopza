@@ -85,9 +85,16 @@
 
 #profile > footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: end;
+  align-content: end;
   align-items: end;
   flex: 1;
+  gap: $gap;
   padding: $padding;
   padding-top: 0;
+}
+
+#profile > footer > button {
+  width: fit-content;
 }

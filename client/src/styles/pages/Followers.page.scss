@@ -6,6 +6,19 @@
   border-radius: $round;
 }
 
+.followers > div {
+  display: flex;
+  width: 100%;
+  gap: $gap;
+}
+
+.followers > div > button {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  transition: background-color $animationCubic;
+}
+
 .followers > header > form {
   display: flex;
   flex-direction: row;
