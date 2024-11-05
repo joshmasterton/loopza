@@ -8,8 +8,10 @@ export const createUserTable = async (usersTable = "users") => {
 				username VARCHAR(500),
 				username_lower_case VARCHAR(500),
 				email VARCHAR(500),
+				reset_password_token VARCHAR(500) DEFAULT NULL,
+				reset_password_token_expires TIMESTAMPTZ DEFAULT NULL,
 				password VARCHAR(500),
-				profile_picture_url VARCHAR(500),
+				profile_picture_url VARCHAR(5000),
 				refresh_token TEXT DEFAULT NULL,
 				followers INT DEFAULT 0,
 				following INT DEFAULT 0,
@@ -17,7 +19,11 @@ export const createUserTable = async (usersTable = "users") => {
 				comments INT DEFAULT 0,
 				likes INT DEFAULT 0,
 				dislikes INT DEFAULT 0,
-				created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+				personality VARCHAR(100),
+				interests VARCHAR(100),
+				disinterests VARCHAR(100),
+				created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+				is_bot BOOLEAN DEFAULT FALSE
 			)`
     );
   } catch (error) {

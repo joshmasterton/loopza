@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppDispatch } from "../store";
-import { LoginFormTypes } from "../../types/pages/Page.types";
+import {
+  ForgotPasswordFormTypes,
+  LoginFormTypes,
+  ResetPasswordFormTypes,
+} from "../../types/pages/Page.types";
 import axios, { AxiosError } from "axios";
 import { UserTypes } from "../../types/features/features.types";
 import { API_URL } from "../utilities/request.utilities";
@@ -114,6 +118,51 @@ export const logoutUser = () => async (dispatch: AppDispatch) => {
     dispatch(setIdle());
   }
 };
+
+export const resetPassword =
+  (data: ResetPasswordFormTypes) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading());
+    try {
+      const resetPassword = await axios.post(
+        `${API_URL}/auth/resetPassword`,
+        data
+      );
+
+      console.log(resetPassword.data);
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        console.error(error.response?.data);
+        dispatch(showPopup({ messages: [error.response.data.error] }));
+      } else if (error instanceof Error) {
+        console.error(error);
+        dispatch(showPopup({ messages: [error.message] }));
+      } else {
+        dispatch(showPopup({ messages: ["An error has occured"] }));
+      }
+    } finally {
+      dispatch(setIdle());
+    }
+  };
+
+export const forgotPassword =
+  (data: ForgotPasswordFormTypes) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading());
+    try {
+      const forgotPassword = await axios.post(
+        `${API_URL}/auth/forgotPassword`,
+        data
+      );
+      console.log(forgotPassword.data);
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        console.error(error.response?.data);
+      } else if (error instanceof Error) {
+        console.error(error);
+      }
+    } finally {
+      dispatch(setIdle());
+    }
+  };
 
 export const checkUser = () => async (dispatch: AppDispatch) => {
   dispatch(setLoading());

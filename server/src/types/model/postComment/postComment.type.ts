@@ -14,6 +14,8 @@ export type PostCommentTypes = {
   email: string;
   profile_picture_url: string;
   reaction: "like" | "dislike" | null;
+  hot_score: number;
+  is_bot: boolean;
 };
 
 export type LikeDislikeTypes = {

@@ -88,6 +88,9 @@ const LoginForm = () => {
             <div className="error">{errors.password.message}</div>
           )}
         </Input>
+        <Navigation link="/forgotPassword" type="link">
+          Forget password?
+        </Navigation>
       </main>
       <Button id="login" type="submit" className="primary">
         {status === "loading" ? <LoadingSpinner isPrimary /> : <div>Login</div>}

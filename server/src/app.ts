@@ -18,6 +18,15 @@ import { getUserRouter } from "./routes/user/getUser.route";
 import { followUserRoute } from "./routes/user/followUser.route";
 import { getUsersRouter } from "./routes/user/getUsers.route";
 import { deleteFollowRoute } from "./routes/user/deleteFollow.route";
+import { dropTables } from "./database/tables.database";
+import {
+  scheduleRandomBotComment,
+  scheduleRandomBotLikeDislike,
+  scheduleRandomBotPost,
+} from "./config/cron.config";
+import { createBotUsers } from "./bot/createUser.bot";
+import { forgotPasswordRouter } from "./routes/auth/forgotPassword.route";
+import { resetPasswordRouter } from "./routes/auth/resetPassword.route";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -48,6 +57,8 @@ app.use("/auth", loginRouter);
 app.use("/auth", signupRouter);
 app.use("/auth", userRouter);
 app.use("/auth", logoutRoute);
+app.use("/auth", forgotPasswordRouter);
+app.use("/auth", resetPasswordRouter);
 
 app.use("/postComment", newPostCommentRouter);
 app.use("/postComment", getPostCommentRouter);
@@ -61,7 +72,12 @@ app.use("/user", deleteFollowRoute);
 
 const startServer = async () => {
   try {
+    await dropTables();
     await initializeDatabase();
+    await createBotUsers(40);
+    scheduleRandomBotPost();
+    scheduleRandomBotComment();
+    scheduleRandomBotLikeDislike();
     app.listen(80, () => {
       console.log("Listening to server on port 80");
     });

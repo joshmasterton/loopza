@@ -67,8 +67,6 @@ export const Followers = () => {
 
       if (response.data.length > 0) {
         setUsers(response.data);
-      } else {
-        setUsers(undefined);
       }
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
@@ -88,6 +86,7 @@ export const Followers = () => {
 
   useEffect(() => {
     setUsers(undefined);
+    setPage(0);
     getUsers(undefined, page);
   }, [isAllUsers, user]);
 
@@ -118,7 +117,7 @@ export const Followers = () => {
             className={`${isAllUsers ? "container" : "primary"} padding`}
             onClick={() => setIsAllUsers(false)}
           >
-            Followers
+            <div>Followers</div>
           </Button>
           <Button
             id="allUsers"
@@ -126,7 +125,7 @@ export const Followers = () => {
             className={`${isAllUsers ? "primary" : "container"} padding`}
             onClick={() => setIsAllUsers(true)}
           >
-            All
+            <div>All</div>
           </Button>
         </div>
         {page > 0 && (
@@ -151,7 +150,8 @@ export const Followers = () => {
                 users.map((user) => (
                   <User key={user.id} profile={user} type="component" />
                 ))}
-              <div className="blank" />
+              {(users && users.length < 3) ||
+                (users === undefined && <div className="blank" />)}
             </>
           )}
         </main>

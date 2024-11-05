@@ -159,7 +159,7 @@ describe("/postComment/likeDislike", () => {
       .post("/auth/signup")
       .field({
         username: "testUserTwo",
-        email: "testEmail@email.com",
+        email: "testEmailTwo@email.com",
         password: "Password",
         confirmPassword: "Password",
       })

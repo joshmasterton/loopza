@@ -135,17 +135,20 @@ export class PostComment {
     try {
       const postCommentFromDb = await queryDatabase(
         `
-					SELECT pc.*, u.username, u.email, u.profile_picture_url, ld.reaction
+					SELECT pc.*, u.username, u.email, u.profile_picture_url, u.is_bot, u.personality, u.interests, u.disinterests, ld.reaction, ((CAST(pc.likes AS FLOAT) - CAST(pc.dislikes AS FLOAT) + pc.comments) / POWER(EXTRACT(EPOCH FROM (NOW() - pc.created_at)) / 3600 + 2, 1.5)) AS hot_score 
 					FROM ${tableConfig.getPostsCommentsTable()} pc
-					JOIN ${tableConfig.getUsersTable()} u
+					LEFT JOIN ${tableConfig.getUsersTable()} u
 					ON pc.user_id = u.id
 					LEFT JOIN ${tableConfig.getLikesDislikesTable()} ld
-					ON pc.id = ld.origin_id AND ld.user_id = $3
+					ON pc.id = ld.origin_id AND ld.user_id = $2
 					WHERE pc.id = $1
-					AND pc.type = $2
 				`,
-        [this.id, this.type, userId]
+        [this.id, userId]
       );
+
+      if (!postCommentFromDb.rows[0]) {
+        return;
+      }
 
       const postComment = postCommentFromDb.rows[0] as PostCommentTypes;
       postComment.created_at = new Date(
@@ -170,7 +173,8 @@ export class PostComment {
     try {
       const postsCommentsFromDb = await queryDatabase(
         `
-					SELECT pc.*, u.username, u.email, u.profile_picture_url, ld.reaction
+					SELECT pc.*, ((CAST(pc.likes AS FLOAT) - CAST(pc.dislikes AS FLOAT) + pc.comments) / POWER(EXTRACT(EPOCH FROM (NOW() - pc.created_at)) / 3600 + 2, 1.5)) AS hot_score,
+					u.username, u.email, u.profile_picture_url, u.personality, u.interests, u.disinterests, ld.reaction, u.is_bot
 					FROM ${tableConfig.getPostsCommentsTable()} pc
 					JOIN ${tableConfig.getUsersTable()} u
 					ON pc.user_id = u.id
@@ -183,7 +187,7 @@ export class PostComment {
               ? "AND comment_parent_id IS NULL"
               : `AND comment_parent_id = ${comment_parent_id}`
           }
-					ORDER BY created_at DESC
+					ORDER BY hot_score DESC, created_at DESC
 					LIMIT 10 OFFSET $2
 				`,
         [type, page * 10, userId]
@@ -203,6 +207,27 @@ export class PostComment {
       if (error instanceof Error) {
         throw error;
       }
+    }
+  }
+
+  async countPostsComments() {
+    try {
+      const count = await queryDatabase(
+        `
+					SELECT COUNT(*) AS count
+					FROM ${tableConfig.getPostsCommentsTable()}
+				`,
+        []
+      );
+
+      return parseInt(count.rows[0].count);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error(
+        "An unknown error occurred while counting posts/comments."
+      );
     }
   }
 

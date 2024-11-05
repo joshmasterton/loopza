@@ -22,7 +22,7 @@ describe("/user/followUser", () => {
       .post("/auth/signup")
       .field({
         username: "testUserTwo",
-        email: "testEmail@email.com",
+        email: "testEmailTwo@email.com",
         password: "Password",
         confirmPassword: "Password",
       })
@@ -62,7 +62,7 @@ describe("/user/followUser", () => {
       .post("/auth/signup")
       .field({
         username: "testUserTwo",
-        email: "testEmail@email.com",
+        email: "testEmailTwo@email.com",
         password: "Password",
         confirmPassword: "Password",
       })
@@ -110,7 +110,7 @@ describe("/user/followUser", () => {
       .post("/auth/signup")
       .field({
         username: "testUserTwo",
-        email: "testEmail@email.com",
+        email: "testEmailTwo@email.com",
         password: "Password",
         confirmPassword: "Password",
       })

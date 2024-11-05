@@ -148,13 +148,20 @@ export class Following {
           `
 						SELECT u.id, u.username, u.email, u.followers, u.following,
 						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted,
-						f.pending_user_id
+						f.pending_user_id, u.is_bot, u.personality, u.interests, u.disinterests
 						FROM ${tableConfig.getUsersTable()} u
 						LEFT JOIN ${tableConfig.getFollowersTable()} f
 						ON (f.follower_one_id = $1 AND f.follower_two_id = u.id)
 						OR (f.follower_one_id = u.id AND f.follower_two_id = $1)
 						${userId ? "WHERE u.id != $1" : ""}
-						${search ? "AND WHERE u.username_lower_case ILIKE $3" : ""}
+						${
+              search
+                ? userId
+                  ? "AND WHERE u.username_lower_case ILIKE $3"
+                  : "WHERE u.username_lower_case ILIKE $3"
+                : ""
+            }
+						ORDER BY u.created_at DESC
 						LIMIT 10 OFFSET $2
 					`,
           search ? [userId, page * 10, searchQuery] : [userId, page * 10]
@@ -175,13 +182,19 @@ export class Following {
           `
 						SELECT u.id, u.username, u.email, u.followers, u.following,
 						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted,
-						f.pending_user_id
+						f.pending_user_id, u.personality, u.interests, u.disinterests
 						FROM ${tableConfig.getUsersTable()} u
 						JOIN ${tableConfig.getFollowersTable()} f
 						ON (f.follower_one_id = $1 AND f.follower_two_id = u.id)
 						OR (f.follower_one_id = u.id AND f.follower_two_id = $1)
 						${userId ? "WHERE u.id != $1" : ""}
-						${search ? "AND WHERE u.username_lower_case ILIKE $3" : ""}
+						${
+              search
+                ? userId
+                  ? "AND WHERE u.username_lower_case ILIKE $3"
+                  : "WHERE u.username_lower_case ILIKE $3"
+                : ""
+            }
 						LIMIT 10 OFFSET $2
 					`,
           search ? [userId, page * 10, searchQuery] : [userId, page * 10]

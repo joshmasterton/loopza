@@ -24,6 +24,8 @@
   width: 100%;
   min-height: calc($height + ($padding * 1.5));
   position: absolute;
+  box-shadow: none;
+  outline: none;
 }
 
 .user > header {
@@ -40,7 +42,6 @@
 }
 
 .user > header > div:last-of-type {
-  padding-top: $fontAdjust;
   overflow: hidden;
 }
 
@@ -48,8 +49,13 @@
   opacity: $opacity;
 }
 
-.user > header > a > img {
+.user > header img {
   object-fit: cover;
+}
+
+.user > header svg {
+  object-fit: cover;
+  padding: calc($padding / 5);
 }
 
 .user > main {

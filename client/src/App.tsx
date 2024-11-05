@@ -17,6 +17,7 @@ import { Profile } from "./pages/Profile.page";
 import { Followers } from "./pages/Followers.page";
 import "@fontsource-variable/comfortaa";
 import "./styles/App.scss";
+import { ForgotPassword, ResetPassword } from "./pages/ForgotPassword.page";
 
 export const Wrapper = ({
   children,
@@ -91,6 +92,16 @@ export const routes = [
   {
     path: "/login",
     element: <Auth isLogin />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/forgotPassword",
+    element: <ForgotPassword />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/resetPassword",
+    element: <ResetPassword />,
     errorElement: <Error />,
   },
 ];

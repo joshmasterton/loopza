@@ -118,7 +118,7 @@ export const User = ({
           <Button
             id="followerReact"
             type="button"
-            className="padding"
+            className="padding primary"
             onClick={async () => {
               await withUserCheck(user, dispatch, async () => {
                 await followUser();
@@ -143,7 +143,7 @@ export const User = ({
             <Button
               id="followerReact"
               type="button"
-              className="padding"
+              className="padding primary"
               onClick={async () => {
                 await withUserCheck(user, dispatch, async () => {
                   await deleteFollowing();
@@ -164,8 +164,10 @@ export const User = ({
     return (
       <div id="profile">
         <header>
-          <img src={profile?.profile_picture_url} alt="" />
-          <img src={profile?.profile_picture_url} alt="" />
+          <>
+            <img src={profile?.profile_picture_url} alt="" />
+            <img src={profile?.profile_picture_url} alt="" />
+          </>
           <div>
             <div>{profile?.username}</div>
             <p>{profile?.email}</p>

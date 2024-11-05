@@ -33,6 +33,13 @@
   flex-direction: column;
 }
 
+.comment > header > a > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
 .comment > header > div:last-of-type {
   overflow: hidden;
   padding-left: calc($fontAdjust * 3);
@@ -59,8 +66,12 @@
   display: flex;
   flex-direction: column;
   height: fit-content;
-  word-break: break-all;
+  overflow: hidden;
   padding-right: $padding;
+}
+
+.comment > main > div > div {
+  line-height: 145%;
 }
 
 .comment > footer {
@@ -149,7 +160,7 @@
 }
 
 .comment > .bar > button.previous {
-  top: calc($height + $paddingSmall / 1.25);
+  top: calc($height + $paddingSmall * 1.25);
 }
 
 .comment > .bar > button > div {

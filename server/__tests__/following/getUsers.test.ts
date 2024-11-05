@@ -22,7 +22,7 @@ describe("/user/getUsers", () => {
       .post("/auth/signup")
       .field({
         username: "testUserTwo",
-        email: "testEmail@email.com",
+        email: "testEmailTwo@email.com",
         password: "Password",
         confirmPassword: "Password",
       })
@@ -35,7 +35,7 @@ describe("/user/getUsers", () => {
       .post("/auth/signup")
       .field({
         username: "testUserThree",
-        email: "testEmail@email.com",
+        email: "testEmailThree@email.com",
         password: "Password",
         confirmPassword: "Password",
       })
@@ -69,7 +69,7 @@ describe("/user/getUsers", () => {
       .post("/auth/signup")
       .field({
         username: "testUserTwo",
-        email: "testEmail@email.com",
+        email: "testEmailTwo@email.com",
         password: "Password",
         confirmPassword: "Password",
       })
@@ -82,7 +82,7 @@ describe("/user/getUsers", () => {
       .post("/auth/signup")
       .field({
         username: "testUserThree",
-        email: "testEmail@email.com",
+        email: "testEmailThree@email.com",
         password: "Password",
         confirmPassword: "Password",
       })

@@ -12,6 +12,10 @@ export type UserTypes = {
   profile_picture_url: string;
   is_accepted?: boolean;
   pending_user_id?: number;
+  is_bot?: boolean;
+  personality?: string;
+  interests?: string;
+  disinterests?: string;
 };
 
 export type PostCommentTypes = {
@@ -30,4 +34,6 @@ export type PostCommentTypes = {
   email: string;
   profile_picture_url: string;
   reaction: "like" | "dislike" | null;
+  hot_score: number;
+  is_bot: boolean;
 };

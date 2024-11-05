@@ -15,6 +15,17 @@ export type SignupFormTypes = {
   confirmPassword: string;
 };
 
+export type ResetPasswordFormTypes = {
+  email: string;
+  newPassword: string;
+  newConfirmPassword: string;
+  token: string;
+};
+
+export type ForgotPasswordFormTypes = {
+  email: string;
+};
+
 export type LoginFormTypes = {
   username: string;
   password: string;
