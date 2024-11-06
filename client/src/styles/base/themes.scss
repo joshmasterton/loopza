@@ -15,9 +15,9 @@ $dark: rgb(25, 25, 30);
     ),
     radial-gradient(circle at bottom left, rgba(58, 66, 120, 0.462), black 50%);
   --blend: screen;
-  --background: rgb(30, 30, 36);
+  --background: rgb(24, 24, 30);
   --shadow: 0;
-  --container: rgb(33, 33, 41);
+  --container: rgb(30, 30, 39);
 }
 
 [data-theme="light"] {
@@ -45,7 +45,7 @@ $dark: rgb(25, 25, 30);
       white 50%
     );
   --blend: multiply, normal, screen;
-  --background: rgb(245, 245, 250);
+  --background: rgb(240, 240, 245);
   --shadow: 0;
   --container: white;
 }

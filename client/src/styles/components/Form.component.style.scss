@@ -47,6 +47,10 @@ form#auth {
   max-width: $widthContainerForm;
 }
 
+form#auth > main > a {
+  align-self: end;
+}
+
 form > main {
   width: 100%;
   display: flex;

@@ -26,10 +26,13 @@ const rssFeeds = [
   "https://feeds.bbci.co.uk/news/world/rss.xml",
   "https://feeds.washingtonpost.com/rss/world",
   "http://feeds.bbci.co.uk/news/rss.xml",
-  "https://www.gamespot.com/feeds/news/",
-  "https://kotaku.com/tag/anime/rss",
   "https://www.sciencedaily.com/rss/all.xml",
-  "https://lifehacker.com/rss",
+  "https://www.rollingstone.com/music/music-news/feed/",
+  "https://www.nasa.gov/rss/dyn/breaking_news.rss",
+  "https://www.historyextra.com/feed/",
+  "https://www.avclub.com/rss",
+  "https://www.eurogamer.net/?format=rss",
+  "https://collider.com/feed/",
 ];
 
 export const createBotPost = async () => {
@@ -50,7 +53,8 @@ export const createBotPost = async () => {
     const feed = await parser.parseURL(randomFeedUrl);
     const randomRssIndex = Math.floor(Math.random() * feed.items.length);
 
-    const prompt = `Be a ${randomBot?.personality} user. Write a tweet based off this title ${feed.items[randomRssIndex].title} and this text ${feed.items[randomRssIndex].contentSnippet}. if it aligns with your interests (${randomBot?.interests}) be positive, if it includes your disinterests (${randomBot?.disinterests}), be negative about it. Do not use adjectives or descriptive words, keep it realistic like a real human and very short`;
+    const prompt = `You are a ${randomBot?.personality} user writing a tweet about this title: "${feed.items[randomRssIndex].title}" and content: "${feed.items[randomRssIndex].contentSnippet}". Breifly mention the title: "${feed.items[randomRssIndex].title}".
+		Let your tone be subtly influenced by your interests (${randomBot?.interests}) and dislikes (${randomBot?.disinterests}), without directly mentioning them. If the topic aligns with your interests, respond with a positive tone; if it includes your dislikes, respond with a more critical or skeptical tone. Keep it realistic, brief, and similar to a casual reaction tweet from a real person.`;
 
     const client = new HfInference(HUGGING_FACE_API_KEY);
     const stream = await client.chatCompletion({
@@ -63,7 +67,7 @@ export const createBotPost = async () => {
       ],
       seed: randomSeed,
       max_tokens: 150,
-      temperature: 0.7,
+      temperature: 0.8,
     });
 
     const newBotPost = await new PostComment(
@@ -115,11 +119,17 @@ export const createBotComment = async () => {
       throw new Error("No bot found");
     }
 
+    if (randomBot.id === randomPostComment.user_id) {
+      return;
+    }
+
     if (randomPostComment.hot_score > 0) {
       const probability = Math.random();
 
-      if (probability <= 0.8) {
-        const prompt = `Be a ${randomBot?.personality} user, reply with a comment to this tweet: ${randomPostComment?.text}. Be positive if it's involving your interests (${randomBot?.interests}), be negative if it includes your disinterests (${randomBot?.disinterests}). Do not use adjectives or descriptive words, keep it realistic like a real human and very short`;
+      if (probability <= 1) {
+        const prompt = `You are a ${randomBot.personality} user replying to this tweet: "${randomPostComment.text}". 
+				Craft a brief, realistic reply with a tone subtly influenced by your interests (${randomBot.interests}) and dislikes (${randomBot.disinterests}). Do not mention these directly. 
+				Instead, let the tone naturally reflect a positive or negative inclination. Keep it casual and brief, as if it’s a quick, off-the-cuff response.`;
 
         const client = new HfInference(HUGGING_FACE_API_KEY);
         const stream = await client.chatCompletion({
@@ -132,7 +142,7 @@ export const createBotComment = async () => {
           ],
           seed: randomSeed,
           max_tokens: 150,
-          temperature: 0.7,
+          temperature: 0.8,
         });
 
         const newBotComment = new PostComment(
@@ -155,12 +165,12 @@ export const createBotComment = async () => {
     } else {
       const probability = Math.random();
 
-      if (probability <= 0.2) {
-        const prompt = `Be a ${randomBot?.personality} user, reply with a comment on this tweet: ${randomPostComment?.text}. Be positive if it's involving your interests (${randomBot?.interests}), be negative if it includes your disinterests (${randomBot?.disinterests}). Do not use adjectives or descriptive words, keep it realistic like a real human and very short`;
+      if (probability <= 1) {
+        const prompt = `Be a ${randomBot?.personality} user, reply with a comment on this tweet: ${randomPostComment?.text}. Mention the topic breifly, Let your interests ${randomBot.interests} and disinterests ${randomBot.disinterests} effect the tone of your tweet. Do not mention your interests or disinterests directly but let it factor your tone in the response. Do not use adjectives or descriptive words, keep it realistic like a real human and very short`;
 
         const client = new HfInference(HUGGING_FACE_API_KEY);
         const stream = await client.chatCompletion({
-          model: "meta-llama/Llama-3.2-11B-Vision-Instruct",
+          model: HUGGING_FACE_MODEL,
           messages: [
             {
               role: "user",
@@ -169,7 +179,7 @@ export const createBotComment = async () => {
           ],
           seed: randomSeed,
           max_tokens: 150,
-          temperature: 0.7,
+          temperature: 0.8,
         });
 
         const newBotComment = new PostComment(

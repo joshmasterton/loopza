@@ -16,7 +16,7 @@ import {
   ResetPasswordFormTypes,
 } from "../../types/pages/Page.types";
 import { forgotPassword, resetPassword } from "../features/authSlice";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 
 const forgotPasswordSchema = yup.object().shape({
@@ -88,6 +88,7 @@ const resetPasswordSchema = yup.object().shape({
 
 export const ResetPassword = () => {
   const location = useLocation();
+  const navigation = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { currentTheme } = useSelector((state: RootState) => state.theme);
   const { status } = useSelector((state: RootState) => state.auth);
@@ -110,7 +111,14 @@ export const ResetPassword = () => {
   });
 
   const onSubmit = async (data: ResetPasswordFormTypes) => {
-    await dispatch(resetPassword(data));
+    try {
+      await dispatch(resetPassword(data));
+      navigation("/login");
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
   };
 
   const showPassword = (passwordType: keyof typeof showPasswords) => {

@@ -153,11 +153,18 @@ export const forgotPassword =
         data
       );
       console.log(forgotPassword.data);
+      dispatch(
+        showPopup({ messages: "Check your mail for reset password link" })
+      );
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
+        dispatch(showPopup({ messages: [error.response.data.error] }));
       } else if (error instanceof Error) {
         console.error(error);
+        dispatch(showPopup({ messages: [error.message] }));
+      } else {
+        dispatch(showPopup({ messages: ["An error has occured"] }));
       }
     } finally {
       dispatch(setIdle());
