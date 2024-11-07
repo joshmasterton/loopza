@@ -41,6 +41,8 @@ export const mockPost: PostCommentTypes = {
   reaction: "like",
   hot_score: 0,
   is_bot: false,
+  last_online: "",
+  is_online: false,
 };
 
 export const mockPostTwo: PostCommentTypes = {
@@ -61,6 +63,8 @@ export const mockPostTwo: PostCommentTypes = {
   reaction: "like",
   hot_score: 0,
   is_bot: false,
+  last_online: "",
+  is_online: false,
 };
 
 export const Test = ({ initialEntry }: { initialEntry: string }) => {
