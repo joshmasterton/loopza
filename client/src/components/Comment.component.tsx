@@ -168,6 +168,11 @@ export const Comment = ({
         )}
         <header>
           <Navigation type="link" link={`/profile/${currentComment.user_id}`}>
+            <div
+              className={`${currentComment.is_online ? "online" : "offline"}`}
+            >
+              <div />
+            </div>
             <img src={currentComment?.profile_picture_url} alt="" />
           </Navigation>
           <div>

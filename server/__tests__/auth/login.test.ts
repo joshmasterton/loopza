@@ -19,7 +19,7 @@ describe("/auth/login", () => {
       );
 
     const login = await request(app).post("/auth/login").send({
-      username: "testUser",
+      email: "testEmail@email.com",
       password: "Password",
     });
 
@@ -29,25 +29,25 @@ describe("/auth/login", () => {
 
   test("Should return error if no user found", async () => {
     const login = await request(app).post("/auth/login").send({
-      username: "testUser",
+      email: "testEmail@email.com",
       password: "Password",
     });
 
     expect(login.body.error).toBe("User login failed");
   });
 
-  test("Should return error if invalid username", async () => {
+  test("Should return error if invalid email", async () => {
     const login = await request(app).post("/auth/login").send({
-      username: "test",
+      email: "test",
       password: "Password",
     });
 
-    expect(login.body.error).toBe("Username must be at least 6 characters");
+    expect(login.body.error).toBe("Email must be a valid email");
   });
 
   test("Should return error if invalid password", async () => {
     const login = await request(app).post("/auth/login").send({
-      username: "testUser",
+      email: "testEmail@email.com",
       password: "Pass",
     });
 

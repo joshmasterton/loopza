@@ -27,6 +27,6 @@ export type ForgotPasswordFormTypes = {
 };
 
 export type LoginFormTypes = {
-  username: string;
+  email: string;
   password: string;
 };

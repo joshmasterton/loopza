@@ -4,10 +4,7 @@ import * as yup from "yup";
 import validator from "validator";
 
 const loginSchema = yup.object().shape({
-  username: yup
-    .string()
-    .min(6, "Username must be at least 6 characters")
-    .required(),
+  email: yup.string().email("Email must be a valid email").required(),
   password: yup
     .string()
     .min(6, "Password must be at least 6 characters")
@@ -21,9 +18,9 @@ export const login = async (req: Request, res: Response) => {
 
     const validatedData = await loginSchema.validate(req.body);
 
-    const serializedUsername = validator.escape(validatedData.username);
+    const serializedEmail = validator.escape(validatedData.email);
 
-    const tokens = await loginUser(serializedUsername, validatedData.password);
+    const tokens = await loginUser(serializedEmail, validatedData.password);
 
     return res
       .cookie("accessToken", tokens?.accessToken, {

@@ -15,9 +15,10 @@ import { Protected } from "./utilities/Protected.utilities";
 import { Popup } from "./utilities/Popup.utilities";
 import { Profile } from "./pages/Profile.page";
 import { Followers } from "./pages/Followers.page";
-import "@fontsource-variable/comfortaa";
-import "./styles/App.scss";
 import { ForgotPassword, ResetPassword } from "./pages/ForgotPassword.page";
+import "@fontsource-variable/comfortaa";
+import "@fontsource/geo";
+import "./styles/App.scss";
 
 export const Wrapper = ({
   children,
@@ -28,10 +29,9 @@ export const Wrapper = ({
 }) => {
   return (
     <>
-      <Side type="left" />
+      <Side />
       <Nav isReturn={isReturn} />
       {children}
-      <Side type="right" />
     </>
   );
 };

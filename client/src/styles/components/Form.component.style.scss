@@ -42,7 +42,7 @@ form.small > label > input {
 }
 
 form#auth {
-  padding: $paddingLarge;
+  padding: calc($paddingLarge / 1.25);
   gap: $gapLarge;
   max-width: $widthContainerForm;
 }

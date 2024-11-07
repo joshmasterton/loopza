@@ -9,6 +9,7 @@ export type PostCommentTypes = {
   comments: number;
   likes: number;
   dislikes: number;
+  last_online: string;
   created_at: string;
   username: string;
   email: string;
@@ -16,6 +17,7 @@ export type PostCommentTypes = {
   reaction: "like" | "dislike" | null;
   hot_score: number;
   is_bot: boolean;
+  is_online: boolean;
 };
 
 export type LikeDislikeTypes = {

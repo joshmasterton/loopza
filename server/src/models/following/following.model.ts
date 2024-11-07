@@ -1,6 +1,7 @@
 import { tableConfig } from "../../app";
 import { queryDatabase } from "../../database/query.database";
 import { UserTypes } from "../../types/model/auth/user.type";
+import { calculateOnline } from "../../utilities/isOnline.utilities";
 
 export class Following {
   public id?: number;
@@ -108,7 +109,7 @@ export class Following {
       const following = await queryDatabase(
         `
 					SELECT u.id, u.username, u.email, u.followers, u.following,
-					u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted,
+					u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.last_online, u.profile_picture_url, f.is_accepted,
 					f.pending_user_id
 					FROM ${tableConfig.getUsersTable()} u
 					JOIN ${tableConfig.getFollowersTable()} f
@@ -123,6 +124,13 @@ export class Following {
         following.rows[0].created_at = new Date(
           following.rows[0].created_at
         ).toLocaleString();
+        following.rows[0].last_online = new Date(
+          following.rows[0].last_online
+        ).toLocaleString();
+        following.rows[0].is_online = calculateOnline(
+          following.rows[0].last_online
+        );
+
         return following.rows[0];
       }
 
@@ -138,6 +146,8 @@ export class Following {
     type: "all" | "followers",
     userId?: number,
     search?: string,
+    getOnlineUsers?: boolean,
+    filter?: string,
     page: number = 0
   ) {
     try {
@@ -147,7 +157,7 @@ export class Following {
         const users = await queryDatabase(
           `
 						SELECT u.id, u.username, u.email, u.followers, u.following,
-						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted,
+						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.last_online, u.profile_picture_url, f.is_accepted,
 						f.pending_user_id, u.is_bot, u.personality, u.interests, u.disinterests
 						FROM ${tableConfig.getUsersTable()} u
 						LEFT JOIN ${tableConfig.getFollowersTable()} f
@@ -155,13 +165,20 @@ export class Following {
 						OR (f.follower_one_id = u.id AND f.follower_two_id = $1)
 						${userId ? "WHERE u.id != $1" : ""}
 						${
-              search
+              getOnlineUsers
                 ? userId
-                  ? "AND WHERE u.username_lower_case ILIKE $3"
+                  ? "AND u.last_online > CURRENT_TIMESTAMP - INTERVAL '1 minute'"
+                  : "WHERE u.last_online > CURRENT_TIMESTAMP - INTERVAL '1 minute'"
+                : ""
+            }
+						${
+              search
+                ? userId || getOnlineUsers
+                  ? "AND u.username_lower_case ILIKE $3"
                   : "WHERE u.username_lower_case ILIKE $3"
                 : ""
             }
-						ORDER BY u.created_at DESC
+						ORDER BY u.${filter ?? "created_at"} DESC
 						LIMIT 10 OFFSET $2
 					`,
           search ? [userId, page * 10, searchQuery] : [userId, page * 10]
@@ -172,6 +189,8 @@ export class Following {
             return {
               ...user,
               created_at: new Date(user.created_at).toLocaleString(),
+              last_online: new Date(user.last_online).toLocaleString(),
+              is_online: calculateOnline(user.last_online),
             };
           })
         );
@@ -181,7 +200,7 @@ export class Following {
         const followers = await queryDatabase(
           `
 						SELECT u.id, u.username, u.email, u.followers, u.following,
-						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted,
+						u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.last_online, u.profile_picture_url, f.is_accepted,
 						f.pending_user_id, u.personality, u.interests, u.disinterests
 						FROM ${tableConfig.getUsersTable()} u
 						JOIN ${tableConfig.getFollowersTable()} f
@@ -189,9 +208,16 @@ export class Following {
 						OR (f.follower_one_id = u.id AND f.follower_two_id = $1)
 						${userId ? "WHERE u.id != $1" : ""}
 						${
-              search
+              getOnlineUsers
                 ? userId
-                  ? "AND WHERE u.username_lower_case ILIKE $3"
+                  ? "AND u.last_online > CURRENT_TIMESTAMP - INTERVAL '1 minute'"
+                  : "WHERE u.last_online > CURRENT_TIMESTAMP - INTERVAL '1 minute'"
+                : ""
+            }
+						${
+              search
+                ? userId || getOnlineUsers
+                  ? "AND u.username_lower_case ILIKE $3"
                   : "WHERE u.username_lower_case ILIKE $3"
                 : ""
             }
@@ -205,6 +231,8 @@ export class Following {
             return {
               ...follower,
               created_at: new Date(follower.created_at).toLocaleString(),
+              last_online: new Date(follower.last_online).toLocaleString(),
+              is_online: calculateOnline(follower.last_online),
             };
           })
         );

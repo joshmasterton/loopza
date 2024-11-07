@@ -39,14 +39,27 @@ export const createBotPost = async () => {
   try {
     const randomSeed = Date.now() + Math.floor(Math.random() * 1000);
 
-    const randomBot = await new User(
+    const randomBotUser = new User(
       undefined,
       undefined,
       undefined,
       undefined,
       undefined,
       undefined
-    ).getUser("is_bot", true, undefined, true);
+    );
+
+    const randomBot = await randomBotUser.getUser(
+      "is_bot",
+      true,
+      undefined,
+      true
+    );
+
+    if (!randomBot) {
+      throw new Error("No bot found");
+    }
+
+    await randomBotUser.updateLastOnline(randomBot?.id);
 
     const randomFeedUrl = rssFeeds[Math.floor(Math.random() * rssFeeds.length)];
 
@@ -67,7 +80,7 @@ export const createBotPost = async () => {
       ],
       seed: randomSeed,
       max_tokens: 150,
-      temperature: 0.8,
+      temperature: 0.75,
     });
 
     const newBotPost = await new PostComment(
@@ -106,99 +119,76 @@ export const createBotComment = async () => {
       throw new Error("No post or comment found");
     }
 
-    const randomBot = await new User(
+    const randomBotUser = new User(
       undefined,
       undefined,
       undefined,
       undefined,
       undefined,
       undefined
-    ).getUser("is_bot", true, undefined, true);
+    );
+
+    const randomBot = await randomBotUser.getUser(
+      "is_bot",
+      true,
+      undefined,
+      true
+    );
 
     if (!randomBot) {
       throw new Error("No bot found");
     }
 
+    await randomBotUser.updateLastOnline(randomBot?.id);
+
     if (randomBot.id === randomPostComment.user_id) {
       return;
     }
 
+    let probability: number;
     if (randomPostComment.hot_score > 0) {
-      const probability = Math.random();
-
-      if (probability <= 1) {
-        const prompt = `You are a ${randomBot.personality} user replying to this tweet: "${randomPostComment.text}". 
-				Craft a brief, realistic reply with a tone subtly influenced by your interests (${randomBot.interests}) and dislikes (${randomBot.disinterests}). Do not mention these directly. 
-				Instead, let the tone naturally reflect a positive or negative inclination. Keep it casual and brief, as if it’s a quick, off-the-cuff response.`;
-
-        const client = new HfInference(HUGGING_FACE_API_KEY);
-        const stream = await client.chatCompletion({
-          model: HUGGING_FACE_MODEL,
-          messages: [
-            {
-              role: "user",
-              content: prompt,
-            },
-          ],
-          seed: randomSeed,
-          max_tokens: 150,
-          temperature: 0.8,
-        });
-
-        const newBotComment = new PostComment(
-          stream.choices[0].message.content?.replace(/"/g, ""),
-          "comment",
-          randomBot?.id
-        );
-
-        if (!randomPostComment?.parent_id) {
-          await newBotComment.new(randomPostComment?.id, undefined);
-        } else if (randomPostComment?.parent_id) {
-          await newBotComment.new(
-            randomPostComment?.parent_id,
-            randomPostComment?.id ?? undefined
-          );
-        }
-
-        return await newBotComment?.getPostComment();
-      }
+      probability = Math.min(0.4 + randomPostComment.hot_score * 0.05, 0.9);
     } else {
-      const probability = Math.random();
+      probability = 0.3;
+    }
 
-      if (probability <= 1) {
-        const prompt = `Be a ${randomBot?.personality} user, reply with a comment on this tweet: ${randomPostComment?.text}. Mention the topic breifly, Let your interests ${randomBot.interests} and disinterests ${randomBot.disinterests} effect the tone of your tweet. Do not mention your interests or disinterests directly but let it factor your tone in the response. Do not use adjectives or descriptive words, keep it realistic like a real human and very short`;
+    if (Math.random() <= probability) {
+      const prompt = `You are a ${randomBot.personality} user replying to this tweet: "${randomPostComment.text}". 
+			Craft a brief, realistic reply with a tone subtly influenced by your interests (${randomBot.interests}) and dislikes (${randomBot.disinterests}). Do not mention these directly. 
+			Instead, let the tone naturally reflect a positive or negative inclination. Keep it casual and brief, as if it’s a quick, off-the-cuff response.`;
 
-        const client = new HfInference(HUGGING_FACE_API_KEY);
-        const stream = await client.chatCompletion({
-          model: HUGGING_FACE_MODEL,
-          messages: [
-            {
-              role: "user",
-              content: prompt,
-            },
-          ],
-          seed: randomSeed,
-          max_tokens: 150,
-          temperature: 0.8,
-        });
+      const client = new HfInference(HUGGING_FACE_API_KEY);
+      const stream = await client.chatCompletion({
+        model: HUGGING_FACE_MODEL,
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        seed: randomSeed,
+        max_tokens: 150,
+        temperature: 0.75,
+      });
 
-        const newBotComment = new PostComment(
-          stream.choices[0].message.content?.replace(/"/g, ""),
-          "comment",
-          randomBot?.id
+      const newBotComment = new PostComment(
+        stream.choices[0].message.content?.replace(/"/g, ""),
+        "comment",
+        randomBot?.id
+      );
+
+      if (!randomPostComment?.parent_id) {
+        await newBotComment.new(randomPostComment?.id, undefined);
+      } else if (randomPostComment?.parent_id) {
+        await newBotComment.new(
+          randomPostComment?.parent_id,
+          randomPostComment?.id ?? undefined
         );
-
-        if (!randomPostComment?.parent_id) {
-          await newBotComment.new(randomPostComment?.id, undefined);
-        } else if (randomPostComment?.parent_id) {
-          await newBotComment.new(
-            randomPostComment?.parent_id,
-            randomPostComment?.id ?? undefined
-          );
-        }
-
-        return await newBotComment?.getPostComment();
       }
+
+      return await newBotComment?.getPostComment();
+    } else {
+      return;
     }
   } catch (error) {
     if (error instanceof Error) {

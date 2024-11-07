@@ -3,78 +3,76 @@
 .side {
   position: fixed;
   display: flex;
+  justify-content: space-between;
   width: 100%;
   top: 0;
   max-width: calc($widthContainerExtraLargeTwo);
   min-height: calc(100% - ($padding * 2));
-  overflow: scroll;
   z-index: 1;
+  overflow: scroll;
 }
 
-.side > div {
-  display: flex;
-  width: 100%;
-  min-height: 100%;
-  padding: $padding;
+.side > div.users {
+  display: none;
+  position: sticky;
+  overflow: scroll;
+  right: $padding;
+  width: calc($width + $padding * 2);
+  min-height: calc(100% - ($padding * 2));
   border-radius: $round;
+  transform-origin: top right;
   transition: width $animationCubic;
+  animation: $animationCubic comeFromRight;
   background: var(--container);
 }
 
-.side > div > ul {
+.side > div.users > main {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: $padding;
+  gap: $gap;
+  width: 100%;
+  min-height: 100%;
+}
+
+.side > div.menu {
+  position: sticky;
+  display: none;
+  left: $padding;
+  width: calc($width + $padding * 2);
+  min-height: calc(100% - ($padding * 2));
+  overflow: scroll;
+  border-radius: $round;
+  transform-origin: top;
+  transition: width $animationCubic;
+  animation: $animationCubic comeFromLeft;
+  background: var(--container);
+  z-index: 3;
+}
+
+.side > div.menu > ul {
+  width: 100%;
+  min-height: 100%;
+  padding: $padding;
+  position: absolute;
   display: flex;
   flex-direction: column;
   gap: $padding;
-  min-height: 100%;
-  width: 100%;
 }
 
-.side.left {
+.side > div.menu > ul a > div,
+.side > div.menu > ul button > div {
   display: none;
-  transform-origin: top;
-  animation: $animationCubic comeFromLeft;
-  z-index: 2;
-}
-
-.side.left > div {
-  position: absolute;
-  left: $padding;
-  width: calc($width + $padding * 2);
-}
-
-.side.left > div > ul a > div,
-.side.left > div > ul button > div {
-  display: none;
-}
-
-.side.right {
-  width: 100%;
-  display: none;
-  transform-origin: top;
-  animation: $animationCubic comeFromRight;
-}
-
-.side.right > div {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  right: $padding;
-  width: calc($width + $padding * 2);
 }
 
 .side img {
   object-fit: cover;
 }
 
-.side.right > div > ul a > div,
-.side.right > div > ul button > div {
-  display: none;
-}
-
 .side div.hover {
   position: absolute;
-  width: calc(100% - $padding * 2);
+  width: calc(100% - ($padding * 2));
   height: $height;
   border-radius: $round;
   transform-origin: center;
@@ -105,35 +103,35 @@
     top: $padding;
   }
 
-  .side.left {
+  .side > div.menu {
     display: flex;
   }
 }
 
 @media screen and (min-width: calc($widthContainerMedium)) {
-  .side.left > div {
+  .side > div.menu {
     width: calc($widthContainerSmall);
   }
 
-  .side.left > div > ul a > div,
-  .side.left > div > ul button > div {
+  .side > div.menu > ul a > div,
+  .side > div.menu > ul button > div {
     display: block;
   }
 }
 
 @media screen and (min-width: calc($widthContainerLarge)) {
-  .side.right {
+  .side > div.users {
     display: flex;
   }
 }
 
 @media screen and (min-width: calc($widthContainerExtraLarge)) {
-  .side.right > div {
+  .side > div.users {
     width: calc($widthContainerSmall);
   }
 
-  .side.right > div > ul a > div,
-  .side.right > div > ul button > div {
-    display: block;
+  .side > div.users > main {
+    padding: 0;
+    gap: 0;
   }
 }

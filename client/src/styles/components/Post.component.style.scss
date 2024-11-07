@@ -32,11 +32,14 @@
   flex-direction: column;
 }
 
+.post > header > a {
+  position: relative;
+}
+
 .post > header > a > div {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
 }
 
 .post > header > div:last-of-type {

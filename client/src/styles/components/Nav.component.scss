@@ -24,7 +24,7 @@ nav > header {
   gap: $gap;
   padding: $padding;
   min-height: calc($height + ($padding * 2));
-  transition: transform $animationCubic;
+  transition: transform $animationCubic, visibility $animationCubic;
   animation: $animationCubic comeFromTop;
   z-index: 1;
   border-bottom-left-radius: $round;
@@ -57,7 +57,7 @@ nav > main {
   border-radius: $round;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  transition: transform $animationCubic;
+  transition: transform $animationCubic, visibility $animationCubic;
   transform-origin: top;
   background: var(--background);
 }
@@ -75,6 +75,7 @@ nav > header > div {
 }
 
 nav.hidden > main {
+  visibility: hidden;
   transform: translateY(-29rem);
 }
 
@@ -119,6 +120,7 @@ nav div.hover.post {
 @media screen and (min-width: $widthContainer) {
   nav > header {
     animation: none;
+    visibility: hidden;
   }
 
   nav > div {
@@ -127,6 +129,7 @@ nav div.hover.post {
   }
 
   nav > main {
+    visibility: hidden;
     animation: none;
   }
 

@@ -13,6 +13,7 @@ export type UserTypes = {
   is_accepted?: boolean;
   pending_user_id?: number;
   is_bot?: boolean;
+  is_online?: boolean;
   personality?: string;
   interests?: string;
   disinterests?: string;
@@ -29,9 +30,11 @@ export type PostCommentTypes = {
   comments: number;
   likes: number;
   dislikes: number;
+  last_online: string;
   created_at: string;
   username: string;
   email: string;
+  is_online: boolean;
   profile_picture_url: string;
   reaction: "like" | "dislike" | null;
   hot_score: number;

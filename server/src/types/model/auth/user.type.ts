@@ -10,6 +10,7 @@ export type UserTypes = {
   comments: number;
   likes: number;
   dislikes: number;
+  last_online: string;
   created_at: string;
   profile_picture_url: string;
   is_accepted?: boolean;
@@ -18,6 +19,7 @@ export type UserTypes = {
   personality?: string;
   interests?: string;
   disinterests?: string;
+  is_online?: boolean;
 };
 
 export interface UserRequest extends Request {

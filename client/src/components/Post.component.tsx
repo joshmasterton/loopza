@@ -82,6 +82,9 @@ export const Post = ({
       )}
       <header>
         <Navigation type="link" link={`/profile/${currentPost.user_id}`}>
+          <div className={`${currentPost.is_online ? "online" : "offline"}`}>
+            <div />
+          </div>
           <img src={currentPost?.profile_picture_url} alt="" />
         </Navigation>
         <div>

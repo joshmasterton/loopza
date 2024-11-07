@@ -28,10 +28,10 @@ const LoginForm = () => {
   const { currentTheme } = useSelector((state: RootState) => state.theme);
 
   const loginSchema = yup.object().shape({
-    username: yup
+    email: yup
       .string()
-      .min(6, "Username must be at least 6 characters")
-      .required("Username required"),
+      .email("Email must be a valid email")
+      .required("Email required"),
     password: yup
       .string()
       .min(6, "Password must be at least 6 characters")
@@ -60,15 +60,13 @@ const LoginForm = () => {
       <h1>Login</h1>
       <main>
         <Input
-          id="username"
+          id="email"
           type="text"
-          title="Username"
-          register={register("username", { required: true })}
-          placeholder="Username"
+          title="Email"
+          register={register("email", { required: true })}
+          placeholder="Email"
         >
-          {errors.username && (
-            <div className="error">{errors.username.message}</div>
-          )}
+          {errors.email && <div className="error">{errors.email.message}</div>}
         </Input>
         <Input
           id="password"

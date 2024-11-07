@@ -1,15 +1,12 @@
 import { User } from "../../models/auth/user.model";
 import { generateToken } from "../../utilities/token.utilities";
 
-export const loginUser = async (username: string, password: string) => {
+export const loginUser = async (email: string, password: string) => {
   try {
-    const user = new User(username, "", password);
+    const user = new User(undefined, email, password);
     await user.login();
 
-    const userId = await user.getUserId(
-      "username_lower_case",
-      username.toLowerCase()
-    );
+    const userId = await user.getUserId("email", email);
 
     if (!userId) {
       throw new Error("User login failed");

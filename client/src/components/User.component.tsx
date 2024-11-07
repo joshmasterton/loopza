@@ -16,9 +16,11 @@ import { FaRegStar } from "react-icons/fa";
 export const User = ({
   profile,
   type,
+  isSide = false,
 }: {
   profile: UserTypes;
   type: "component" | "page";
+  isSide?: boolean;
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
@@ -103,10 +105,13 @@ export const User = ({
 
   if (type === "component") {
     return (
-      <div className="user">
+      <div className={`user ${isSide ? "sideComp" : ""}`}>
         <Navigation link={`/profile/${currentUser?.id}`} type="button" />
         <header>
           <div>
+            <div className={`${currentUser.is_online ? "online" : "offline"}`}>
+              <div />
+            </div>
             <img src={currentUser?.profile_picture_url} alt="" />
           </div>
           <div>

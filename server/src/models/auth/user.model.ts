@@ -3,6 +3,7 @@ import { queryDatabase } from "../../database/query.database";
 import { UserTypes } from "../../types/model/auth/user.type";
 import { uploadImage } from "../../config/cloudinary.config";
 import bcrypt from "bcryptjs";
+import { calculateOnline } from "../../utilities/isOnline.utilities";
 
 export class User {
   public id?: number;
@@ -117,19 +118,13 @@ export class User {
 
   async login() {
     try {
-      const existingUser = await this.getUser(
-        "username_lower_case",
-        this.username?.toLowerCase()
-      );
+      const existingUser = await this.getUser("email", this.email);
 
       if (!existingUser) {
         throw new Error("User login failed");
       }
 
-      const hashedPassword = await this.getUserPassword(
-        "username_lower_case",
-        this.username?.toLowerCase()
-      );
+      const hashedPassword = await this.getUserPassword("email", this.email);
 
       if (!this.password || !hashedPassword) {
         throw new Error("User login failed");
@@ -243,12 +238,29 @@ export class User {
     }
   }
 
+  async updateLastOnline(userId: number) {
+    try {
+      await queryDatabase(
+        `
+					UPDATE ${tableConfig.getUsersTable()}
+					SET last_online = NOW()
+					WHERE id = $1
+				`,
+        [userId]
+      );
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  }
+
   async getUserId<T>(method: string, value: T) {
     try {
       const user = await queryDatabase(
         `
 					SELECT id, username, email, followers, following,
-					posts, comments, likes, dislikes, created_at, profile_picture_url, is_bot, personality, interests, disinterests
+					posts, comments, likes, dislikes, created_at, last_online, profile_picture_url, is_bot, personality, interests, disinterests
 					FROM ${tableConfig.getUsersTable()} 
 					WHERE ${method} = $1
 				`,
@@ -293,7 +305,7 @@ export class User {
         `
 					SELECT u.id, u.username, u.email, u.followers, u.following,
 					u.posts, u.comments, u.likes, u.dislikes, u.created_at, u.profile_picture_url, f.is_accepted,
-					f.pending_user_id, u.is_bot, u.personality, u.interests, u.disinterests
+					f.pending_user_id, u.is_bot, u.personality, u.interests, u.disinterests, u.last_online
 					FROM ${tableConfig.getUsersTable()} u
 					LEFT JOIN ${tableConfig.getFollowersTable()} f
 					ON (f.follower_one_id = u.id AND f.follower_two_id = $2)
@@ -318,6 +330,10 @@ export class User {
         serializedUser.created_at = new Date(
           serializedUser.created_at
         ).toLocaleString();
+        serializedUser.last_online = new Date(
+          serializedUser.last_online
+        ).toLocaleString();
+        serializedUser.is_online = calculateOnline(serializedUser.last_online);
       }
 
       return serializedUser;

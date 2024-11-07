@@ -22,6 +22,7 @@ export const createUserTable = async (usersTable = "users") => {
 				personality VARCHAR(100),
 				interests VARCHAR(100),
 				disinterests VARCHAR(100),
+				last_online TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
 				created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
 				is_bot BOOLEAN DEFAULT FALSE
 			)`

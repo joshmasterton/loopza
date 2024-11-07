@@ -5,8 +5,10 @@ import { Following } from "../../models/following/following.model";
 
 const getUsersSchema = yup.object().shape({
   userId: yup.number().optional(),
+  getOnlineUsers: yup.boolean().optional(),
   page: yup.number().optional(),
   search: yup.string().optional(),
+  filter: yup.string().optional(),
   type: yup
     .mixed<"all" | "followers">()
     .oneOf(["all", "followers"], "Type must be all or followers")
@@ -21,6 +23,8 @@ export const getUsers = async (req: UserRequest, res: Response) => {
       validatedData.type,
       validatedData.userId,
       validatedData.search,
+      validatedData.getOnlineUsers ?? false,
+      validatedData.filter,
       validatedData.page
     );
 

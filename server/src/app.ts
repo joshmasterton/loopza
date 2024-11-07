@@ -74,7 +74,7 @@ const startServer = async () => {
   try {
     await dropTables();
     await initializeDatabase();
-    await createBotUsers(40);
+    await createBotUsers(100);
     scheduleRandomBotPost();
     scheduleRandomBotComment();
     scheduleRandomBotLikeDislike();

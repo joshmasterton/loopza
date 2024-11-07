@@ -19,47 +19,65 @@ export const likeDislikeBot = async () => {
       throw new Error("No post or comment here to like or dislike");
     }
 
-    const randomBot = await new User(
+    const randomBotUser = new User(
       undefined,
       undefined,
       undefined,
       undefined,
       undefined,
       undefined
-    ).getUser("is_bot", true, undefined, true);
+    );
+
+    const randomBot = await randomBotUser.getUser(
+      "is_bot",
+      true,
+      undefined,
+      true
+    );
 
     if (!randomBot) {
       throw new Error("No bot found");
     }
 
-    if (randomPostComment.hot_score > 0) {
-      const probability = Math.random();
+    await randomBotUser.updateLastOnline(randomBot?.id);
 
-      if (probability <= 0.8) {
-        const likeDislike = await new PostComment(
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          randomPostCommentId
-        ).likeDislike(randomBot.id, "like");
+    const { hot_score, likes, dislikes } = randomPostComment;
 
-        return likeDislike;
-      }
+    let probability: number;
+    if (hot_score > 0) {
+      probability = Math.min(0.7 + randomPostComment.hot_score * 0.05, 0.9);
     } else {
-      const probability = Math.random();
+      probability = 0.5;
+    }
 
-      if (probability <= 0.2) {
-        const likeDislike = await new PostComment(
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          randomPostCommentId
-        ).likeDislike(randomBot.id, "like");
+    const likeBias = Math.min(0.05 * likes, 0.5);
+    const dislikeBias = Math.min(0.05 * dislikes, 0.5);
 
-        return likeDislike;
-      }
+    const likeProbability = Math.min(probability + likeBias, 0.9);
+    const dislikeProbability = Math.min(probability + dislikeBias, 0.9);
+
+    const randomValue = Math.random();
+
+    if (dislikes > likes && randomValue <= dislikeProbability) {
+      const likeDislike = await new PostComment(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        randomPostCommentId
+      ).likeDislike(randomBot.id, "dislike");
+
+      return likeDislike;
+    } else if (likes >= dislikes && randomValue <= likeProbability) {
+      const likeDislike = await new PostComment(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        randomPostCommentId
+      ).likeDislike(randomBot.id, "like");
+
+      return likeDislike;
     }
 
     return;

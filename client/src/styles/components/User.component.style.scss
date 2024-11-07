@@ -18,6 +18,40 @@
   background: var(--container);
 }
 
+.user.sideComp {
+  padding: 0;
+}
+
+.user.sideComp > a {
+  min-height: $height;
+  max-height: $height;
+}
+
+.user.sideComp > main {
+  display: none;
+}
+
+.user.sideComp > header > div:last-of-type {
+  display: none;
+}
+
+@media screen and (min-width: $widthContainerExtraLarge) {
+  .user.sideComp {
+    background: var(--container);
+    padding: $padding;
+    padding-bottom: 0;
+  }
+
+  .user.sideComp > a {
+    min-height: calc($height + $padding);
+    max-height: calc($height + $padding);
+  }
+
+  .user.sideComp > header > div:last-of-type {
+    display: flex;
+  }
+}
+
 .user > a {
   left: 0;
   top: 0;
@@ -36,6 +70,7 @@
 }
 
 .user > header > div {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,6 +78,12 @@
 
 .user > header > div:last-of-type {
   overflow: hidden;
+  padding-top: $fontAdjust;
+}
+
+.user > header > div:last-of-type > p {
+  text-wrap: nowrap;
+  word-break: keep-all;
 }
 
 .user > header > div > p {

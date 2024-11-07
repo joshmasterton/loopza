@@ -33,11 +33,14 @@
   flex-direction: column;
 }
 
+.comment > header > a {
+  position: relative;
+}
+
 .comment > header > a > div {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
 }
 
 .comment > header > div:last-of-type {

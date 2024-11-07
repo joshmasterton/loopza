@@ -99,6 +99,13 @@ button.container {
   background: var(--container);
 }
 
+button.background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--background);
+}
+
 button.transparent {
   color: var(--color);
   background: transparent;
