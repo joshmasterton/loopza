@@ -104,6 +104,7 @@ export const createBotComment = async () => {
     const randomSeed = Date.now() + Math.floor(Math.random() * 1000);
 
     const postCommentsLength = await new PostComment().countPostsComments();
+    console.log(postCommentsLength);
     const randomPostCommentId =
       Math.floor(Math.random() * postCommentsLength) + 1;
 

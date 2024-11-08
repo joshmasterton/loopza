@@ -1,21 +1,48 @@
 import cron from "node-cron";
 import { createBotComment, createBotPost } from "../bot/createPostComment.bot";
 import { likeDislikeBot } from "../bot/likeDislike.bot";
+import { queryDatabase } from "../database/query.database";
+import { tableConfig } from "../app";
 
 export const scheduleRandomBotPost = () => {
-  cron.schedule("*/10 * * * *", async () => {
+  cron.schedule("* * * * *", async () => {
     await createBotPost();
   });
 };
 
 export const scheduleRandomBotComment = () => {
-  cron.schedule("*/5 * * * *", async () => {
+  cron.schedule("* * * * *", async () => {
     await createBotComment();
   });
 };
 
 export const scheduleRandomBotLikeDislike = () => {
-  cron.schedule("*/2 * * * *", async () => {
+  cron.schedule("* * * * *", async () => {
     await likeDislikeBot();
+  });
+};
+
+export const scheduleDeleteOldPostsComments = () => {
+  cron.schedule("* * * * *", async () => {
+    try {
+      await queryDatabase(
+        `
+					DELETE FROM ${tableConfig.getPostsCommentsTable()}
+					WHERE created_at < NOW() - INTERVAL '7 days'
+				`,
+        []
+      );
+      await queryDatabase(
+        `
+					DELETE FROM ${tableConfig.getLikesDislikesTable()}
+					WHERE created_at < NOW() - INTERVAL '7 days'
+				`,
+        []
+      );
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
   });
 };

@@ -1,6 +1,5 @@
 import { tableConfig } from "../../app";
 import { queryDatabase } from "../../database/query.database";
-import { UserTypes } from "../../types/model/auth/user.type";
 import { uploadImage } from "../../config/cloudinary.config";
 import bcrypt from "bcryptjs";
 import { calculateOnline } from "../../utilities/isOnline.utilities";
@@ -315,15 +314,15 @@ export class User {
         [value, requesterId ?? null]
       );
 
-      let serializedUser: UserTypes;
+      let serializedUser;
 
       if (is_bot) {
         const randomBotId =
           Math.floor(Math.random() * (user.rows.length - 1)) + 1;
 
-        serializedUser = user.rows[randomBotId] as UserTypes;
+        serializedUser = user.rows[randomBotId];
       } else {
-        serializedUser = user.rows[0] as UserTypes;
+        serializedUser = user.rows[0];
       }
 
       if (serializedUser) {

@@ -18,7 +18,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     const user = new User(undefined, validatedData.email);
 
     await user.resetPassword(validatedData.newPassword, validatedData.token);
-    return res.status(201).json({ message: "Password reset" });
+    return res.status(201).json({ message: "Password updated" });
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ error: error.message });

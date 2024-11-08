@@ -128,7 +128,7 @@ export const resetPassword =
         data
       );
 
-      console.log(resetPassword.data);
+      dispatch(showPopup({ messages: [resetPassword.data.message] }));
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);
@@ -152,10 +152,7 @@ export const forgotPassword =
         `${API_URL}/auth/forgotPassword`,
         data
       );
-      console.log(forgotPassword.data);
-      dispatch(
-        showPopup({ messages: "Check your mail for reset password link" })
-      );
+      dispatch(showPopup({ messages: [forgotPassword.data.message] }));
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error(error.response?.data);

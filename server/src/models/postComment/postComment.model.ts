@@ -6,6 +6,7 @@ import {
   PostCommentTypes,
 } from "../../types/model/postComment/postComment.type";
 import { calculateOnline } from "../../utilities/isOnline.utilities";
+import { formatTimeDifference } from "../../utilities/timeDifference.utilities";
 
 export class PostComment {
   public id?: number;
@@ -136,7 +137,7 @@ export class PostComment {
     try {
       const postCommentFromDb = await queryDatabase(
         `
-					SELECT pc.*, u.username, u.email, u.profile_picture_url, u.last_online, u.is_bot, u.personality, u.interests, u.disinterests, ld.reaction, ((CAST(pc.likes AS FLOAT) - CAST(pc.dislikes AS FLOAT) + CAST(pc.comments AS FLOAT)) / POWER(EXTRACT(EPOCH FROM (NOW() - pc.created_at)) / 3600 + 2, 1.5)) AS hot_score 
+					SELECT pc.*, u.username, u.email, u.profile_picture_url, u.last_online, u.is_bot, u.personality, u.interests, u.disinterests, ld.reaction, ((CAST(pc.likes AS FLOAT) - CAST(pc.dislikes AS FLOAT) + CAST(pc.comments AS FLOAT)) / POWER(EXTRACT(EPOCH FROM (NOW() - pc.created_at)) / 3600 + 2, 1.15)) AS hot_score 
 					FROM ${tableConfig.getPostsCommentsTable()} pc
 					LEFT JOIN ${tableConfig.getUsersTable()} u
 					ON pc.user_id = u.id
@@ -151,11 +152,12 @@ export class PostComment {
         return;
       }
 
-      const postComment = postCommentFromDb.rows[0] as PostCommentTypes;
-      postComment.created_at = new Date(
-        postComment.created_at
-      ).toLocaleString();
+      const postComment = postCommentFromDb.rows[0];
+      postComment.created_at = formatTimeDifference(postComment.created_at);
       postComment.is_online = calculateOnline(postComment.last_online);
+      postComment.last_online = new Date(
+        postComment.last_online
+      ).toLocaleString();
 
       return postComment;
     } catch (error) {
@@ -175,7 +177,7 @@ export class PostComment {
     try {
       const postsCommentsFromDb = await queryDatabase(
         `
-					SELECT pc.*, ((CAST(pc.likes AS FLOAT) - CAST(pc.dislikes AS FLOAT) + CAST(pc.comments AS FLOAT)) / POWER(EXTRACT(EPOCH FROM (NOW() - pc.created_at)) / 3600 + 2, 1.5)) AS hot_score,
+					SELECT pc.*, ((CAST(pc.likes AS FLOAT) - CAST(pc.dislikes AS FLOAT) + CAST(pc.comments AS FLOAT)) / POWER(EXTRACT(EPOCH FROM (NOW() - pc.created_at)) / 3600 + 2, 1.15)) AS hot_score,
 					u.username, u.email, u.profile_picture_url, u.last_online, u.personality, u.interests, u.disinterests, ld.reaction, u.is_bot
 					FROM ${tableConfig.getPostsCommentsTable()} pc
 					JOIN ${tableConfig.getUsersTable()} u
@@ -196,11 +198,14 @@ export class PostComment {
       );
 
       const postsComments: PostCommentTypes[] = await Promise.all(
-        postsCommentsFromDb.rows.map((postCommentFromDb: PostCommentTypes) => {
+        postsCommentsFromDb.rows.map((postCommentFromDb) => {
           return {
             ...postCommentFromDb,
-            created_at: new Date(postCommentFromDb.created_at).toLocaleString(),
+            created_at: formatTimeDifference(postCommentFromDb.created_at),
             is_online: calculateOnline(postCommentFromDb.last_online),
+            last_online: new Date(
+              postCommentFromDb.last_online
+            ).toLocaleString(),
           };
         })
       );

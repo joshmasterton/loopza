@@ -185,7 +185,7 @@ export class Following {
         );
 
         const allUsers: UserTypes[] = await Promise.all(
-          users.rows.map((user: UserTypes) => {
+          users.rows.map((user) => {
             return {
               ...user,
               created_at: new Date(user.created_at).toLocaleString(),
@@ -227,7 +227,7 @@ export class Following {
         );
 
         const allFollowers: UserTypes[] = await Promise.all(
-          followers.rows.map((follower: UserTypes) => {
+          followers.rows.map((follower) => {
             return {
               ...follower,
               created_at: new Date(follower.created_at).toLocaleString(),

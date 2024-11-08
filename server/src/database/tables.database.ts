@@ -69,7 +69,8 @@ export const createLikesDislikesTable = async (
 				id SERIAL PRIMARY KEY,
 				origin_id INT,
 				user_id INT,
-				reaction VARCHAR(10)
+				reaction VARCHAR(10),
+				created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 			)`
     );
   } catch (error) {

@@ -79,6 +79,7 @@ export const authenticateToken = async (
         throw new Error("Token error");
       }
 
+      await user.updateLastOnline(serializedUser.id);
       const newAccessToken = generateToken(serializedUser?.id, "access");
 
       res.cookie("accessToken", newAccessToken, {
