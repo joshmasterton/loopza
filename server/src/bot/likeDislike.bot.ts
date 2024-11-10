@@ -45,9 +45,9 @@ export const likeDislikeBot = async () => {
 
     let probability: number;
     if (hot_score > 0) {
-      probability = Math.min(0.7 + randomPostComment.hot_score * 0.05, 0.9);
+      probability = Math.min(0.3 + randomPostComment.hot_score, 1);
     } else {
-      probability = 0.5;
+      probability = 0.3;
     }
 
     const likeBias = Math.min(0.05 * likes, 0.5);
@@ -58,26 +58,25 @@ export const likeDislikeBot = async () => {
 
     const randomValue = Math.random();
 
-    if (dislikes > likes && randomValue <= dislikeProbability) {
-      const likeDislike = await new PostComment(
+    if (
+      randomValue <
+      dislikeProbability / (likeProbability + dislikeProbability)
+    ) {
+      return await new PostComment(
         undefined,
         undefined,
         undefined,
         undefined,
         randomPostCommentId
       ).likeDislike(randomBot.id, "dislike");
-
-      return likeDislike;
-    } else if (likes >= dislikes && randomValue <= likeProbability) {
-      const likeDislike = await new PostComment(
+    } else {
+      return await new PostComment(
         undefined,
         undefined,
         undefined,
         undefined,
         randomPostCommentId
       ).likeDislike(randomBot.id, "like");
-
-      return likeDislike;
     }
 
     return;

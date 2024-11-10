@@ -104,7 +104,6 @@ export const createBotComment = async () => {
     const randomSeed = Date.now() + Math.floor(Math.random() * 1000);
 
     const postCommentsLength = await new PostComment().countPostsComments();
-    console.log(postCommentsLength);
     const randomPostCommentId =
       Math.floor(Math.random() * postCommentsLength) + 1;
 
@@ -148,7 +147,7 @@ export const createBotComment = async () => {
 
     let probability: number;
     if (randomPostComment.hot_score > 0) {
-      probability = Math.min(0.4 + randomPostComment.hot_score * 0.05, 0.9);
+      probability = Math.min(0.3 + randomPostComment.hot_score, 1);
     } else {
       probability = 0.3;
     }
