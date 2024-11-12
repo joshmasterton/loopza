@@ -36,6 +36,9 @@ nav > header > h5 {
   display: flex;
   justify-content: center;
   padding-top: $fontAdjust;
+  height: $height;
+  border-radius: $round;
+  background: var(--background);
 }
 
 nav > header > div {
@@ -43,7 +46,6 @@ nav > header > div {
   justify-content: end;
   align-items: end;
   width: 100%;
-  background: var(--background);
 }
 
 nav > header > div > button {
@@ -94,7 +96,7 @@ nav div.hover {
   height: $height;
   border-radius: $round;
   transition: transform $animationCubic;
-  background: var(--container);
+  border: $outline;
 }
 
 nav div.hover.home {

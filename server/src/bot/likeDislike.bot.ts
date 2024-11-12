@@ -1,11 +1,15 @@
-import { HfInference } from "@huggingface/inference";
 import { User } from "../models/auth/user.model";
 import { PostComment } from "../models/postComment/postComment.model";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const { HUGGING_FACE_API_KEY, HUGGING_FACE_MODEL } = process.env;
+const { GOOGLE_API_KEY } = process.env;
 
 export const likeDislikeBot = async () => {
   try {
+    if (!GOOGLE_API_KEY) {
+      throw new Error("Environment variable error");
+    }
+
     const postCommentsLength = await new PostComment().countPostsComments();
     const randomPostCommentId =
       Math.floor(Math.random() * postCommentsLength) + 1;
@@ -46,27 +50,13 @@ export const likeDislikeBot = async () => {
       return;
     }
 
-    const randomSeed = Date.now() + Math.floor(Math.random() * 1000);
+    const prompt = `You are a ${randomBot?.personality}, you like ${randomBot?.interests}, but dislike ${randomBot?.disinterests}, tell me by responding only with the word like or the word dislike if you would you like or dislike this tweet: ${randomPostComment?.text}?`;
 
-    const prompt = `You are a ${randomBot?.personality}, you like ${randomBot?.interests}, but dislike ${randomBot?.disinterests}, tell me by responding only with like or dislike if you would you like or dislike this tweet: ${randomPostComment?.text}?`;
+    const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const result = await model.generateContent(prompt);
 
-    const client = new HfInference(HUGGING_FACE_API_KEY);
-    const stream = await client.chatCompletion({
-      model: HUGGING_FACE_MODEL,
-      messages: [
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-      seed: randomSeed,
-      max_tokens: 150,
-      temperature: 0.1,
-    });
-
-    const reaction = stream.choices[0].message.content?.toLowerCase() as
-      | "like"
-      | "dislike";
+    const reaction = result.response.text().toLowerCase() as "like" | "dislike";
 
     await randomBotUser.updateLastOnline(randomBot?.id);
 
@@ -76,7 +66,10 @@ export const likeDislikeBot = async () => {
       undefined,
       undefined,
       randomPostCommentId
-    ).likeDislike(randomBot.id, reaction);
+    ).likeDislike(
+      randomBot.id,
+      reaction.includes("dislike") ? "dislike" : "like"
+    );
   } catch (error) {
     if (error instanceof Error) {
       throw error;

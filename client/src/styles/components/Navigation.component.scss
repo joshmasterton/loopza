@@ -22,6 +22,10 @@ a.fixed {
   z-index: 2;
 }
 
+a.background {
+  background: var(--background);
+}
+
 @media screen and (min-width: $widthContainer) {
   a.fixed {
     display: none !important;

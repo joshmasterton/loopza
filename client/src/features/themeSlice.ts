@@ -34,7 +34,7 @@ export const getTheme = () => (dispatch: AppDispatch) => {
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute(
         "content",
-        `${localTheme === "dark" ? "rgb(24, 24, 30)" : "rgb(255, 255, 255)"}`
+        `${localTheme === "dark" ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)"}`
       );
 
     document.documentElement.setAttribute("data-theme", localTheme);
@@ -50,7 +50,7 @@ export const changeTheme =
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute(
         "content",
-        `${newTheme === "dark" ? "rgb(24, 24, 30)" : "rgb(255, 255, 255)"}`
+        `${newTheme === "dark" ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)"}`
       );
     document.documentElement.setAttribute("data-theme", newTheme);
 

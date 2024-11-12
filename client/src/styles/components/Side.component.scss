@@ -79,7 +79,7 @@
   border-radius: $round;
   transform-origin: center;
   transition: transform $animationCubic;
-  background: var(--container);
+  border: $outline;
 }
 
 .side div.hover.home {

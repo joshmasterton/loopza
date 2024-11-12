@@ -1,5 +1,5 @@
 import { Navigation } from "./Navigation.component";
-import { IoChevronBack, IoClose, IoMenu } from "react-icons/io5";
+import { IoArrowBack, IoClose, IoMenu } from "react-icons/io5";
 import { Button } from "./Button.component";
 import { CgLogOut } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,17 +58,21 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
     <nav className={isMenu ? "active" : "hidden"}>
       <header>
         {isReturn ? (
-          <Navigation link="/" type="button">
-            <IoChevronBack />
+          <Navigation link="/" type="button" className="background">
+            <IoArrowBack />
           </Navigation>
         ) : (
           <>
             {user ? (
-              <Navigation link={`/profile/${user.id}`} type="button">
+              <Navigation
+                link={`/profile/${user.id}`}
+                type="button"
+                className="background"
+              >
                 <img src={user.profile_picture_url} alt="" />
               </Navigation>
             ) : (
-              <Navigation link="/login" type="button">
+              <Navigation link="/login" type="button" className="background">
                 <TiUserOutline />
               </Navigation>
             )}
@@ -81,7 +85,7 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
         <div>
           <Button
             id=""
-            className="transparent"
+            className="background"
             type="button"
             onClick={() => {
               setIsMenu(!isMenu);

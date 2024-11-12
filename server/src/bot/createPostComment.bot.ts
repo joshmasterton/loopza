@@ -1,10 +1,10 @@
 import { fileURLToPath } from "url";
-import { HfInference } from "@huggingface/inference";
 import path from "path";
 import dotenv from "dotenv";
+import Parser from "rss-parser";
 import { User } from "../models/auth/user.model";
 import { PostComment } from "../models/postComment/postComment.model";
-import Parser from "rss-parser";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const parser = new Parser();
@@ -18,7 +18,7 @@ dotenv.config({
   ),
 });
 
-const { HUGGING_FACE_API_KEY, HUGGING_FACE_MODEL } = process.env;
+const { GOOGLE_API_KEY } = process.env;
 
 const rssFeeds = [
   "https://www.theguardian.com/world/rss",
@@ -38,7 +38,9 @@ const rssFeeds = [
 
 export const createBotPost = async () => {
   try {
-    const randomSeed = Date.now() + Math.floor(Math.random() * 1000);
+    if (!GOOGLE_API_KEY) {
+      throw new Error("Environment variable error");
+    }
 
     const randomBotUser = new User(
       undefined,
@@ -71,22 +73,12 @@ export const createBotPost = async () => {
 		Let your tone be subtly influenced by your interests (${randomBot?.interests}) and dislikes (${randomBot?.disinterests}), without directly mentioning them. If the topic aligns with your interests, respond with a positive tone; if it includes your dislikes,
 		respond with a more critical or skeptical tone. Keep it realistic, brief, and similar to a casual reaction tweet from a real person, only include response. Make sure it is short, only a sentence or two.`;
 
-    const client = new HfInference(HUGGING_FACE_API_KEY);
-    const stream = await client.chatCompletion({
-      model: HUGGING_FACE_MODEL,
-      messages: [
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-      seed: randomSeed,
-      max_tokens: 150,
-      temperature: 0.75,
-    });
+    const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const result = await model.generateContent(prompt);
 
     const newBotPost = await new PostComment(
-      stream.choices[0].message.content?.replace(/"/g, ""),
+      result.response.text(),
       "post",
       randomBot?.id
     ).new();
@@ -97,13 +89,15 @@ export const createBotPost = async () => {
       throw error;
     }
 
-    throw new Error("create bots users error");
+    throw new Error("create bots post error");
   }
 };
 
 export const createBotComment = async () => {
   try {
-    const randomSeed = Date.now() + Math.floor(Math.random() * 1000);
+    if (!GOOGLE_API_KEY) {
+      throw new Error("Environment variable error");
+    }
 
     const postCommentsLength = await new PostComment().countPostsComments();
     const randomPostCommentId =
@@ -167,22 +161,12 @@ export const createBotComment = async () => {
 			Craft a brief, realistic reply with a tone subtly influenced by your interests (${randomBot.interests}) and dislikes (${randomBot.disinterests}). Do not mention these directly. 
 			Instead, let the tone naturally reflect a positive or negative inclination. Keep it casual and brief, as if it’s a quick, off-the-cuff response, only include response. Make sure it is short, only a sentence or two.`;
 
-      const client = new HfInference(HUGGING_FACE_API_KEY);
-      const stream = await client.chatCompletion({
-        model: HUGGING_FACE_MODEL,
-        messages: [
-          {
-            role: "user",
-            content: prompt,
-          },
-        ],
-        seed: randomSeed,
-        max_tokens: 150,
-        temperature: 0.75,
-      });
+      const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const result = await model.generateContent(prompt);
 
       const newBotComment = new PostComment(
-        stream.choices[0].message.content?.replace(/"/g, ""),
+        result.response.text(),
         "comment",
         randomBot?.id
       );
@@ -205,6 +189,6 @@ export const createBotComment = async () => {
       throw error;
     }
 
-    throw new Error("create bots users error");
+    throw new Error("create bot comment error");
   }
 };
