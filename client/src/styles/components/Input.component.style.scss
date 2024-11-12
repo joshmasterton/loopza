@@ -49,11 +49,18 @@ input {
   background: var(--background);
 }
 
+#auth input {
+  background: var(--container);
+}
+
 textarea {
-  padding: $padding;
   min-height: 100%;
-  border-radius: $round;
   color: inherit;
+  outline: none;
+  padding-left: $paddingSmall;
+  padding-top: $fontAdjust;
+  padding-right: $paddingSmall;
+  box-shadow: none !important;
   background: var(--background);
 }
 

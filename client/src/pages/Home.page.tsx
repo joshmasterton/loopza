@@ -34,7 +34,7 @@ export const Home = () => {
               <Button
                 type="button"
                 id="loadPrevious"
-                className="container more"
+                className="more"
                 onClick={async () => {
                   await dispatch(getPosts(postsPage, user?.id, true, false));
                 }}
@@ -54,7 +54,7 @@ export const Home = () => {
               <Button
                 type="button"
                 id="loadMore"
-                className="container more"
+                className="more"
                 onClick={async () => {
                   await dispatch(getPosts(postsPage, user?.id, false, true));
                 }}

@@ -13,6 +13,7 @@
   "dependencies": {
     "@fontsource-variable/comfortaa": "^5.1.0",
     "@fontsource/geo": "^5.1.0",
+    "@fontsource/oxanium": "^5.1.0",
     "@hookform/resolvers": "^3.9.0",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.7",

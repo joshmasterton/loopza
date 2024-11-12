@@ -54,7 +54,7 @@ export const PostPage = () => {
             <Button
               type="button"
               id="loadPrevious"
-              className="container more"
+              className="more"
               onClick={async () => {
                 await dispatch(
                   getComments(
@@ -91,7 +91,7 @@ export const PostPage = () => {
                 <Button
                   type="button"
                   id="loadMore"
-                  className="container more"
+                  className="more"
                   onClick={async () => {
                     await dispatch(
                       getComments(

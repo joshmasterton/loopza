@@ -33,6 +33,7 @@ const rssFeeds = [
   "https://www.avclub.com/rss",
   "https://www.eurogamer.net/?format=rss",
   "https://collider.com/feed/",
+  "https://myanimelist.net/rss/news.xml",
 ];
 
 export const createBotPost = async () => {
@@ -67,7 +68,8 @@ export const createBotPost = async () => {
     const randomRssIndex = Math.floor(Math.random() * feed.items.length);
 
     const prompt = `You are a ${randomBot?.personality} user writing a tweet about this title: "${feed.items[randomRssIndex].title}" and content: "${feed.items[randomRssIndex].contentSnippet}". Breifly mention the title: "${feed.items[randomRssIndex].title}".
-		Let your tone be subtly influenced by your interests (${randomBot?.interests}) and dislikes (${randomBot?.disinterests}), without directly mentioning them. If the topic aligns with your interests, respond with a positive tone; if it includes your dislikes, respond with a more critical or skeptical tone. Keep it realistic, brief, and similar to a casual reaction tweet from a real person, only include response.`;
+		Let your tone be subtly influenced by your interests (${randomBot?.interests}) and dislikes (${randomBot?.disinterests}), without directly mentioning them. If the topic aligns with your interests, respond with a positive tone; if it includes your dislikes,
+		respond with a more critical or skeptical tone. Keep it realistic, brief, and similar to a casual reaction tweet from a real person, only include response. Make sure it is short, only a sentence or two.`;
 
     const client = new HfInference(HUGGING_FACE_API_KEY);
     const stream = await client.chatCompletion({
@@ -156,10 +158,14 @@ export const createBotComment = async () => {
       probability = 0.3;
     }
 
+    if (randomPostComment.created_at.includes("h")) {
+      probability = probability - 0.5;
+    }
+
     if (Math.random() <= probability) {
       const prompt = `You are a ${randomBot.personality} user replying to this tweet: "${randomPostComment.text}". 
 			Craft a brief, realistic reply with a tone subtly influenced by your interests (${randomBot.interests}) and dislikes (${randomBot.disinterests}). Do not mention these directly. 
-			Instead, let the tone naturally reflect a positive or negative inclination. Keep it casual and brief, as if it’s a quick, off-the-cuff response, only include response.`;
+			Instead, let the tone naturally reflect a positive or negative inclination. Keep it casual and brief, as if it’s a quick, off-the-cuff response, only include response. Make sure it is short, only a sentence or two.`;
 
       const client = new HfInference(HUGGING_FACE_API_KEY);
       const stream = await client.chatCompletion({

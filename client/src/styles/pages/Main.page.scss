@@ -20,23 +20,26 @@
   flex: 1;
   min-height: calc($height + ($padding * 2));
   gap: $gap;
-  padding: $padding;
   border-radius: $round;
-  background: var(--container);
+}
+
+#main > header > form {
+  padding: 0;
+  padding-top: $fontAdjust;
+  background: var(--background);
+}
+
+#main > header > form > label > input {
+  outline: $outline;
 }
 
 #main.newPost {
   border-radius: $round;
-  background: var(--container);
+  background: var(--background);
 }
 
 #main.newPost > form {
   padding-top: $fontAdjust;
-}
-
-#main.newPost > form > main {
-  padding: $padding;
-  padding-top: 0;
 }
 
 @media screen and (min-width: $widthContainer) {
@@ -45,24 +48,24 @@
   }
 
   #main {
-    margin-left: calc(($height) + $padding * 3);
+    margin-left: calc(($height) + $padding * 2);
   }
 }
 
 @media screen and (min-width: $widthContainerMedium) {
   #main {
-    margin-left: calc($widthContainerSmall + $padding);
+    margin-left: calc($widthContainerSmall);
   }
 }
 
 @media screen and (min-width: calc($widthContainerLarge)) {
   #main {
-    margin-right: calc(($height) + $padding * 3);
+    margin-right: calc(($height) + $padding * 2);
   }
 }
 
 @media screen and (min-width: calc($widthContainerExtraLarge)) {
   #main {
-    margin-right: calc($widthContainerSmall + $padding);
+    margin-right: calc($widthContainerSmall);
   }
 }

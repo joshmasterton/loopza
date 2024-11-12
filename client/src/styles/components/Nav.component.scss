@@ -33,7 +33,9 @@ nav > header {
 }
 
 nav > header > h5 {
-  padding-top: 0.35rem;
+  display: flex;
+  justify-content: center;
+  padding-top: $fontAdjust;
 }
 
 nav > header > div {

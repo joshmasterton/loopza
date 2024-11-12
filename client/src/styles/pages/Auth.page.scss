@@ -7,7 +7,7 @@
   animation: $animationCubic comeFromLeft;
   z-index: 1;
   box-shadow: var(--shadow);
-  background: var(--container);
+  outline: $outline;
 }
 
 #auth > a {

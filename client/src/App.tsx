@@ -18,6 +18,7 @@ import { Followers } from "./pages/Followers.page";
 import { ForgotPassword, ResetPassword } from "./pages/ForgotPassword.page";
 import "@fontsource-variable/comfortaa";
 import "@fontsource/geo";
+import "@fontsource/oxanium";
 import "./styles/App.scss";
 
 export const Wrapper = ({
@@ -106,7 +107,7 @@ export const routes = [
   },
 ];
 
-const router = createBrowserRouter(routes, { basename: "/" });
+const router = createBrowserRouter(routes, { basename: "/loopza" });
 
 export const App = () => {
   const dispatch = useDispatch<AppDispatch>();

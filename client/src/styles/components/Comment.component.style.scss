@@ -74,7 +74,8 @@
 }
 
 .comment > main > div > div {
-  line-height: 145%;
+  line-height: 155%;
+  font-size: calc($font / 1.15);
 }
 
 .comment > footer {

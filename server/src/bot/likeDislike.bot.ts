@@ -48,7 +48,7 @@ export const likeDislikeBot = async () => {
 
     const randomSeed = Date.now() + Math.floor(Math.random() * 1000);
 
-    const prompt = `You are a ${randomBot?.personality}, you like ${randomBot?.interests} and dislike ${randomBot?.disinterests}, tell me by responding only with like or dislike if you would you like or dislike this tweet ${randomPostComment?.text}?`;
+    const prompt = `You are a ${randomBot?.personality}, you like ${randomBot?.interests}, but dislike ${randomBot?.disinterests}, tell me by responding only with like or dislike if you would you like or dislike this tweet: ${randomPostComment?.text}?`;
 
     const client = new HfInference(HUGGING_FACE_API_KEY);
     const stream = await client.chatCompletion({

@@ -116,7 +116,7 @@ export const User = ({
           </div>
           <div>
             <div>{currentUser?.username}</div>
-            <p>{currentUser?.created_at}</p>
+            <p>{currentUser?.email}</p>
           </div>
         </header>
         <main>

@@ -15,7 +15,7 @@
   width: calc($width * 2);
   height: $height;
   border-radius: $round;
-  background: var(--background);
+  border: $outline;
 }
 
 #theme > div > button.dark {
@@ -33,10 +33,6 @@
   color: white;
   transition: transform $animationCubic;
   width: fit-content;
-}
-
-nav #theme > div {
-  background: var(--container);
 }
 
 .side #theme > div {

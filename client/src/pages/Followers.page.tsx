@@ -114,7 +114,7 @@ export const Followers = () => {
           <Button
             id="allUsers"
             type="button"
-            className={`${isAllUsers ? "container" : "primary"} padding`}
+            className={`${isAllUsers ? "more" : "primary"} padding`}
             onClick={() => setIsAllUsers(false)}
           >
             <div>Followers</div>
@@ -122,7 +122,7 @@ export const Followers = () => {
           <Button
             id="allUsers"
             type="button"
-            className={`${isAllUsers ? "primary" : "container"} padding`}
+            className={`${isAllUsers ? "primary" : "more"} padding`}
             onClick={() => setIsAllUsers(true)}
           >
             <div>All</div>
@@ -132,7 +132,7 @@ export const Followers = () => {
           <Button
             type="button"
             id="loadPrevious"
-            className="container more"
+            className="more"
             onClick={async () => {
               await getUsers("", page, false, true);
             }}
@@ -151,7 +151,9 @@ export const Followers = () => {
                   <User key={user.id} profile={user} type="component" />
                 ))}
               {(users && users.length < 3) ||
-                (users === undefined && <div className="blank" />)}
+                (users === undefined && (
+                  <div className="blank">No followers</div>
+                ))}
             </>
           )}
         </main>
@@ -159,7 +161,7 @@ export const Followers = () => {
           <Button
             type="button"
             id="loadMore"
-            className="container more"
+            className="more"
             onClick={async () => {
               await getUsers("", page, true, false);
             }}

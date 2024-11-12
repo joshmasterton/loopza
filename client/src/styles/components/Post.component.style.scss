@@ -6,8 +6,8 @@
   flex-direction: column;
   border-radius: $round;
   transform-origin: top;
-  border-radius: $round;
-  background: var(--container);
+  border-radius: 0;
+  border-bottom: $outline;
 }
 
 .post > a {
@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   gap: $gap;
-  padding: $padding;
+  padding-bottom: $padding;
 }
 
 .post > header > div {
@@ -69,10 +69,10 @@
 }
 
 .post > main > div > div {
-  padding: $padding;
-  padding-top: 0;
   flex: 1;
-  line-height: 145%;
+  padding-left: $fontAdjust;
+  padding-right: $fontAdjust;
+  line-height: 155%;
 }
 
 .post > main > div > img {
@@ -88,8 +88,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: $gap;
-  padding: $padding;
-  padding-top: 0;
+  padding-top: $padding;
+  padding-bottom: $padding;
 }
 
 .post > footer > .reply {
