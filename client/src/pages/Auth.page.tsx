@@ -17,15 +17,12 @@ import { useNavigate } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 import { LoadingSpinner } from "../components/Loading.component";
 import { TiUserOutline } from "react-icons/ti";
-import logo from "../assets/loopza.png";
-import logo_dark from "../assets/loopza_dark.png";
 import * as yup from "yup";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { status } = useSelector((state: RootState) => state.auth);
-  const { currentTheme } = useSelector((state: RootState) => state.theme);
 
   const loginSchema = yup.object().shape({
     email: yup
@@ -53,7 +50,6 @@ const LoginForm = () => {
 
   return (
     <form id="auth" method="POST" onSubmit={handleSubmit(onSubmit)}>
-      <img src={currentTheme === "dark" ? logo_dark : logo} alt="logo" />
       <Navigation link="/" type="button">
         <CgClose />
       </Navigation>
@@ -114,7 +110,6 @@ const SignupForm = () => {
     confirmPassword: false,
   });
   const { status } = useSelector((state: RootState) => state.auth);
-  const { currentTheme } = useSelector((state: RootState) => state.theme);
   const [imagePreview, setImagePreview] = useState<string | undefined>(
     undefined
   );
@@ -205,7 +200,6 @@ const SignupForm = () => {
         }
       })}
     >
-      <img src={currentTheme === "dark" ? logo : logo_dark} alt="logo" />
       <Navigation link="/" type="button">
         <CgClose />
       </Navigation>

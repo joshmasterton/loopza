@@ -27,15 +27,12 @@ export const getTheme = () => (dispatch: AppDispatch) => {
     document.documentElement.setAttribute("data-theme", "light");
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", "rgb(255, 255, 255)");
+      ?.setAttribute("content", "white");
     dispatch(setTheme({ currentTheme: "light" }));
   } else {
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute(
-        "content",
-        `${localTheme === "dark" ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)"}`
-      );
+      ?.setAttribute("content", `${localTheme === "dark" ? "black" : "white"}`);
 
     document.documentElement.setAttribute("data-theme", localTheme);
     dispatch(setTheme({ currentTheme: localTheme }));
@@ -48,10 +45,7 @@ export const changeTheme =
 
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute(
-        "content",
-        `${newTheme === "dark" ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)"}`
-      );
+      ?.setAttribute("content", `${newTheme === "dark" ? "black" : "white"}`);
     document.documentElement.setAttribute("data-theme", newTheme);
 
     localStorage.setItem("loopza_theme", newTheme);

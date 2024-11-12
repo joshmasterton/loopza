@@ -60,8 +60,7 @@ textarea {
 #main.newPost textarea {
   outline: none;
   border-radius: 0;
-  padding-left: $paddingSmall;
-  padding-right: $paddingSmall;
+  padding: $fontAdjust;
   box-shadow: none !important;
   background: transparent;
 }

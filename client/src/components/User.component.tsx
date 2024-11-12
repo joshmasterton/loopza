@@ -200,50 +200,52 @@ export const User = ({
             <p>{(profile?.likes ?? 0) - (profile?.dislikes ?? 0)}</p>
           </div>
         </main>
-        <footer>
-          <Button
-            id="followerReact"
-            type="button"
-            className="padding primary"
-            onClick={async () => {
-              await withUserCheck(user, dispatch, async () => {
-                await followUser();
-              });
-            }}
-          >
-            {loadingFollow ? (
-              <LoadingSpinner isPrimary />
-            ) : (
-              <div>
-                {currentUser?.is_accepted === null
-                  ? "Follow"
-                  : currentUser?.is_accepted
-                  ? "Followers"
-                  : currentUser?.pending_user_id === user?.id
-                  ? "Accept"
-                  : "Waiting for follow"}
-              </div>
-            )}
-          </Button>
-          {currentUser?.is_accepted !== null && (
+        {user?.id !== profile.id && (
+          <footer>
             <Button
               id="followerReact"
               type="button"
               className="padding primary"
               onClick={async () => {
                 await withUserCheck(user, dispatch, async () => {
-                  await deleteFollowing();
+                  await followUser();
                 });
               }}
             >
-              {loadingDelete ? (
+              {loadingFollow ? (
                 <LoadingSpinner isPrimary />
               ) : (
-                <div>Unfollow</div>
+                <div>
+                  {currentUser?.is_accepted === null
+                    ? "Follow"
+                    : currentUser?.is_accepted
+                    ? "Followers"
+                    : currentUser?.pending_user_id === user?.id
+                    ? "Accept"
+                    : "Waiting for follow"}
+                </div>
               )}
             </Button>
-          )}
-        </footer>
+            {currentUser?.is_accepted !== null && (
+              <Button
+                id="followerReact"
+                type="button"
+                className="padding primary"
+                onClick={async () => {
+                  await withUserCheck(user, dispatch, async () => {
+                    await deleteFollowing();
+                  });
+                }}
+              >
+                {loadingDelete ? (
+                  <LoadingSpinner isPrimary />
+                ) : (
+                  <div>Unfollow</div>
+                )}
+              </Button>
+            )}
+          </footer>
+        )}
       </div>
     );
   }

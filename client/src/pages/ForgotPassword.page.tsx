@@ -1,6 +1,4 @@
 import { Navigation } from "../components/Navigation.component";
-import logo from "../assets/loopza.png";
-import logo_dark from "../assets/loopza_dark.png";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
@@ -25,7 +23,6 @@ const forgotPasswordSchema = yup.object().shape({
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { currentTheme } = useSelector((state: RootState) => state.theme);
   const { status } = useSelector((state: RootState) => state.auth);
 
   const {
@@ -43,7 +40,6 @@ export const ForgotPassword = () => {
 
   return (
     <form id="auth" method="POST" onSubmit={handleSubmit(onSubmit)}>
-      <img src={currentTheme === "dark" ? logo_dark : logo} alt="logo" />
       <Navigation link="/login" type="button">
         <CgClose />
       </Navigation>
@@ -90,7 +86,6 @@ export const ResetPassword = () => {
   const location = useLocation();
   const navigation = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { currentTheme } = useSelector((state: RootState) => state.theme);
   const { status } = useSelector((state: RootState) => state.auth);
   const [showPasswords, setShowPasswords] = useState<{
     newPassword: boolean;
@@ -139,7 +134,6 @@ export const ResetPassword = () => {
 
   return (
     <form id="auth" method="POST" onSubmit={handleSubmit(onSubmit)}>
-      <img src={currentTheme === "dark" ? logo_dark : logo} alt="logo" />
       <Navigation link="/login" type="button">
         <CgClose />
       </Navigation>

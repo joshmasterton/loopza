@@ -74,7 +74,12 @@ export const createBotPost = async () => {
 		respond with a more critical or skeptical tone. Keep it realistic, brief, and similar to a casual reaction tweet from a real person, only include response. Make sure it is short, only a sentence or two.`;
 
     const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+      generationConfig: {
+        temperature: 0.5,
+      },
+    });
     const result = await model.generateContent(prompt);
 
     const newBotPost = await new PostComment(
@@ -135,10 +140,6 @@ export const createBotComment = async () => {
       throw new Error("No bot found");
     }
 
-    if (randomPostComment.created_at.includes("d")) {
-      return;
-    }
-
     await randomBotUser.updateLastOnline(randomBot?.id);
 
     if (randomBot.id === randomPostComment.user_id) {
@@ -146,14 +147,47 @@ export const createBotComment = async () => {
     }
 
     let probability: number;
+
     if (randomPostComment.hot_score > 0) {
-      probability = Math.min(0.3 + randomPostComment.hot_score, 1);
+      probability = Math.min(0.5 + randomPostComment.hot_score, 1);
     } else {
-      probability = 0.3;
+      probability = 0.5;
     }
 
     if (randomPostComment.created_at.includes("h")) {
       probability = probability - 0.5;
+    }
+
+    if (randomPostComment.parent_id) {
+      const parentPost = await new PostComment(
+        undefined,
+        "post",
+        undefined,
+        undefined,
+        randomPostComment.parent_id
+      ).getPostComment();
+
+      if (parentPost.created_at.includes("h")) {
+        probability = probability - 0.5;
+      }
+
+      if (
+        parentPost.created_at.includes("d") ||
+        parentPost.created_at.includes("w")
+      ) {
+        probability = probability - 1;
+      }
+    }
+
+    if (randomPostComment.created_at.includes("h")) {
+      probability = probability - 0.5;
+    }
+
+    if (
+      randomPostComment.created_at.includes("d") ||
+      randomPostComment.created_at.includes("w")
+    ) {
+      probability = probability - 1;
     }
 
     if (Math.random() <= probability) {
@@ -162,7 +196,12 @@ export const createBotComment = async () => {
 			Instead, let the tone naturally reflect a positive or negative inclination. Keep it casual and brief, as if it’s a quick, off-the-cuff response, only include response. Make sure it is short, only a sentence or two.`;
 
       const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({
+        model: "gemini-1.5-flash",
+        generationConfig: {
+          temperature: 0.5,
+        },
+      });
       const result = await model.generateContent(prompt);
 
       const newBotComment = new PostComment(
@@ -179,6 +218,31 @@ export const createBotComment = async () => {
           randomPostComment?.id ?? undefined
         );
       }
+
+      const reactionModel = genAI.getGenerativeModel({
+        model: "gemini-1.5-flash",
+        generationConfig: {
+          temperature: 0.1,
+        },
+      });
+      const reactionPrompt = `You are a ${randomBot?.personality}, you like ${randomBot?.interests}, but dislike ${randomBot?.disinterests}, tell me by responding only with the word like or the word dislike if you would you like or dislike this tweet: ${randomPostComment?.text}?`;
+      const resultReaction = await reactionModel.generateContent(
+        reactionPrompt
+      );
+      const reaction = resultReaction.response.text().toLowerCase() as
+        | "like"
+        | "dislike";
+
+      await new PostComment(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        randomPostCommentId
+      ).likeDislike(
+        randomBot.id,
+        reaction.includes("dislike") ? "dislike" : "like"
+      );
 
       return await newBotComment?.getPostComment();
     } else {

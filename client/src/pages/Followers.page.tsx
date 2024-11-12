@@ -25,7 +25,7 @@ export const Followers = () => {
   const [users, setUsers] = useState<UserTypes[] | undefined>(undefined);
   const [page, setPage] = useState(0);
   const [isAllUsers, setIsAllUsers] = useState(false);
-  const [loadingUsers, setLoadingUsers] = useState(false);
+  const [loadingUsers, setLoadingUsers] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
 
   const {
@@ -81,6 +81,7 @@ export const Followers = () => {
   };
 
   const onSubmit = async (data: { search?: string }) => {
+    setUsers(undefined);
     await getUsers(data.search, page);
   };
 
@@ -150,12 +151,12 @@ export const Followers = () => {
                 users.map((user) => (
                   <User key={user.id} profile={user} type="component" />
                 ))}
-              {(users && users.length < 3) ||
-                (users === undefined && (
-                  <div className="blank">{`No ${
-                    isAllUsers ? "users" : "followers"
-                  }`}</div>
-                ))}
+              {users && users.length < 3 && <div className="blank"></div>}
+              {users === undefined && !loadingUsers && !loadingMore && (
+                <div className="blank">{`No ${
+                  isAllUsers ? "users" : "followers"
+                }`}</div>
+              )}
             </>
           )}
         </main>

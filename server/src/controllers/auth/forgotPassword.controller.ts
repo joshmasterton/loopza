@@ -14,7 +14,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
   try {
     const validatedData = await forgotPasswordSchema.validate(req.body);
     const resetPasswordToken = crypto.randomBytes(32).toString("hex");
-    const resetTokenLink = `https://www.zonomaly.com/resetPassword?token=${resetPasswordToken}&email=${validatedData.email}`;
+    const resetTokenLink = `https://www.zonomaly.com//loopza/resetPassword?token=${resetPasswordToken}&email=${validatedData.email}`;
 
     const user = new User(undefined, validatedData.email);
 
