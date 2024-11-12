@@ -87,6 +87,26 @@ button.primary {
   background: var(--primary);
 }
 
+button.outline {
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  padding: $paddingSmall;
+  height: $height;
+  max-height: $height;
+  outline: $outline;
+}
+
+button.more {
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  padding: $paddingSmall;
+  height: $height;
+  max-height: $height;
+  border: $outline;
+}
+
 button.padding {
   width: fit-content;
   padding: $padding;
@@ -146,13 +166,6 @@ button.small > svg {
 
 button.like > svg {
   color: var(--primary);
-}
-
-button.more {
-  display: flex;
-  justify-content: center;
-  background: transparent;
-  border: $outline;
 }
 
 button.danger > svg {

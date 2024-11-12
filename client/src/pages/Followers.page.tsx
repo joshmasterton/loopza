@@ -114,7 +114,7 @@ export const Followers = () => {
           <Button
             id="allUsers"
             type="button"
-            className={`${isAllUsers ? "more" : "primary"} padding`}
+            className={`${isAllUsers ? "outline" : "primary"} padding`}
             onClick={() => setIsAllUsers(false)}
           >
             <div>Followers</div>
@@ -122,7 +122,7 @@ export const Followers = () => {
           <Button
             id="allUsers"
             type="button"
-            className={`${isAllUsers ? "primary" : "more"} padding`}
+            className={`${isAllUsers ? "primary" : "outline"} padding`}
             onClick={() => setIsAllUsers(true)}
           >
             <div>All</div>
@@ -152,7 +152,9 @@ export const Followers = () => {
                 ))}
               {(users && users.length < 3) ||
                 (users === undefined && (
-                  <div className="blank">No followers</div>
+                  <div className="blank">{`No ${
+                    isAllUsers ? "users" : "followers"
+                  }`}</div>
                 ))}
             </>
           )}

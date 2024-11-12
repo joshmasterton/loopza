@@ -5,8 +5,8 @@ $dark: rgb(25, 25, 30);
   --primary: #525aec;
   --primaryShadow: rgba(82, 90, 236, 0.6);
   --colorDanger: rgb(255, 85, 85);
-  --outlineColor: rgba(55, 55, 75, 0.5);
-  --outline: 0.125rem solid rgba(55, 55, 75, 0.5);
+  --outlineColor: rgba(55, 55, 65, 0.5);
+  --outline: 0.125rem solid rgba(55, 55, 65, 0.5);
   --outlinePrimary: 0.125rem solid var(--primary);
   --gradient: radial-gradient(
       circle at top right,
@@ -17,7 +17,7 @@ $dark: rgb(25, 25, 30);
   --blend: screen;
   --background: rgb(0, 0, 0);
   --shadow: 0;
-  --container: rgba(55, 55, 75, 0.5);
+  --container: rgba(55, 55, 65, 0.5);
 }
 
 [data-theme="light"] {
