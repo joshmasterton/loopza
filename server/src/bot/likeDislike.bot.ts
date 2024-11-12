@@ -1,5 +1,8 @@
+import { HfInference } from "@huggingface/inference";
 import { User } from "../models/auth/user.model";
 import { PostComment } from "../models/postComment/postComment.model";
+
+const { HUGGING_FACE_API_KEY, HUGGING_FACE_MODEL } = process.env;
 
 export const likeDislikeBot = async () => {
   try {
@@ -39,47 +42,41 @@ export const likeDislikeBot = async () => {
       throw new Error("No bot found");
     }
 
+    if (randomPostComment.created_at.includes("d")) {
+      return;
+    }
+
+    const randomSeed = Date.now() + Math.floor(Math.random() * 1000);
+
+    const prompt = `You are a ${randomBot?.personality}, you like ${randomBot?.interests} and dislike ${randomBot?.disinterests}, tell me by responding only with like or dislike if you would you like or dislike this tweet ${randomPostComment?.text}?`;
+
+    const client = new HfInference(HUGGING_FACE_API_KEY);
+    const stream = await client.chatCompletion({
+      model: HUGGING_FACE_MODEL,
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      seed: randomSeed,
+      max_tokens: 150,
+      temperature: 0.1,
+    });
+
+    const reaction = stream.choices[0].message.content?.toLowerCase() as
+      | "like"
+      | "dislike";
+
     await randomBotUser.updateLastOnline(randomBot?.id);
 
-    const { hot_score, likes, dislikes } = randomPostComment;
-
-    let probability: number;
-    if (hot_score > 0) {
-      probability = Math.min(0.3 + randomPostComment.hot_score, 1);
-    } else {
-      probability = 0.3;
-    }
-
-    const likeBias = Math.min(0.05 * likes, 0.5);
-    const dislikeBias = Math.min(0.05 * dislikes, 0.5);
-
-    const likeProbability = Math.min(probability + likeBias, 0.9);
-    const dislikeProbability = Math.min(probability + dislikeBias, 0.9);
-
-    const randomValue = Math.random();
-
-    if (
-      randomValue <
-      dislikeProbability / (likeProbability + dislikeProbability)
-    ) {
-      return await new PostComment(
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        randomPostCommentId
-      ).likeDislike(randomBot.id, "dislike");
-    } else {
-      return await new PostComment(
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        randomPostCommentId
-      ).likeDislike(randomBot.id, "like");
-    }
-
-    return;
+    return await new PostComment(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      randomPostCommentId
+    ).likeDislike(randomBot.id, reaction);
   } catch (error) {
     if (error instanceof Error) {
       throw error;
