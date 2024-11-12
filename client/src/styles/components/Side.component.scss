@@ -16,6 +16,7 @@
   position: sticky;
   overflow: scroll;
   right: 0;
+  padding-top: $fontAdjust;
   width: calc($width + $padding * 2);
   min-height: calc(100% - ($padding * 2));
   transform-origin: top right;
@@ -56,6 +57,7 @@
   padding-bottom: 0;
   padding-top: 0;
   position: absolute;
+  padding-top: $fontAdjust;
   display: flex;
   flex-direction: column;
   gap: $padding;
