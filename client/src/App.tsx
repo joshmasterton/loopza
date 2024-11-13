@@ -19,6 +19,7 @@ import { ForgotPassword, ResetPassword } from "./pages/ForgotPassword.page";
 import "@fontsource-variable/comfortaa";
 import "@fontsource/geo";
 import "@fontsource/oxanium";
+import "@fontsource/poppins";
 import "./styles/App.scss";
 
 export const Wrapper = ({
