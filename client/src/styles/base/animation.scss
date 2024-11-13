@@ -77,12 +77,24 @@ $animationEase: 0.5s ease;
 
 @keyframes spinner {
   from {
-    transform: scale(1) rotate(0deg);
+    transform: rotate(0deg);
   }
   50% {
-    transform: scale(0.5) rotate(180deg);
+    transform: rotate(180deg);
   }
   to {
-    transform: scale(1) rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scaly {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
   }
 }

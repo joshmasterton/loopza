@@ -23,6 +23,7 @@
   max-width: $width;
   min-height: $height;
   max-height: $height;
+  animation: 0.75s infinite ease-in-out spinner;
 }
 
 button.small .loadingSpinner {
@@ -37,14 +38,14 @@ button.small .loadingSpinner {
   max-width: calc($width - $paddingSmall);
   min-height: calc($height - $paddingSmall);
   max-height: calc($height - $paddingSmall);
-  animation: 0.75s infinite ease-in-out spinner;
+  animation: 0.75s infinite ease-in-out scaly;
 }
 
 .loadingSpinner > div > div {
   position: absolute;
   width: $paddingSmall;
   height: $paddingSmall;
-  border-radius: $roundExtra;
+  border-radius: 0.1rem;
   background: var(--primary);
 }
 
