@@ -50,7 +50,7 @@
   }
 
   #main {
-    margin-left: calc(($height) + $padding * 2);
+    margin-left: calc(($height) + $padding);
   }
 }
 
@@ -62,7 +62,7 @@
 
 @media screen and (min-width: calc($widthContainerLarge)) {
   #main {
-    margin-right: calc(($height) + $padding * 2);
+    margin-right: calc(($height) + $padding);
   }
 }
 

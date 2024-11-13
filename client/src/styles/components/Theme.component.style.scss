@@ -15,7 +15,7 @@
   width: calc($width * 2);
   height: $height;
   border-radius: $round;
-  border: $outline;
+  background: var(--container);
 }
 
 #theme > div > button.dark {

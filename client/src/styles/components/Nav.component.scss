@@ -21,7 +21,7 @@ nav > header {
   justify-content: start;
   align-items: center;
   width: calc(100%);
-  gap: $gap;
+  gap: $gapSmall;
   padding: $padding;
   min-height: calc($height + ($padding * 2));
   transition: transform $animationCubic, visibility $animationCubic;
@@ -34,7 +34,7 @@ nav > header {
 
 nav > header > h5 {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   padding-top: $fontAdjust;
   height: $height;
   border-radius: $round;
@@ -96,7 +96,7 @@ nav div.hover {
   height: $height;
   border-radius: $round;
   transition: transform $animationCubic;
-  border: $outline;
+  background: var(--container);
 }
 
 nav div.hover.home {

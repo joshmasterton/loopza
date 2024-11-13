@@ -5,8 +5,8 @@ $dark: rgb(25, 25, 30);
   --primary: #525aec;
   --primaryShadow: rgba(82, 90, 236, 0.6);
   --colorDanger: rgb(255, 85, 85);
-  --outlineColor: rgba(75, 75, 90, 0.75);
-  --outline: 0.125rem solid rgba(75, 75, 90, 0.75);
+  --outlineColor: rgba(75, 75, 90, 0.45);
+  --outline: 0.125rem solid rgba(75, 75, 90, 0.45);
   --outlinePrimary: 0.125rem solid var(--primary);
   --gradient: radial-gradient(
     circle at top right,
@@ -14,9 +14,9 @@ $dark: rgb(25, 25, 30);
     rgba(61, 115, 221, 0.75) 100%
   );
   --blend: multiply, screen;
-  --background: rgb(15, 15, 20);
+  --background: rgb(15, 15, 18);
   --shadow: 0;
-  --container: rgba(75, 75, 90, 0.75);
+  --container: rgba(75, 75, 100, 0.15);
 }
 
 [data-theme="light"] {
@@ -24,8 +24,8 @@ $dark: rgb(25, 25, 30);
   --primary: #5962ff;
   --primaryShadow: rgba(89, 98, 255, 0.6);
   --colorDanger: rgb(234, 82, 82);
-  --outlineColor: rgba(185, 185, 195, 0.75);
-  --outline: 0.125rem solid rgba(185, 185, 195, 0.75);
+  --outlineColor: rgba(185, 185, 195, 0.5);
+  --outline: 0.125rem solid rgba(185, 185, 195, 0.5);
   --outlinePrimary: 0.125rem solid var(--primary);
   --gradient: radial-gradient(
       circle at top right,
