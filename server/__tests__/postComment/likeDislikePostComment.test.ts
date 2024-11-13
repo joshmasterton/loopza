@@ -24,8 +24,7 @@ describe("/postComment/likeDislike", () => {
         post: "Some random post",
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     const likeDislikePost = await request(app)
       .put("/postComment/likeDislike")
@@ -34,8 +33,7 @@ describe("/postComment/likeDislike", () => {
         type: newPostComment.body.type,
         reaction: "like",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     expect(likeDislikePost.body.id).toBe(1);
     expect(likeDislikePost.body.type).toBe("post");
@@ -63,8 +61,7 @@ describe("/postComment/likeDislike", () => {
         post: "Some random post",
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     await request(app)
       .put("/postComment/likeDislike")
@@ -73,8 +70,7 @@ describe("/postComment/likeDislike", () => {
         type: newPostComment.body.type,
         reaction: "like",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     const likeDislikePost = await request(app)
       .put("/postComment/likeDislike")
@@ -83,8 +79,7 @@ describe("/postComment/likeDislike", () => {
         type: newPostComment.body.type,
         reaction: "like",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     expect(likeDislikePost.body.id).toBe(1);
     expect(likeDislikePost.body.type).toBe("post");
@@ -112,8 +107,7 @@ describe("/postComment/likeDislike", () => {
         post: "Some random post",
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     await request(app)
       .put("/postComment/likeDislike")
@@ -122,8 +116,7 @@ describe("/postComment/likeDislike", () => {
         type: newPostComment.body.type,
         reaction: "like",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     const likeDislikePost = await request(app)
       .put("/postComment/likeDislike")
@@ -132,8 +125,7 @@ describe("/postComment/likeDislike", () => {
         type: newPostComment.body.type,
         reaction: "dislike",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     expect(likeDislikePost.body.id).toBe(1);
     expect(likeDislikePost.body.type).toBe("post");
@@ -174,8 +166,7 @@ describe("/postComment/likeDislike", () => {
         post: "Some random post",
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signupTwo.header["set-cookie"]);
 
     await request(app)
       .put("/postComment/likeDislike")
@@ -184,8 +175,7 @@ describe("/postComment/likeDislike", () => {
         type: newPostComment.body.type,
         reaction: "like",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     await request(app)
       .put("/postComment/likeDislike")
@@ -194,7 +184,6 @@ describe("/postComment/likeDislike", () => {
         type: newPostComment.body.type,
         reaction: "like",
       })
-      .set("Cookie", signupTwo.header["set-cookie"][2])
-      .set("Cookie", signupTwo.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
   });
 });

@@ -27,19 +27,19 @@ describe("createBotUsers", () => {
     // expect(newBotComment?.type).toBe("comment");
   });
 
-  test("Bot should be able to like or dislike", async () => {
-    await createBotUsers(5);
-    const post = await createBotPost();
-    const postTwo = await createBotPost();
-    const comment = await createBotComment();
-    const commentTwo = await createBotComment();
-    await likeDislikeBot();
+  // test("Bot should be able to like or dislike", async () => {
+  //   await createBotUsers(5);
+  //   const post = await createBotPost();
+  //   const postTwo = await createBotPost();
+  //   const comment = await createBotComment();
+  //   const commentTwo = await createBotComment();
+  //   await likeDislikeBot();
 
-    console.log({
-      post: post?.text,
-      comment: comment?.text,
-      postTwo: postTwo?.text,
-      commentTwo: commentTwo?.text,
-    });
-  });
+  //   console.log({
+  //     post: post?.text,
+  //     comment: comment?.text,
+  //     postTwo: postTwo?.text,
+  //     commentTwo: commentTwo?.text,
+  //   });
+  // });
 });

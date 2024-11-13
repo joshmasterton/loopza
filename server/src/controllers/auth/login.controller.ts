@@ -13,9 +13,6 @@ const loginSchema = yup.object().shape({
 
 export const login = async (req: Request, res: Response) => {
   try {
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
-
     const validatedData = await loginSchema.validate(req.body);
 
     const serializedEmail = validator.escape(validatedData.email);

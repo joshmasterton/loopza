@@ -24,8 +24,7 @@ describe("/postComment/get", () => {
         post: "Some random post",
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     const getPostComment = await request(app)
       .get("/postComment/get")
@@ -33,8 +32,7 @@ describe("/postComment/get", () => {
         id: 1,
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     expect(getPostComment.body.id).toBe(1);
     expect(getPostComment.body.username).toBe("testUser");

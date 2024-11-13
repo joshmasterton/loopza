@@ -96,8 +96,7 @@ describe("/user/getUsers", () => {
       .send({
         follower_two_id: 1,
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     const allUsers = await request(app)
       .get("/user/gets")
@@ -105,8 +104,7 @@ describe("/user/getUsers", () => {
         type: "followers",
         userId: 1,
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     expect(allUsers.body).toHaveLength(1);
   });

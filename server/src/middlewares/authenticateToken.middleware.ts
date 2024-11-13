@@ -34,6 +34,12 @@ export const authenticateToken = async (
       throw new Error("Error finding user");
     }
 
+    req.user = serializedUser;
+
+    if (req.path === "/logout") {
+      return next();
+    }
+
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -50,7 +56,6 @@ export const authenticateToken = async (
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    req.user = serializedUser;
     next();
   } catch {
     try {
@@ -82,6 +87,12 @@ export const authenticateToken = async (
       await user.updateLastOnline(serializedUser.id);
       const newAccessToken = generateToken(serializedUser?.id, "access");
 
+      req.user = serializedUser;
+
+      if (req.path === "/logout") {
+        return next();
+      }
+
       res.cookie("accessToken", newAccessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -98,7 +109,6 @@ export const authenticateToken = async (
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 
-      req.user = serializedUser;
       next();
     } catch (error) {
       if (error instanceof Error) {

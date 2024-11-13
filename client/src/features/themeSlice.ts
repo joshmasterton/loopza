@@ -32,7 +32,10 @@ export const getTheme = () => (dispatch: AppDispatch) => {
   } else {
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", `${localTheme === "dark" ? "black" : "white"}`);
+      ?.setAttribute(
+        "content",
+        `${localTheme === "dark" ? "rgb(15, 15, 20)" : "white"}`
+      );
 
     document.documentElement.setAttribute("data-theme", localTheme);
     dispatch(setTheme({ currentTheme: localTheme }));
@@ -45,7 +48,10 @@ export const changeTheme =
 
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", `${newTheme === "dark" ? "black" : "white"}`);
+      ?.setAttribute(
+        "content",
+        `${newTheme === "dark" ? "rgb(15, 15, 20)" : "white"}`
+      );
     document.documentElement.setAttribute("data-theme", newTheme);
 
     localStorage.setItem("loopza_theme", newTheme);

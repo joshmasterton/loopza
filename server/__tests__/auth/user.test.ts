@@ -20,8 +20,7 @@ describe("/auth/user", async () => {
 
     const user = await request(app)
       .get("/auth/user")
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     expect(user.body.id).toBe(1);
     expect(user.body.username).toBe("testUser");
@@ -45,7 +44,7 @@ describe("/auth/user", async () => {
 
     const user = await request(app)
       .get("/auth/user")
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"][1]);
 
     expect(user.body.id).toBe(1);
     expect(user.body.username).toBe("testUser");
@@ -75,7 +74,7 @@ describe("/auth/user", async () => {
 
     const user = await request(app)
       .get("/auth/user")
-      .set("Cookie", signup.header["set-cookie"][2]);
+      .set("Cookie", signup.header["set-cookie"][0]);
 
     expect(user.body.error).toBe("No token present, authorization denied");
   });

@@ -24,8 +24,7 @@ describe("/postComment/new", () => {
         post: "Some random post",
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     expect(newPostComment.body.id).toBe(1);
     expect(newPostComment.body.username).toBe("testUser");
@@ -51,8 +50,7 @@ describe("/postComment/new", () => {
         post: "Some random post",
         type: "post",
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     const newComment = await request(app)
       .post("/postComment/new")
@@ -61,8 +59,7 @@ describe("/postComment/new", () => {
         type: "comment",
         parent_id: newPost.body.id,
       })
-      .set("Cookie", signup.header["set-cookie"][2])
-      .set("Cookie", signup.header["set-cookie"][3]);
+      .set("Cookie", signup.header["set-cookie"]);
 
     expect(newComment.body.id).toBe(2);
     expect(newComment.body.type).toBe("comment");
