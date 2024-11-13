@@ -18,13 +18,11 @@ import { getUserRouter } from "./routes/user/getUser.route";
 import { followUserRoute } from "./routes/user/followUser.route";
 import { getUsersRouter } from "./routes/user/getUsers.route";
 import { deleteFollowRoute } from "./routes/user/deleteFollow.route";
-import { dropTables } from "./database/tables.database";
 import {
   scheduleRandomBotComment,
   scheduleRandomBotLikeDislike,
   scheduleRandomBotPost,
 } from "./config/cron.config";
-import { createBotUsers } from "./bot/createUser.bot";
 import { forgotPasswordRouter } from "./routes/auth/forgotPassword.route";
 import { resetPasswordRouter } from "./routes/auth/resetPassword.route";
 
@@ -72,9 +70,7 @@ app.use("/user", deleteFollowRoute);
 
 const startServer = async () => {
   try {
-    await dropTables();
     await initializeDatabase();
-    await createBotUsers(100);
     scheduleRandomBotPost();
     scheduleRandomBotComment();
     scheduleRandomBotLikeDislike();
