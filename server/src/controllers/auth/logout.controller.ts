@@ -2,7 +2,7 @@ import { Response } from "express";
 import { User } from "../../models/auth/user.model";
 import { UserRequest } from "../../types/model/auth/user.type";
 
-export const logout = (req: UserRequest, res: Response) => {
+export const logout = async (req: UserRequest, res: Response) => {
   try {
     const currentUser = new User();
 
@@ -10,7 +10,7 @@ export const logout = (req: UserRequest, res: Response) => {
       throw new Error("No user present");
     }
 
-    currentUser.logout(req.user?.id);
+    await currentUser.logout(req.user?.id);
 
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
