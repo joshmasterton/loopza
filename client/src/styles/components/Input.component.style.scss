@@ -98,7 +98,9 @@ label > svg {
 #auth label.file > svg {
   width: $width + $paddingLarge;
   height: $height + $paddingLarge;
-  padding: $padding + $paddingSmall;
+  padding: $padding;
+  border-radius: $round;
+  background: var(--background);
 }
 
 input[type="file"] {

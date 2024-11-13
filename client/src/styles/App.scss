@@ -97,6 +97,18 @@ svg {
   border-radius: $round;
 }
 
+a .logo {
+  width: calc($width - $paddingSmall);
+  height: calc($height - $paddingSmall);
+  margin-left: $fontAdjust;
+  margin-right: $fontAdjust;
+}
+
+.logo {
+  width: $width - $fontAdjust;
+  height: $height - $fontAdjust;
+}
+
 .boxElement {
   display: flex;
   justify-content: center;

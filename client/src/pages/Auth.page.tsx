@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 import { LoadingSpinner } from "../components/Loading.component";
 import { TiUserOutline } from "react-icons/ti";
+import logo from "../assets/loopza.png";
 import * as yup from "yup";
 
 const LoginForm = () => {
@@ -53,6 +54,7 @@ const LoginForm = () => {
       <Navigation link="/" type="button">
         <CgClose />
       </Navigation>
+      <img src={logo} />
       <h1>Login</h1>
       <main>
         <Input
@@ -200,6 +202,7 @@ const SignupForm = () => {
         }
       })}
     >
+      <img src={logo} />
       <Navigation link="/" type="button">
         <CgClose />
       </Navigation>

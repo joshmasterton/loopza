@@ -14,7 +14,7 @@ $dark: rgb(25, 25, 30);
     rgba(61, 115, 221, 0.75) 100%
   );
   --blend: multiply, screen;
-  --background: rgb(15, 15, 18);
+  --background: #0f0f12;
   --shadow: 0;
   --container: rgba(75, 75, 100, 0.15);
 }
@@ -38,7 +38,7 @@ $dark: rgb(25, 25, 30);
       rgba(246, 40, 177, 0.5) 75%
     );
   --blend: multiply, screen;
-  --background: rgb(250, 250, 250);
+  --background: #fafafa;
   --shadow: 0;
   --container: rgb(240, 240, 245);
 }

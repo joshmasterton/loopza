@@ -16,6 +16,7 @@ import axios, { AxiosError } from "axios";
 import { API_URL } from "../utilities/request.utilities";
 import { UserTypes } from "../../types/features/features.types";
 import { User } from "./User.component";
+import logo from "../assets/loopza.png";
 
 export const Side = () => {
   const [page, setPage] = useState(0);
@@ -94,6 +95,10 @@ export const Side = () => {
       <div className="menu">
         <ul>
           <div className={`hover ${currentPage}`} />
+          <Navigation link="/" type="button">
+            <img src={logo} className="logo" />
+            <div>Loopza</div>
+          </Navigation>
           {user ? (
             <Navigation link={`/profile/${user.id}`} type="button">
               <img src={user.profile_picture_url} alt="" />

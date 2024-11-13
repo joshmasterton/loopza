@@ -13,6 +13,7 @@ import { TiGroupOutline, TiUserOutline } from "react-icons/ti";
 import { MdOutlineCreate } from "react-icons/md";
 import { LoadingSpinner } from "./Loading.component";
 import { withUserCheck } from "../utilities/Protected.utilities";
+import logo from "../assets/loopza.png";
 
 export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
   const location = useLocation();
@@ -73,7 +74,7 @@ export const Nav = ({ isReturn = false }: { isReturn?: boolean }) => {
               </Navigation>
             ) : (
               <Navigation link="/login" type="button" className="background">
-                <TiUserOutline />
+                <img src={logo} className="logo" />
               </Navigation>
             )}
           </>

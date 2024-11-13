@@ -79,20 +79,21 @@
   border-radius: $round;
   transform-origin: center;
   transition: transform $animationCubic;
+  transform: translateY(($height) + ($padding));
   background: var(--container);
 }
 
 .side div.hover.home {
-  transform: translateY(($height) + ($padding));
+  transform: translateY(($height * 2) + ($padding * 2));
 }
 
 .side div.hover.followers {
-  transform: translateY(($height * 2) + ($padding * 2));
+  transform: translateY(($height * 3) + ($padding * 3));
 }
 
 .side div.hover.new {
   border: none;
-  transform: translateY(($height * 3) + ($padding * 3));
+  transform: translateY(($height * 4) + ($padding * 4));
 }
 
 .side div.hover.post {

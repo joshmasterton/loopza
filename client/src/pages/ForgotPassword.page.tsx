@@ -16,6 +16,7 @@ import {
 import { forgotPassword, resetPassword } from "../features/authSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
+import logo from "../assets/loopza.png";
 
 const forgotPasswordSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -43,6 +44,7 @@ export const ForgotPassword = () => {
       <Navigation link="/login" type="button">
         <CgClose />
       </Navigation>
+      <img src={logo} />
       <h1>Forgot Password</h1>
       <main>
         <Input
@@ -137,6 +139,7 @@ export const ResetPassword = () => {
       <Navigation link="/login" type="button">
         <CgClose />
       </Navigation>
+      <img src={logo} />
       <h1>Reset password</h1>
       <main>
         <Input
