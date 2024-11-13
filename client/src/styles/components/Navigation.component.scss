@@ -43,6 +43,10 @@ a.button {
   color: var(--color);
 }
 
+nav a.button {
+  gap: $gap;
+}
+
 a.small {
   display: flex;
   justify-content: center;

@@ -18,6 +18,10 @@ button {
   z-index: 1;
 }
 
+nav button {
+  gap: $gap;
+}
+
 button.fixed {
   position: fixed;
   display: flex;

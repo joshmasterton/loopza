@@ -21,7 +21,7 @@ nav > header {
   justify-content: start;
   align-items: center;
   width: calc(100%);
-  gap: $gapSmall;
+  gap: $gap;
   padding: $padding;
   min-height: calc($height + ($padding * 2));
   transition: transform $animationCubic, visibility $animationCubic;
