@@ -42,7 +42,7 @@ export const User = ({
 
   const getUser = async () => {
     try {
-      setLoadingCurrentUser(true);
+      setLoadingCurrentUser(false);
       const getUserResponse = await axios.get(`${API_URL}/user/get`, {
         params: {
           userId: currentUser.id,
