@@ -133,7 +133,7 @@ export class PostComment {
     }
   }
 
-  async getPostComment(userId?: number) {
+  async getPostComment(userId?: number, isNew?: boolean, isRandom?: boolean) {
     try {
       const postCommentFromDb = await queryDatabase(
         `
@@ -142,10 +142,18 @@ export class PostComment {
 					LEFT JOIN ${tableConfig.getUsersTable()} u
 					ON pc.user_id = u.id
 					LEFT JOIN ${tableConfig.getLikesDislikesTable()} ld
-					ON pc.id = ld.origin_id AND ld.user_id = $2
-					WHERE pc.id = $1
+					ON pc.id = ld.origin_id AND ld.user_id = ${this.id ? "$2" : "$1"}
+					${this.id ? "WHERE pc.id = $1" : ""}
+					${
+            isNew
+              ? `${
+                  userId ? "AND" : "WHERE"
+                } pc.created_at >= NOW() - INTERVAL '1 hour'`
+              : ""
+          }
+					${isRandom ? "ORDER BY RANDOM() LIMIT 1" : ""}
 				`,
-        [this.id, userId]
+        this.id ? [this.id, userId] : [userId]
       );
 
       if (!postCommentFromDb.rows[0]) {

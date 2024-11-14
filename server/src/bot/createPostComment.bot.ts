@@ -77,7 +77,7 @@ export const createBotPost = async () => {
     const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
       generationConfig: {
-        temperature: 0.5,
+        temperature: 0.8,
       },
     });
     const result = await model.generateContent(prompt);
@@ -104,17 +104,13 @@ export const createBotComment = async () => {
       throw new Error("Environment variable error");
     }
 
-    const postCommentsLength = await new PostComment().countPostsComments();
-    const randomPostCommentId =
-      Math.floor(Math.random() * postCommentsLength) + 1;
-
     const randomPostComment = await new PostComment(
       undefined,
       undefined,
       undefined,
       undefined,
-      randomPostCommentId
-    ).getPostComment();
+      undefined
+    ).getPostComment(undefined, true, true);
 
     if (!randomPostComment) {
       throw new Error("No post or comment found");
@@ -154,10 +150,6 @@ export const createBotComment = async () => {
       probability = 0.5;
     }
 
-    if (randomPostComment.created_at.includes("h")) {
-      probability = probability - 0.5;
-    }
-
     if (randomPostComment.parent_id) {
       const parentPost = await new PostComment(
         undefined,
@@ -168,26 +160,15 @@ export const createBotComment = async () => {
       ).getPostComment();
 
       if (parentPost.created_at.includes("h")) {
-        probability = probability - 0.5;
+        probability = probability - 0.3;
       }
 
       if (
         parentPost.created_at.includes("d") ||
         parentPost.created_at.includes("w")
       ) {
-        probability = probability - 1;
+        probability = probability - 0.8;
       }
-    }
-
-    if (randomPostComment.created_at.includes("h")) {
-      probability = probability - 0.5;
-    }
-
-    if (
-      randomPostComment.created_at.includes("d") ||
-      randomPostComment.created_at.includes("w")
-    ) {
-      probability = probability - 1;
     }
 
     if (Math.random() <= probability) {
@@ -199,7 +180,7 @@ export const createBotComment = async () => {
       const model = genAI.getGenerativeModel({
         model: "gemini-1.5-flash",
         generationConfig: {
-          temperature: 0.5,
+          temperature: 0.8,
         },
       });
       const result = await model.generateContent(prompt);
@@ -238,7 +219,7 @@ export const createBotComment = async () => {
         undefined,
         undefined,
         undefined,
-        randomPostCommentId
+        randomPostComment.id
       ).likeDislike(
         randomBot.id,
         reaction.includes("dislike") ? "dislike" : "like"

@@ -15,9 +15,8 @@
   display: none;
   position: sticky;
   overflow: scroll;
-  right: 0;
-  padding-top: $fontAdjust;
-  width: calc($width + $padding);
+  right: $padding;
+  width: calc($width + $padding * 2);
   min-height: calc(100% - ($padding * 2));
   transform-origin: top right;
   transition: width $animationCubic;
@@ -28,36 +27,46 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  padding: $padding;
-  padding-left: 0;
-  padding-top: 0;
   gap: $gap;
   width: 100%;
   min-height: 100%;
 }
 
+.side > div.users > main > .usersContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding-top: $padding;
+  padding-bottom: $padding;
+  gap: $gap;
+  min-height: 100%;
+  border-radius: $round;
+  border: $outline;
+  background: var(--container);
+}
+
 .side > div.menu {
   position: sticky;
   display: none;
-  left: 0;
-  width: calc($width + $padding);
+  left: $padding;
+  width: calc($width + $padding * 2);
   min-height: calc(100% - ($padding * 2));
   overflow: scroll;
   transform-origin: top;
   transition: width $animationCubic;
   animation: $animationCubic comeFromLeft;
+  border-radius: $round;
   z-index: 3;
+  border: $outline;
+  background: var(--container);
 }
 
 .side > div.menu > ul {
-  width: 100%;
   min-height: 100%;
   padding: $padding;
-  padding-right: $fontAdjust;
-  padding-bottom: 0;
-  padding-top: 0;
   position: absolute;
-  padding-top: $fontAdjust;
   display: flex;
   flex-direction: column;
   gap: $padding;
@@ -74,13 +83,14 @@
 
 .side div.hover {
   position: absolute;
-  width: calc(100% - ($padding));
+  width: calc(100% - ($padding * 2));
   height: $height;
   border-radius: $round;
   transform-origin: center;
   transition: transform $animationCubic;
   transform: translateY(($height) + ($padding));
-  background: var(--container);
+  outline: $outline;
+  background: var(--background);
 }
 
 .side div.hover.home {
@@ -116,6 +126,10 @@
     width: calc($widthContainerSmall);
   }
 
+  .side > div.menu > ul {
+    width: 100%;
+  }
+
   .side > div.menu > ul a > div,
   .side > div.menu > ul button > div {
     display: block;
@@ -133,8 +147,8 @@
     width: calc($widthContainerSmall);
   }
 
-  .side > div.users > main {
-    padding: 0;
-    gap: 0;
+  .side > div.users > main > .usersContainer {
+    align-items: start;
+    padding: $padding;
   }
 }

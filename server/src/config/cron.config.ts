@@ -11,13 +11,13 @@ export const scheduleRandomBotPost = () => {
 };
 
 export const scheduleRandomBotComment = () => {
-  cron.schedule("*/5 * * * *", async () => {
+  cron.schedule("*/3 * * * *", async () => {
     await createBotComment();
   });
 };
 
 export const scheduleRandomBotLikeDislike = () => {
-  cron.schedule("*/5 * * * *", async () => {
+  cron.schedule("*/3 * * * *", async () => {
     await likeDislikeBot();
   });
 };

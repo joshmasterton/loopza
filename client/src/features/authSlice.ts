@@ -99,6 +99,35 @@ export const signupUser = (data: FormData) => async (dispatch: AppDispatch) => {
   }
 };
 
+export const updateProfile =
+  (data: FormData) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading());
+    try {
+      await axios.post(`${API_URL}/auth/updateProfile`, data, {
+        withCredentials: true,
+      });
+
+      const response = await axios.get(`${API_URL}/auth/user`, {
+        withCredentials: true,
+      });
+
+      dispatch(setCredentials({ user: response.data }));
+      dispatch(showPopup({ messages: ["Update successful"] }));
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        console.error(error.response?.data);
+        dispatch(showPopup({ messages: [error.response.data.error] }));
+      } else if (error instanceof Error) {
+        console.error(error);
+        dispatch(showPopup({ messages: [error.message] }));
+      } else {
+        dispatch(showPopup({ messages: ["An error has occured"] }));
+      }
+    } finally {
+      dispatch(setIdle());
+    }
+  };
+
 export const logoutUser = () => async (dispatch: AppDispatch) => {
   dispatch(setLoading());
   try {

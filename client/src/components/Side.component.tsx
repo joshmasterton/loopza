@@ -17,6 +17,7 @@ import { API_URL } from "../utilities/request.utilities";
 import { UserTypes } from "../../types/features/features.types";
 import { User } from "./User.component";
 import logo from "../assets/loopza.png";
+import { Weather } from "./Weather.component";
 
 export const Side = () => {
   const [page, setPage] = useState(0);
@@ -147,43 +148,19 @@ export const Side = () => {
       </div>
       <div className="users">
         <main>
-          {/* {page > 0 && (
-            <Button
-              type="button"
-              id="loadPrevious"
-              className="container more"
-              onClick={async () => {
-                await getUsers("", page, false, true);
-              }}
-            >
-              {loadingMore ? <LoadingSpinner /> : <div>Load previous</div>}
-            </Button>
-          )} */}
+          <Weather />
           {loadingUsers ? (
             <LoadingContainer />
           ) : (
-            <>
+            <div className="usersContainer">
               {users &&
                 users?.length > 0 &&
+                !loadingUsers &&
                 users.map((user) => (
                   <User key={user.id} profile={user} type="component" isSide />
                 ))}
-              {(users && users.length < 3) ||
-                (users === undefined && <div className="blank" />)}
-            </>
+            </div>
           )}
-          {/* {users?.length === 10 && (
-            <Button
-              type="button"
-              id="loadMore"
-              className="container more"
-              onClick={async () => {
-                await getUsers("", page, true, false);
-              }}
-            >
-              {loadingMore ? <LoadingSpinner /> : <div>Load more</div>}
-            </Button>
-          )} */}
         </main>
       </div>
     </div>

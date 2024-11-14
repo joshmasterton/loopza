@@ -2,43 +2,34 @@ $dark: rgb(25, 25, 30);
 
 [data-theme="dark"] {
   --color: white;
-  --primary: #525aec;
-  --primaryShadow: rgba(82, 90, 236, 0.6);
+  --primary: #445aff;
+  --primaryShadow: #485ae6bd;
   --colorDanger: rgb(255, 85, 85);
-  --outlineColor: rgba(75, 75, 90, 0.45);
-  --outline: 0.125rem solid rgba(75, 75, 90, 0.45);
+  --outlineColor: rgba(30, 30, 38);
+  --outline: 0.125rem solid rgba(30, 30, 38);
   --outlinePrimary: 0.125rem solid var(--primary);
-  --gradient: radial-gradient(
-    circle at top right,
-    rgba(91, 59, 235, 0.75),
-    rgba(61, 115, 221, 0.75) 100%
-  );
+  --gradient: radial-gradient(circle at top right, #485ae691, transparent 200%),
+    radial-gradient(circle at bottom left, #942dccab, transparent 200%),
+    radial-gradient(circle at center, #6131b3c3, transparent 200%);
   --blend: multiply, screen;
   --background: #0f0f12;
   --shadow: 0;
-  --container: rgba(75, 75, 100, 0.15);
+  --container: rgba(24, 24, 30);
 }
 
 [data-theme="light"] {
   --color: black;
-  --primary: #5962ff;
-  --primaryShadow: rgba(89, 98, 255, 0.6);
+  --primary: #445aff;
+  --primaryShadow: #485ae6bd;
   --colorDanger: rgb(234, 82, 82);
-  --outlineColor: rgba(185, 185, 195, 0.5);
-  --outline: 0.125rem solid rgba(185, 185, 195, 0.5);
+  --outlineColor: rgba(235, 235, 240);
+  --outline: 0.125rem solid rgba(235, 235, 240);
   --outlinePrimary: 0.125rem solid var(--primary);
-  --gradient: radial-gradient(
-      circle at top right,
-      rgba(40, 243, 254, 0.5),
-      rgba(70, 252, 50, 0.5) 75%
-    ),
-    radial-gradient(
-      circle at bottom left,
-      rgba(51, 45, 247, 0.5),
-      rgba(246, 40, 177, 0.5) 75%
-    );
+  --gradient: radial-gradient(circle at top right, #4558e9bf, transparent 200%),
+    radial-gradient(circle at bottom left, #b137f3c0, transparent 200%),
+    radial-gradient(circle at center, #7e40e9a0, transparent 200%);
   --blend: multiply, screen;
-  --background: #fafafa;
+  --background: rgb(245, 245, 250);
   --shadow: 0;
-  --container: rgb(240, 240, 245);
+  --container: rgb(255, 255, 255);
 }

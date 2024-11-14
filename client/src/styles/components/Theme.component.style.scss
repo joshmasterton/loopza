@@ -15,6 +15,7 @@
   width: calc($width * 2);
   height: $height;
   border-radius: $round;
+  outline: $outline;
   background: var(--container);
 }
 
@@ -39,6 +40,7 @@
   flex-direction: column;
   width: calc($width);
   height: calc($width * 2);
+  background: var(--background);
 }
 
 .side #theme > div > button.dark {

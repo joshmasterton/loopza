@@ -36,7 +36,7 @@ export const authenticateToken = async (
 
     req.user = serializedUser;
 
-    if (req.path === "/logout") {
+    if (req.path === "/logout" || req.path === "/updateProfile") {
       return next();
     }
 
@@ -89,7 +89,7 @@ export const authenticateToken = async (
 
       req.user = serializedUser;
 
-      if (req.path === "/logout") {
+      if (req.path === "/logout" || req.path === "/updateProfile") {
         return next();
       }
 

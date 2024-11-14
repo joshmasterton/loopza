@@ -97,6 +97,7 @@ nav div.hover {
   border-radius: $round;
   transition: transform $animationCubic;
   background: var(--container);
+  outline: $outline;
 }
 
 nav div.hover.home {

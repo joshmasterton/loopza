@@ -3,6 +3,7 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 import * as yup from "yup";
 import { User } from "../../models/auth/user.model";
+import validator from "validator";
 
 const forgotPasswordSchema = yup.object().shape({
   email: yup.string().email("Must be a valid email type").required(),
@@ -16,7 +17,9 @@ export const forgotPassword = async (req: Request, res: Response) => {
     const resetPasswordToken = crypto.randomBytes(32).toString("hex");
     const resetTokenLink = `https://www.zonomaly.com//loopza/resetPassword?token=${resetPasswordToken}&email=${validatedData.email}`;
 
-    const user = new User(undefined, validatedData.email);
+    const serializedEmail = validator.escape(validatedData.email);
+
+    const user = new User(undefined, serializedEmail);
 
     const transporter = nodemailer.createTransport({
       host: "send.ahasend.com",

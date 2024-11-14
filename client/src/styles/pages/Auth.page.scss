@@ -8,6 +8,7 @@
   z-index: 1;
   box-shadow: var(--shadow);
   outline: $outline;
+  background: var(--container);
 }
 
 #auth > a {
@@ -18,6 +19,10 @@
 
 #auth main img {
   padding: 0 !important;
+}
+
+#auth input {
+  background: var(--background);
 }
 
 #auth > img {

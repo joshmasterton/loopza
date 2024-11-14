@@ -15,6 +15,14 @@ export type SignupFormTypes = {
   confirmPassword: string;
 };
 
+export type UpdateProfileFormTypes = {
+  username?: string;
+  email?: string;
+  profilePicture?: FileList;
+  password?: string;
+  confirmPassword?: string;
+};
+
 export type ResetPasswordFormTypes = {
   email: string;
   newPassword: string;

@@ -79,13 +79,11 @@ export const PostPage = () => {
           ) : (
             <>
               <div className="comments">
-                {comments && comments.length > 0 ? (
+                {comments &&
+                  comments.length > 0 &&
                   comments.map((comment) => (
                     <Comment key={comment.id} item={comment} canComment />
-                  ))
-                ) : (
-                  <div className="blank" />
-                )}
+                  ))}
               </div>
               {comments?.length === 10 && (
                 <Button

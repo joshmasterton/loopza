@@ -2,7 +2,7 @@
 
 #popup {
   width: 100%;
-  max-width: $widthContainerExtraLargeTwo;
+  max-width: calc($widthContainerExtraLargeTwo + ($padding * 2));
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -30,12 +30,14 @@
   padding: $paddingSmall;
   max-width: $widthContainerForm;
   border-radius: $round;
-  background: var(--primary);
+  background: var(--gradient);
   background-blend-mode: multiply, screen;
   pointer-events: all;
   touch-action: auto;
   transform-origin: right;
   color: white;
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
   animation: $animationCubic comeFromTopScale;
 }
 

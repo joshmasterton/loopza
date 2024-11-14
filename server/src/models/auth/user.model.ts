@@ -163,6 +163,84 @@ export class User {
     }
   }
 
+  async update(userId: number) {
+    try {
+      if (!this.username && !this.email && !this.password && !this.file) {
+        throw new Error("Nothing to update");
+      }
+
+      if (this.username) {
+        const existingUser = await this.getUser(
+          "username_lower_case",
+          this.username?.toLowerCase()
+        );
+
+        if (existingUser) {
+          throw new Error("Username already in use");
+        }
+
+        await queryDatabase(
+          `
+						UPDATE ${tableConfig.getUsersTable()}
+						SET username = $1,
+						username_lower_case = $2
+						WHERE id = $3
+					`,
+          [this.username, this.username.toLowerCase(), userId]
+        );
+      }
+
+      if (this.email) {
+        const existingEmail = await this.getUser("email", this.email);
+
+        if (existingEmail) {
+          throw new Error("Email already in use");
+        }
+
+        await queryDatabase(
+          `
+						UPDATE ${tableConfig.getUsersTable()}
+						SET email = $1
+						WHERE id = $2
+					`,
+          [this.email, userId]
+        );
+      }
+
+      if (this.file) {
+        const uploadedImage = await uploadImage(this.file);
+
+        await queryDatabase(
+          `
+						UPDATE ${tableConfig.getUsersTable()}
+						SET profile_picture_url = $1
+						WHERE id = $2
+					`,
+          [uploadedImage, userId]
+        );
+      }
+
+      if (this.password) {
+        const hashedPassword = await bcrypt.hash(this.password, 10);
+
+        await queryDatabase(
+          `
+						UPDATE ${tableConfig.getUsersTable()}
+						SET password = $1
+						WHERE id = $2
+					`,
+          [hashedPassword, userId]
+        );
+      }
+
+      return this;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  }
+
   async setResetToken(reset_password_token: string) {
     try {
       await queryDatabase(

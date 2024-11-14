@@ -1,0 +1,61 @@
+@import "../base/variables.scss";
+
+.weather {
+  width: 100%;
+  padding-top: $padding;
+  padding-bottom: $padding;
+  border-radius: $round;
+  border: $outline;
+  background: var(--container);
+}
+
+.weather > main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $gap;
+}
+
+.weather > main > p {
+  display: none;
+}
+
+.weather > main > h2 {
+  font-size: $font;
+}
+
+@media screen and (min-width: $widthContainerExtraLarge) {
+  .weather {
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .weather > main > img {
+    position: absolute;
+    right: $paddingSmall;
+    top: -$paddingSmall;
+    padding: 0;
+    padding-left: $paddingSmall;
+    width: calc($width + ($padding * 2));
+    height: calc($height + ($padding * 2));
+  }
+
+  .weather > main {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    padding-top: $padding;
+  }
+
+  .weather > main > div,
+  .weather > main > h2,
+  .weather > main > p {
+    display: flex;
+    padding-left: $padding;
+  }
+
+  .weather > main > h2 {
+    font-size: $fontLarge;
+  }
+}

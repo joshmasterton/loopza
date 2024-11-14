@@ -113,12 +113,12 @@ export const NewPost = () => {
             {imagePreview ? (
               <img src={imagePreview} alt="" />
             ) : (
-              <MdAttachFile />
+              <MdAttachFile className="background" />
             )}
           </Input>
           <Button
             id=""
-            className="clear"
+            className="clear background"
             type="button"
             onClick={() => {
               resetField("postPicture");
@@ -127,7 +127,7 @@ export const NewPost = () => {
           >
             <CgClose />
           </Button>
-          <div className="boxElement">
+          <div className="boxElement background">
             {post && post.length ? post?.length : 0}
           </div>
           <Button id="" type="submit" className="primary">

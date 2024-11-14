@@ -16,8 +16,9 @@ export const login = async (req: Request, res: Response) => {
     const validatedData = await loginSchema.validate(req.body);
 
     const serializedEmail = validator.escape(validatedData.email);
+    const serializedPassword = validator.escape(validatedData.password);
 
-    const tokens = await loginUser(serializedEmail, validatedData.password);
+    const tokens = await loginUser(serializedEmail, serializedPassword);
 
     return res
       .cookie("accessToken", tokens?.accessToken, {

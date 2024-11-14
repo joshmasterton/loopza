@@ -12,14 +12,16 @@
   max-height: fit-content;
   margin: 0;
   gap: $gap;
-  padding-bottom: $padding;
-  border-bottom: $outline;
+  padding: $padding;
+  border-radius: $round;
+  border: $outline;
+  background: var(--container);
 }
 
 .user.sideComp {
   border: 0;
   padding: 0;
-  background: transparent !important;
+  background: transparent;
 }
 
 .user.sideComp > a {
@@ -36,22 +38,6 @@
 }
 
 @media screen and (min-width: $widthContainerExtraLarge) {
-  .user.sideComp {
-    background: var(--container);
-    padding: $padding;
-    padding-left: 0;
-    padding-bottom: 0;
-  }
-
-  .user.sideComp:first-of-type {
-    padding-top: 0;
-  }
-
-  .user.sideComp > a {
-    min-height: calc($height + $padding);
-    max-height: calc($height + $padding);
-  }
-
   .user.sideComp > header > div:last-of-type {
     display: flex;
   }
@@ -82,7 +68,6 @@
 }
 
 .user > header > div:last-of-type {
-  padding-top: $fontAdjust;
   overflow: hidden;
 }
 

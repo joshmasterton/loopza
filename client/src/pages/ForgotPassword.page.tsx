@@ -49,7 +49,7 @@ export const ForgotPassword = () => {
       <main>
         <Input
           id="email"
-          type="text"
+          type="email"
           title="Email"
           register={register("email", { required: true })}
           placeholder="Email"
@@ -144,7 +144,7 @@ export const ResetPassword = () => {
       <main>
         <Input
           id="email"
-          type="text"
+          type="email"
           title="Email"
           register={register("email", { required: true })}
           placeholder="Email"

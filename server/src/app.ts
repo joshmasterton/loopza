@@ -25,6 +25,8 @@ import {
 } from "./config/cron.config";
 import { forgotPasswordRouter } from "./routes/auth/forgotPassword.route";
 import { resetPasswordRouter } from "./routes/auth/resetPassword.route";
+import { weatherRoute } from "./routes/utilities/weather.route";
+import { updateProfileRoute } from "./routes/auth/updateProfile.route";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -57,6 +59,7 @@ app.use("/auth", userRouter);
 app.use("/auth", logoutRoute);
 app.use("/auth", forgotPasswordRouter);
 app.use("/auth", resetPasswordRouter);
+app.use("/auth", updateProfileRoute);
 
 app.use("/postComment", newPostCommentRouter);
 app.use("/postComment", getPostCommentRouter);
@@ -67,6 +70,8 @@ app.use("/user", getUserRouter);
 app.use("/user", getUsersRouter);
 app.use("/user", followUserRoute);
 app.use("/user", deleteFollowRoute);
+
+app.use("/weather", weatherRoute);
 
 const startServer = async () => {
   try {

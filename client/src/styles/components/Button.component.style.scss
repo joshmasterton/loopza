@@ -14,7 +14,7 @@ button {
   border-radius: $round;
   color: inherit;
   white-space: nowrap;
-  background: var(--primary);
+  background: var(--gradient);
   z-index: 1;
 }
 
@@ -75,7 +75,7 @@ button.clear {
   max-width: fit-content;
   border-radius: $roundExtra;
   color: inherit;
-  background: transparent;
+  background: var(--container);
 }
 
 button[type="submit"] {
@@ -88,7 +88,7 @@ button.primary {
   backdrop-filter: blur(1rem);
   -webkit-backdrop-filter: blur(1rem);
   background-blend-mode: var(--blend);
-  background: var(--primary);
+  background: var(--gradient);
 }
 
 button.outline {
@@ -99,6 +99,7 @@ button.outline {
   height: $height;
   max-height: $height;
   outline: $outline;
+  background: var(--container);
 }
 
 button.more {
@@ -109,6 +110,7 @@ button.more {
   height: $height;
   max-height: $height;
   border: $outline;
+  background: var(--container);
 }
 
 button.padding {

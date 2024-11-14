@@ -19,6 +19,7 @@
 @import "./components/Theme.component.style.scss";
 @import "./components/Comment.component.style.scss";
 @import "./utilities/Popup.style.scss";
+@import "./components/Weather.comp.scss";
 
 * {
   margin: 0;
@@ -101,7 +102,7 @@ a .logo {
   width: calc($width - $paddingSmall);
   height: calc($height - $paddingSmall);
   margin-left: $fontAdjust;
-  margin-right: $fontAdjust;
+  margin-right: calc($fontAdjust * 1.25);
 }
 
 .logo {
@@ -120,14 +121,20 @@ a .logo {
   outline: $outline;
   padding-top: $fontAdjust;
   border-radius: $roundExtra;
+  background: var(--container);
+}
+
+.background {
   background: var(--background);
 }
 
 .blank {
   width: 100%;
   flex: 1;
-  padding: $fontAdjust;
+  padding: $padding;
   border-radius: $round;
+  border: $outline;
+  background: var(--container);
 }
 
 .online {

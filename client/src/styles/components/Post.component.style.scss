@@ -6,8 +6,9 @@
   flex-direction: column;
   border-radius: $round;
   transform-origin: top;
-  border-radius: 0;
-  border-bottom: $outline;
+  border: $outline;
+  padding: $padding;
+  background: var(--container);
 }
 
 .post > a {
@@ -43,7 +44,6 @@
 }
 
 .post > header > div:last-of-type {
-  padding-top: $fontAdjust;
   overflow: hidden;
 }
 
@@ -89,7 +89,6 @@
   flex-wrap: wrap;
   gap: $gap;
   padding-top: $padding;
-  padding-bottom: $padding;
 }
 
 .post > footer > .reply {
@@ -106,7 +105,7 @@
   display: flex;
   flex-direction: column;
   align-items: end;
-  padding-bottom: $padding;
+  padding-top: $padding;
   gap: $gap;
 }
 
