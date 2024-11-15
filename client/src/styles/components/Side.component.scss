@@ -15,7 +15,7 @@
   display: none;
   position: sticky;
   overflow: scroll;
-  right: $padding;
+  margin-right: $padding;
   width: calc($width + $padding * 2);
   min-height: calc(100% - ($padding * 2));
   transform-origin: top right;
@@ -38,6 +38,7 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  padding-left: $padding;
   padding-top: $padding;
   padding-bottom: $padding;
   gap: $gap;
@@ -50,17 +51,17 @@
 .side > div.menu {
   position: sticky;
   display: none;
-  left: $padding;
   width: calc($width + $padding * 2);
   min-height: calc(100% - ($padding * 2));
   overflow: scroll;
+  margin-left: $padding;
   transform-origin: top;
   transition: width $animationCubic;
   animation: $animationCubic comeFromLeft;
   border-radius: $round;
-  z-index: 3;
-  border: $outline;
+  outline: $outline;
   background: var(--container);
+  z-index: 3;
 }
 
 .side > div.menu > ul {

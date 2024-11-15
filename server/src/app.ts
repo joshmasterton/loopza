@@ -10,6 +10,7 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 import cookie from "cookie-parser";
 import path from "path";
+import { rateLimit } from "express-rate-limit";
 import { newPostCommentRouter } from "./routes/postComment/newPostComment.route";
 import { getPostCommentRouter } from "./routes/postComment/getPostComment.route";
 import { getPostsCommentsRouter } from "./routes/postComment/getPostsComments.route";
@@ -44,12 +45,22 @@ export const tableConfig = new TableConfig();
 
 const { CLIENT_URL } = process.env;
 
+app.set("trust proxy", 1);
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookie());
 
 app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(helmet());
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 100,
+    standardHeaders: "draft-7",
+    legacyHeaders: false,
+  })
+);
 
 app.get("/", (_req, res) => res.json({ message: "Welcome to loopza" }));
 

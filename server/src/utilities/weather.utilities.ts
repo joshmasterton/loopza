@@ -14,29 +14,25 @@ dotenv.config({
   ),
 });
 
-export const getUserCity = async () => {
-  try {
-    const { IP_INFO_API_KEY } = process.env;
-    const response = await axios.get(
-      `https://ipinfo.io/json?token=${IP_INFO_API_KEY}`
-    );
-    return response.data.city;
-  } catch (error) {
-    if (error instanceof Error) {
-      throw error;
-    }
-  }
-};
+const locations = [
+  { name: "New York", country: "USA", query: "New York" },
+  { name: "London", country: "UK", query: "London" },
+  { name: "Tokyo", country: "Japan", query: "Tokyo" },
+];
 
-export const getWeather = async () => {
+export const getWeatherForLocations = async () => {
   try {
     const { WEATHER_API_KEY } = process.env;
-    const city = await getUserCity();
-    const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_API_KEY}&units=metric`
-    );
 
-    return response.data;
+    const weatherData = await Promise.all(
+      locations.map(async (location) => {
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${location.query}&appid=${WEATHER_API_KEY}&units=metric`
+        );
+        return response.data;
+      })
+    );
+    return weatherData;
   } catch (error) {
     if (error instanceof Error) {
       throw error;
