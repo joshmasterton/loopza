@@ -73,7 +73,7 @@ div.fixed > button > div {
 button.clear {
   outline: $outline;
   max-width: fit-content;
-  border-radius: $roundExtra;
+  border-radius: $round;
   color: inherit;
   background: var(--container);
 }

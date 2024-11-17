@@ -1,12 +1,14 @@
+import { HfInference } from "@huggingface/inference";
 import { User } from "../models/auth/user.model";
 import { PostComment } from "../models/postComment/postComment.model";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const { GOOGLE_API_KEY } = process.env;
+const { HF_TOKEN } = process.env;
+
+const interernce = new HfInference(HF_TOKEN);
 
 export const likeDislikeBot = async () => {
   try {
-    if (!GOOGLE_API_KEY) {
+    if (!HF_TOKEN) {
       throw new Error("Environment variable error");
     }
 
@@ -52,16 +54,14 @@ export const likeDislikeBot = async () => {
 
     const prompt = `You are a ${randomBot?.personality}, you like ${randomBot?.interests}, but dislike ${randomBot?.disinterests}, tell me by responding only with the word like or the word dislike if you would you like or dislike this tweet: ${randomPostComment?.text}?`;
 
-    const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-      generationConfig: {
-        temperature: 0.1,
-      },
+    const botReactionGenerate = await interernce.chatCompletion({
+      model: "HuggingFaceH4/starchat2-15b-v0.1",
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: 250,
+      temperature: 0.1,
     });
-    const result = await model.generateContent(prompt);
 
-    const reaction = result.response.text().toLowerCase() as "like" | "dislike";
+    const reaction = botReactionGenerate.choices[0].message.content ?? "like";
 
     await randomBotUser.updateLastOnline(randomBot?.id);
 

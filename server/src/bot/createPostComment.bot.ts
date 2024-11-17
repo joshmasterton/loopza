@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import Parser from "rss-parser";
 import { User } from "../models/auth/user.model";
 import { PostComment } from "../models/postComment/postComment.model";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { HfInference } from "@huggingface/inference";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const parser = new Parser();
@@ -18,7 +18,9 @@ dotenv.config({
   ),
 });
 
-const { GOOGLE_API_KEY } = process.env;
+const { HF_TOKEN } = process.env;
+
+const interernce = new HfInference(HF_TOKEN);
 
 const rssFeeds = [
   "https://www.theguardian.com/world/rss",
@@ -38,7 +40,7 @@ const rssFeeds = [
 
 export const createBotPost = async () => {
   try {
-    if (!GOOGLE_API_KEY) {
+    if (!HF_TOKEN) {
       throw new Error("Environment variable error");
     }
 
@@ -64,6 +66,8 @@ export const createBotPost = async () => {
 
     await randomBotUser.updateLastOnline(randomBot?.id);
 
+    const randomSeed = Math.floor(Date.now() / Math.random());
+
     const randomFeedUrl = rssFeeds[Math.floor(Math.random() * rssFeeds.length)];
 
     const feed = await parser.parseURL(randomFeedUrl);
@@ -73,17 +77,16 @@ export const createBotPost = async () => {
 		Let your tone be subtly influenced by your interests (${randomBot?.interests}) and dislikes (${randomBot?.disinterests}), without directly mentioning them. If the topic aligns with your interests, respond with a positive tone; if it includes your dislikes,
 		respond with a more critical or skeptical tone. Keep it realistic, brief, and similar to a casual reaction tweet from a real person, only include response. Make sure it is short, only a sentence or two.`;
 
-    const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-      generationConfig: {
-        temperature: 0.8,
-      },
+    const botGenerate = await interernce.chatCompletion({
+      model: "HuggingFaceH4/starchat2-15b-v0.1",
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: 250,
+      temperature: 0.8,
+      seed: randomSeed,
     });
-    const result = await model.generateContent(prompt);
 
     const newBotPost = await new PostComment(
-      result.response.text(),
+      botGenerate.choices[0].message.content,
       "post",
       randomBot?.id
     ).new();
@@ -100,7 +103,7 @@ export const createBotPost = async () => {
 
 export const createBotComment = async () => {
   try {
-    if (!GOOGLE_API_KEY) {
+    if (!HF_TOKEN) {
       throw new Error("Environment variable error");
     }
 
@@ -150,8 +153,10 @@ export const createBotComment = async () => {
       probability = 0.5;
     }
 
+    let parentPost;
+
     if (randomPostComment.parent_id) {
-      const parentPost = await new PostComment(
+      parentPost = await new PostComment(
         undefined,
         "post",
         undefined,
@@ -171,22 +176,31 @@ export const createBotComment = async () => {
       }
     }
 
+    const randomSeed = Math.floor(Date.now() / Math.random());
+
     if (Math.random() <= probability) {
-      const prompt = `You are a ${randomBot.personality} user replying to this tweet: "${randomPostComment.text}". 
-			Craft a brief, realistic reply with a tone subtly influenced by your interests (${randomBot.interests}) and dislikes (${randomBot.disinterests}). Do not mention these directly. 
+      const prompt = `You are a ${
+        randomBot.personality
+      } user replying to this tweet: "${randomPostComment.text}, ${
+        parentPost ? `the main tweet is this ${parentPost.text}` : ""
+      }". 
+			Craft a brief, realistic reply with a tone subtly influenced by your interests (${
+        randomBot.interests
+      }) and dislikes (${
+        randomBot.disinterests
+      }). Do not mention these directly. 
 			Instead, let the tone naturally reflect a positive or negative inclination. Keep it casual and brief, as if it’s a quick, off-the-cuff response, only include response. Make sure it is short, only a sentence or two.`;
 
-      const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
-      const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash",
-        generationConfig: {
-          temperature: 0.8,
-        },
+      const botGenerate = await interernce.chatCompletion({
+        model: "HuggingFaceH4/starchat2-15b-v0.1",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 250,
+        temperature: 0.8,
+        seed: randomSeed,
       });
-      const result = await model.generateContent(prompt);
 
       const newBotComment = new PostComment(
-        result.response.text(),
+        botGenerate.choices[0].message.content,
         "comment",
         randomBot?.id
       );
@@ -200,19 +214,16 @@ export const createBotComment = async () => {
         );
       }
 
-      const reactionModel = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash",
-        generationConfig: {
-          temperature: 0.1,
-        },
-      });
       const reactionPrompt = `You are a ${randomBot?.personality}, you like ${randomBot?.interests}, but dislike ${randomBot?.disinterests}, tell me by responding only with the word like or the word dislike if you would you like or dislike this tweet: ${randomPostComment?.text}?`;
-      const resultReaction = await reactionModel.generateContent(
-        reactionPrompt
-      );
-      const reaction = resultReaction.response.text().toLowerCase() as
-        | "like"
-        | "dislike";
+
+      const botReactionGenerate = await interernce.chatCompletion({
+        model: "HuggingFaceH4/starchat2-15b-v0.1",
+        messages: [{ role: "user", content: reactionPrompt }],
+        max_tokens: 250,
+        temperature: 0.1,
+      });
+
+      const reaction = botReactionGenerate.choices[0].message.content ?? "like";
 
       await new PostComment(
         undefined,
