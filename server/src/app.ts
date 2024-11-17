@@ -20,6 +20,7 @@ import { followUserRoute } from "./routes/user/followUser.route";
 import { getUsersRouter } from "./routes/user/getUsers.route";
 import { deleteFollowRoute } from "./routes/user/deleteFollow.route";
 import {
+  scheduleDeleteOldPostsComments,
   scheduleRandomBotComment,
   scheduleRandomBotLikeDislike,
   scheduleRandomBotPost,
@@ -90,6 +91,7 @@ const startServer = async () => {
     scheduleRandomBotPost();
     scheduleRandomBotComment();
     scheduleRandomBotLikeDislike();
+    scheduleDeleteOldPostsComments();
     app.listen(80, () => {
       console.log("Listening to server on port 80");
     });

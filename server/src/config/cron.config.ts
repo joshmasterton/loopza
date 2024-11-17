@@ -28,14 +28,14 @@ export const scheduleDeleteOldPostsComments = () => {
       await queryDatabase(
         `
 					DELETE FROM ${tableConfig.getPostsCommentsTable()}
-					WHERE created_at < NOW() - INTERVAL '7 days'
+					WHERE created_at < NOW() - INTERVAL '3 days'
 				`,
         []
       );
       await queryDatabase(
         `
 					DELETE FROM ${tableConfig.getLikesDislikesTable()}
-					WHERE created_at < NOW() - INTERVAL '7 days'
+					WHERE created_at < NOW() - INTERVAL '3 days'
 				`,
         []
       );
