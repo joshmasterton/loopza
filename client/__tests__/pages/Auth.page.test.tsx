@@ -42,9 +42,7 @@ describe("Auth page", () => {
     const loginButton = screen.getByRole("button", { name: "Login" });
     await userEvent.click(loginButton);
 
-    expect(
-      screen.queryByText("Username must be at least 6 characters")
-    ).toBeInTheDocument();
+    expect(screen.queryByText("Email required")).toBeInTheDocument();
     expect(
       screen.queryByText("Password must be at least 6 characters")
     ).toBeInTheDocument();
@@ -81,10 +79,10 @@ describe("Auth page", () => {
       render(<Test initialEntry="/login" />);
     });
 
-    const usernameInput = screen.getByLabelText("Username");
+    const emailInput = screen.getByLabelText("Email");
     const passwordInput = screen.getByLabelText("Password");
 
-    await userEvent.type(usernameInput, "testUser");
+    await userEvent.type(emailInput, "testUser@email.com");
     await userEvent.type(passwordInput, "Password");
 
     const loginButton = screen.getByRole("button", { name: "Login" });
@@ -92,7 +90,7 @@ describe("Auth page", () => {
 
     expect(axios.post).toHaveBeenCalledWith(
       `${API_URL}/auth/login`,
-      { username: "testUser", password: "Password" },
+      { email: "testUser@email.com", password: "Password" },
       { withCredentials: true }
     );
   });

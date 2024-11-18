@@ -5,6 +5,8 @@ import {
   mockPost,
   mockPostTwo,
   mockUser,
+  mockUserTwo,
+  mockWeather,
   Test,
 } from "../utilities/Test.utilities";
 import axios from "axios";
@@ -14,8 +16,22 @@ vitest.mock("axios");
 describe("Nav component", () => {
   test("Should render nav bar", async () => {
     (axios.get as Mock).mockResolvedValueOnce({
+      data: [mockWeather],
+    });
+    (axios.get as Mock).mockResolvedValueOnce({
+      data: [mockUser, mockUserTwo],
+    });
+    (axios.get as Mock).mockResolvedValueOnce({
       data: [mockPost, mockPostTwo],
     });
+    (axios.get as Mock).mockResolvedValueOnce({ data: mockUser });
+    (axios.get as Mock).mockResolvedValueOnce({
+      data: [mockUser, mockUserTwo],
+    });
+    (axios.get as Mock).mockResolvedValueOnce({
+      data: [mockPost, mockPostTwo],
+    });
+    (axios.get as Mock).mockResolvedValueOnce({ data: mockUser });
     (axios.get as Mock).mockResolvedValueOnce({ data: mockUser });
 
     await act(async () => {

@@ -7,12 +7,27 @@ import { useEffect } from "react";
 import {
   PostCommentTypes,
   UserTypes,
+  WeatherResponse,
 } from "../../types/features/features.types";
 
 export const mockUser: UserTypes = {
   id: 1,
   username: "testUser",
   email: "testEmail@email.com",
+  followers: 0,
+  following: 0,
+  comments: 0,
+  posts: 0,
+  likes: 0,
+  dislikes: 0,
+  created_at: new Date(Date.now()).toLocaleString(),
+  profile_picture_url: "http://www.random.com",
+};
+
+export const mockUserTwo: UserTypes = {
+  id: 2,
+  username: "testUserTwo",
+  email: "testEmailTwo@email.com",
   followers: 0,
   following: 0,
   comments: 0,
@@ -65,6 +80,51 @@ export const mockPostTwo: PostCommentTypes = {
   is_bot: false,
   last_online: "",
   is_online: false,
+};
+
+export const mockWeather: WeatherResponse = {
+  coord: {
+    lon: 1,
+    lat: 1,
+  },
+  weather: [
+    {
+      id: 1,
+      main: "",
+      description: "",
+      icon: "",
+    },
+  ],
+  base: "",
+  main: {
+    temp: 1,
+    feels_like: 1,
+    temp_min: 1,
+    temp_max: 1,
+    pressure: 1,
+    humidity: 1,
+  },
+  visibility: 1,
+  wind: {
+    speed: 1,
+    deg: 1,
+    gust: 1,
+  },
+  clouds: {
+    all: 1,
+  },
+  dt: 1,
+  sys: {
+    type: 1,
+    id: 1,
+    country: "",
+    sunrise: 1,
+    sunset: 1,
+  },
+  timezone: 1,
+  id: 1,
+  name: "",
+  cod: 1,
 };
 
 export const Test = ({ initialEntry }: { initialEntry: string }) => {
