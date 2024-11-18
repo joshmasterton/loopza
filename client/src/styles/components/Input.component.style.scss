@@ -91,10 +91,10 @@ label > img,
 label > svg {
   width: $width;
   height: $height;
-  border-radius: $round;
+  padding: 0;
   border-radius: $round;
   outline: $outline;
-  background: var(--container);
+  background: var(--background);
   object-fit: cover;
 }
 
