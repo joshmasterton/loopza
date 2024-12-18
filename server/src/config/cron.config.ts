@@ -5,19 +5,19 @@ import { queryDatabase } from "../database/query.database";
 import { tableConfig } from "../app";
 
 export const scheduleRandomBotPost = () => {
-  cron.schedule("*/30 * * * *", async () => {
+  cron.schedule("*/90 * * * *", async () => {
     await createBotPost();
   });
 };
 
 export const scheduleRandomBotComment = () => {
-  cron.schedule("*/15 * * * *", async () => {
+  cron.schedule("*/45 * * * *", async () => {
     await createBotComment();
   });
 };
 
 export const scheduleRandomBotLikeDislike = () => {
-  cron.schedule("*/15 * * * *", async () => {
+  cron.schedule("*/45 * * * *", async () => {
     await likeDislikeBot();
   });
 };

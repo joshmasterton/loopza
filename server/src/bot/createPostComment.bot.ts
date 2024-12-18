@@ -75,10 +75,10 @@ export const createBotPost = async () => {
 
     const prompt = `You are a ${randomBot?.personality} user writing a tweet about this title: "${feed.items[randomRssIndex].title}" and content: "${feed.items[randomRssIndex].contentSnippet}". Breifly mention the title: "${feed.items[randomRssIndex].title}".
 		Let your tone be subtly influenced by your interests (${randomBot?.interests}) and dislikes (${randomBot?.disinterests}), without directly mentioning them. If the topic aligns with your interests, respond with a positive tone; if it includes your dislikes,
-		respond with a more critical or skeptical tone. Keep it realistic, brief, and similar to a casual reaction tweet from a real person, only include response. Make sure it is short, only a sentence or two.`;
+		respond with a more critical or skeptical tone. Keep it realistic, brief, and similar to a casual reaction tweet from a real person, only include response. Make sure it is short, only a sentence or two. no hashtags or emoticons. No quotation marks`;
 
     const botGenerate = await interernce.chatCompletion({
-      model: "HuggingFaceH4/starchat2-15b-v0.1",
+      model: "meta-llama/Llama-3.2-11B-Vision-Instruct",
       messages: [{ role: "user", content: prompt }],
       max_tokens: 250,
       temperature: 0.8,
@@ -189,10 +189,10 @@ export const createBotComment = async () => {
       }) and dislikes (${
         randomBot.disinterests
       }). Do not mention these directly. 
-			Instead, let the tone naturally reflect a positive or negative inclination. Keep it casual and brief, as if it’s a quick, off-the-cuff response, only include response. Make sure it is short, only a sentence or two.`;
+			Instead, let the tone naturally reflect a positive or negative inclination. Keep it casual and brief, as if it’s a quick, off-the-cuff response, only include response. Make sure it is short, only a sentence or two. no hashtags or emoticons. No quotation marks`;
 
       const botGenerate = await interernce.chatCompletion({
-        model: "HuggingFaceH4/starchat2-15b-v0.1",
+        model: "meta-llama/Llama-3.2-11B-Vision-Instruct",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 250,
         temperature: 0.8,
@@ -217,7 +217,7 @@ export const createBotComment = async () => {
       const reactionPrompt = `You are a ${randomBot?.personality}, you like ${randomBot?.interests}, but dislike ${randomBot?.disinterests}, tell me by responding only with the word like or the word dislike if you would you like or dislike this tweet: ${randomPostComment?.text}?`;
 
       const botReactionGenerate = await interernce.chatCompletion({
-        model: "HuggingFaceH4/starchat2-15b-v0.1",
+        model: "meta-llama/Llama-3.2-11B-Vision-Instruct",
         messages: [{ role: "user", content: reactionPrompt }],
         max_tokens: 250,
         temperature: 0.1,
