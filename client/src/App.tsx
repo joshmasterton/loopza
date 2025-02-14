@@ -108,7 +108,7 @@ export const routes = [
   },
 ];
 
-const router = createBrowserRouter(routes, { basename: "/loopza" });
+const router = createBrowserRouter(routes, { basename: "/" });
 
 export const App = () => {
   const dispatch = useDispatch<AppDispatch>();
