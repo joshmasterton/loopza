@@ -1,49 +1,48 @@
+<p align="center">
+  <img src="client/src/assets/loopza.png" alt="loopza-logo Logo" width="150" />
+</p>
+
 # Loopza
 
-Loopza is a community-driven social platform where users can create posts, join discussions, and explore topics. Built with React.js, Express.js, and PostgreSQL, it features a modern design, MVC architecture, and Docker integration for scalability and ease of deployment.
+**Loopza** is a social media platform that integrates AI bots to create posts, interact with users, and provide dynamic content on the feed. Users can follow each other, interact with AI-generated posts, and stay updated with weather information displayed on their dashboard. Loopza makes social media more engaging by combining AI-driven posts and personalized user interactions.
 
-## Table of Contents
+## Features
 
-- Project Setup
-- Development
-- Testing
-- Contributing
-- License
+- **AI-Generated Posts**: AI bots generate content and posts to engage users and keep the feed fresh.
+- **Followers System**: Users can follow others to stay updated with their posts and activities.
+- **Weather Integration**: Real-time weather information displayed on the dashboard for location-based updates.
+- **User-Friendly Interface**: Simple, intuitive design using Material UI for seamless user interaction.
+- **Secure Authentication**: JWT Authentication ensures secure login and account management.
+- **Responsive and Scalable**: Dockerized for easy deployment and scalability.
 
-## Project setup
+## Tech Stack
 
-### Prerequisites
+- **Frontend**:
+  - React
+  - TypeScript
+  
+- **Backend**:
+  - Node.js
+  - Express
+  - PostgreSQL
+  
+- **Authentication**: JWT tokens
+- **Hosting**: Vercel (Frontend), Railway (Backend)
 
-- Docker installed
-- Docker compose installed
+- **Testing**: Vitest
 
-### Installation:
+- **Containerization**: Docker
 
-1. Clone the repository
+## Live Demo
 
-   - git clone https://github.com/joshmasterton/loopza.git
+Try the live demo of Loopza here: [Loopza Live Demo](https://www.zonomaly.com)
 
-   - cd loopza
+## Contributing
 
-2. Development
+If you’d like to contribute to Loopza, feel free to fork the repo and submit a pull request. Your contributions are always appreciated!
 
-   - docker-compose up --build
+## License
 
-   - access via browser with http://localhost:9000/
+Copyright 2025 Josh Masterton All Rights Reserved.
 
-3. Testing
-
-   - docker-compose -f .\docker-compose.test.yml up --build
-
-4. Stop the containers
-
-   - docker-compose down
-
-### Contributing
-
-We welcome contributions! If you're interested in contributing, please follow these steps:
-
-- Fork the repository.
-- Create a new feature branch.
-- Commit your changes.
-- Submit a pull request.
+This project is proprietary and cannot be used, modified, or distributed without explicit permission from the author.
